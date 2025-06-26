@@ -35,6 +35,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""push2"",
+                    ""type"": ""Button"",
+                    ""id"": ""2d5227f8-d856-4680-90c3-146fcff89d72"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -74,6 +83,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7234f6ff-fcfb-494e-8630-55e1d490c9eb"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""push2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -662,6 +682,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         // Player1
         m_Player1 = asset.FindActionMap("Player1", throwIfNotFound: true);
         m_Player1_Fire = m_Player1.FindAction("Fire", throwIfNotFound: true);
+        m_Player1_push2 = m_Player1.FindAction("push2", throwIfNotFound: true);
         // Player2
         m_Player2 = asset.FindActionMap("Player2", throwIfNotFound: true);
         m_Player2_Fire = m_Player2.FindAction("Fire", throwIfNotFound: true);
@@ -746,11 +767,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player1;
     private List<IPlayer1Actions> m_Player1ActionsCallbackInterfaces = new List<IPlayer1Actions>();
     private readonly InputAction m_Player1_Fire;
+    private readonly InputAction m_Player1_push2;
     public struct Player1Actions
     {
         private @InputSystem_Actions m_Wrapper;
         public Player1Actions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Fire => m_Wrapper.m_Player1_Fire;
+        public InputAction @push2 => m_Wrapper.m_Player1_push2;
         public InputActionMap Get() { return m_Wrapper.m_Player1; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -763,6 +786,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Fire.started += instance.OnFire;
             @Fire.performed += instance.OnFire;
             @Fire.canceled += instance.OnFire;
+            @push2.started += instance.OnPush2;
+            @push2.performed += instance.OnPush2;
+            @push2.canceled += instance.OnPush2;
         }
 
         private void UnregisterCallbacks(IPlayer1Actions instance)
@@ -770,6 +796,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Fire.started -= instance.OnFire;
             @Fire.performed -= instance.OnFire;
             @Fire.canceled -= instance.OnFire;
+            @push2.started -= instance.OnPush2;
+            @push2.performed -= instance.OnPush2;
+            @push2.canceled -= instance.OnPush2;
         }
 
         public void RemoveCallbacks(IPlayer1Actions instance)
@@ -999,6 +1028,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     public interface IPlayer1Actions
     {
         void OnFire(InputAction.CallbackContext context);
+        void OnPush2(InputAction.CallbackContext context);
     }
     public interface IPlayer2Actions
     {
