@@ -36,7 +36,7 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "852140f2-7766-474d-8707-702459ba45f3",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Hold",
                     "initialStateCheck": false
@@ -87,9 +87,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Push1",
+                    "name": "push2",
                     "type": "Button",
-                    "id": "60f06f84-9b30-4158-8c85-3999d27b5303",
+                    "id": "2d5227f8-d856-4680-90c3-146fcff89d72",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -484,12 +484,12 @@
                 },
                 {
                     "name": "",
-                    "id": "97997b84-852a-4537-89fa-5ac6e22a0a75",
-                    "path": "<Keyboard>/numpad1",
+                    "id": "7234f6ff-fcfb-494e-8630-55e1d490c9eb",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Push1",
+                    "action": "push2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
