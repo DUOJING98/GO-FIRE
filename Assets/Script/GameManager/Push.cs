@@ -1,32 +1,30 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static InputSystem_Actions;
 
-public class Push : MonoBehaviour
+public class Push : MonoBehaviour, IPlayer1Actions, IPlayer2Actions
 {
-    [SerializeField]    InputSystem_Actions Turnaction;
+
 
     protected bool isTurn = false;
+    public string playerName = "P1";
+    public GameManager manager;
 
+    public Transform charaTransform;
 
-    protected virtual void OnEnable()
+    public void OnFire(InputAction.CallbackContext context)
     {
-        Turnaction.Enable();
+        if (context.performed)
+        {
+            manager.PlayerPressed(playerName);
+            if(!isTurn) {
+                charaTransform.Rotate(0f, 180f, 0f);
+                isTurn = true;
+            }
+           
+
+        }
+        Debug.Log("Fire!");
     }
 
-    protected virtual void OnDisable( ) 
-    {
-        Turnaction.Disable();
-    }
-
-    private void OnTurn()
-    {
-        Flip();
-    }
-    protected virtual void Flip()
-    {
-        isTurn = !isTurn;
-        Vector3 localScale = transform.localScale;
-        localScale.x *= -1;
-        transform.localScale = localScale;
-    }
 }
