@@ -29,7 +29,7 @@ public class CountDownManager : MonoBehaviour
         yield return ShowNumber("3");
         yield return ShowNumber("2");
         yield return ShowNumber("1");
-        signalText.text = "èÄîı...";
+        signalText.text = "READY...";
         onReadyStart?.Invoke();
 
         yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
@@ -53,7 +53,7 @@ public class CountDownManager : MonoBehaviour
             }
             else
             {
-                string[] fakeSignals = { "WAIT!", "DOG!", "START!", "READY!", "HOLD!" };
+                string[] fakeSignals = { "WAIT!", "DOG!", "START!", "HOLD!" };
                 string fake = fakeSignals[Random.Range(0, fakeSignals.Length)];
                 signalText.text = fake;
                 onFakeSignal?.Invoke();

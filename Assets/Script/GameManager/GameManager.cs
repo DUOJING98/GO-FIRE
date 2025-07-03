@@ -8,16 +8,16 @@ public class GameManager : MonoBehaviour
     public Push p1;
     public Push p2;
 
-    private int p1Hp =100,p2Hp =100;
-    private int p1Wins=0,p2Wins=0;
+    [SerializeField]private int p1Hp =100,p2Hp =100;
+    [SerializeField]private int p1Wins=0,p2Wins=0;
     private bool roundEnded = false;
 
     private void Start()
     {
         CDM.onGoSignal.AddListener(() => StartRound(true));
         CDM.onGoSignal.AddListener(()=>StartRound(false));
-        //StartNewRound();
-        CDM.StartCountdown();
+        StartNewRound();
+        
     }
 
     private void StartNewRound()
@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
         p1.RestRound();
         p2.RestRound();
         CDM.StartCountdown();
+        roundEnded = false;
     }
 
     void StartRound(bool isRealGo)
@@ -39,29 +40,13 @@ public class GameManager : MonoBehaviour
         if(roundEnded) return;
         roundEnded = true;
 
-        if (playerName == "P1")
+        if (playerName == "P1"&&isCorrect)
         {
-            if (isCorrect)
-            {
-                p2Hp -= 50;
-                p1Wins++;
-            }
-            else
-            {
-                p1Hp -= 50;
-            }
+            p2Hp -= 50;
         }
-        else
+        else if(playerName =="P2"&&isCorrect)
         {
-            if(isCorrect)
-            {
-                p1Hp -= 50;
-                p2Wins++;
-            }
-            else
-            {
-                p2Hp -= 50;
-            }
+            p1Hp -= 50;
         }
 
         if(p1Wins==2||p2Wins==2)
