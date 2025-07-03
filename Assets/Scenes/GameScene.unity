@@ -915,6 +915,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CDM: {fileID: 1887530382}
+  p1: {fileID: 1423981475}
+  p2: {fileID: 1196400840}
 --- !u!1 &1887530381
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,6 +948,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minDelay: 1
   maxDelay: 3
+  signalInterval: 1
   signalText: {fileID: 317123101}
   onReadyStart:
     m_PersistentCalls:

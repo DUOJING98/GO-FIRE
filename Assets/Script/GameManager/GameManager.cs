@@ -1,54 +1,82 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public CountDownManager CDM;
 
-    private bool canPress = false;
-    private bool isRealGO = false;
-    private bool gameEnded = false;
+    public Push p1;
+    public Push p2;
 
+    private int p1Hp =100,p2Hp =100;
+    private int p1Wins=0,p2Wins=0;
+    private bool roundEnded = false;
 
     private void Start()
     {
-        CDM.onGoSignal.AddListener(HandleGO);
-        CDM.onGoSignal.AddListener(HandleFake);
+        CDM.onGoSignal.AddListener(() => StartRound(true));
+        CDM.onGoSignal.AddListener(()=>StartRound(false));
+        //StartNewRound();
+        CDM.StartCountdown();
     }
 
-    void HandleGO()
+    private void StartNewRound()
     {
-        canPress = true;
-        isRealGO = true;
+        p1.RestRound();
+        p2.RestRound();
+        CDM.StartCountdown();
     }
 
-    void HandleFake()
+    void StartRound(bool isRealGo)
     {
-        canPress = true;
-        isRealGO = false;
+        roundEnded = false;
+        p1.BeginRound(isRealGo);
+        p2.BeginRound(isRealGo);
     }
 
-    public void PlayerPressed(string playerName)
+    public void PlayerPressed(string playerName,bool isCorrect)
     {
-        if (gameEnded) return;
-        if (!canPress)
+        if(roundEnded) return;
+        roundEnded = true;
+
+        if (playerName == "P1")
         {
-            gameEnded = true;
-            CDM.signalText.text = $"{playerName} 早押し！失格！";
-            return;
-        }
-
-        if(isRealGO)
-        {
-            gameEnded = true;
-            CDM.signalText.text = $"{playerName} 勝利！";
+            if (isCorrect)
+            {
+                p2Hp -= 50;
+                p1Wins++;
+            }
+            else
+            {
+                p1Hp -= 50;
+            }
         }
         else
         {
-            gameEnded = true;
-            CDM.signalText.text = $"{playerName} 間違い！失格！";
-
+            if(isCorrect)
+            {
+                p1Hp -= 50;
+                p2Wins++;
+            }
+            else
+            {
+                p2Hp -= 50;
+            }
         }
 
+        if(p1Wins==2||p2Wins==2)
+        {
+            EndGame();
+        }
+        else
+        {
+            Invoke(nameof(StartNewRound), 1f);
+        }
     }
 
+    private void EndGame()
+    {
+        string winner = p1Wins == 2 ? "P1" : "P2";
+        CDM.signalText.text = $"{winner} 勝利！";
+    }
 }

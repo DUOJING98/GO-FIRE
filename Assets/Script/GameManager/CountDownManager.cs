@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class CountDownManager : MonoBehaviour
 {
+
     public float minDelay = 1f;
     public float maxDelay = 3f;
+    public float signalInterval = 1f;
 
     public Text signalText;
 
@@ -14,10 +16,12 @@ public class CountDownManager : MonoBehaviour
     public UnityEvent onGoSignal;
     public UnityEvent onFakeSignal;
 
+    private bool hasGoAppeared = false;
 
-    private void Start()
+    public void StartCountdown()
     {
         StartCoroutine(nameof(CountdownRoutine));
+        hasGoAppeared = false;
     }
 
     IEnumerator CountdownRoutine()
@@ -26,25 +30,37 @@ public class CountDownManager : MonoBehaviour
         yield return ShowNumber("2");
         yield return ShowNumber("1");
         signalText.text = "èÄîı...";
-        onReadyStart.Invoke();
-        
+        onReadyStart?.Invoke();
+
         yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
 
-        int rand = Random.Range(0, 2);//0:fake,1:Go!
-        if(rand == 0)
-        {
-            string[] fakeSignals = { "WAIT!", "DOG!", "START!", "READY!", "HOLD!" };
-            string fake = fakeSignals[Random.Range(0, fakeSignals.Length)];
-            signalText.text = fake;
-            onFakeSignal.Invoke();
-        }
-        else
-        {
-            signalText.text = "GO!";
-            onGoSignal.Invoke();
-        }
+        StartCoroutine(nameof(SignalLoop));
+
     }
 
+    IEnumerator SignalLoop()
+    {
+        while (!hasGoAppeared)
+        {
+            yield return new WaitForSeconds(signalInterval);
+            int rand = Random.Range(0, 3);//0:fake,1:Go!
+            if (rand == 0)
+            {
+                signalText.text = "GO!";
+                onGoSignal?.Invoke();
+                hasGoAppeared = true;
+
+            }
+            else
+            {
+                string[] fakeSignals = { "WAIT!", "DOG!", "START!", "READY!", "HOLD!" };
+                string fake = fakeSignals[Random.Range(0, fakeSignals.Length)];
+                signalText.text = fake;
+                onFakeSignal?.Invoke();
+            }
+
+        }
+    }
 
     IEnumerator ShowNumber(string number)
     {
