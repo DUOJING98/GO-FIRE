@@ -8,14 +8,14 @@ public class CountDownManager : MonoBehaviour
     public static bool canAct=false;
 
 
-    private void Start()
-    {
-        canAct = false;
-        StartCoroutine(nameof(CountdownRoutine);
-    }
+    //private void Start()
+    //{
+    //    canAct = false;
+    //    StartCoroutine(nameof(CountdownRoutine);
+    //}
 
-    private System.Collections.IEnumerator CountdownRoutine()
-    {
+    //private System.Collections.IEnumerator CountdownRoutine()
+    //{
 
-    }
+    //}
 }
