@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0bc11d8ebc028ac49a332e5bd71efcc7
+guid: 9c0cf69ac04f4f64b93835c3293b0cfa
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5308448175360178355
-    second: cowboy_0
+      213: 1322821052197086858
+    second: P1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cowboy_0
+      name: P1_0
       rect:
         serializedVersion: 2
-        x: 69
-        y: 15
+        x: 58
+        y: 43
         width: 535
-        height: 664
+        height: 657
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3b8f9e87d756ba940800000000000000
-      internalID: 5308448175360178355
+      spriteID: a86ad950dba9b5210800000000000000
+      internalID: 1322821052197086858
       vertices: []
       indices: 
       edges: []
@@ -134,8 +134,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      cowboy_0: 5308448175360178355
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
