@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      cowboy_stand_black_0: -3094375360393090321
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

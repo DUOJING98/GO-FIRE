@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      cowboy_jump_black_0: 1502180272991327084
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
