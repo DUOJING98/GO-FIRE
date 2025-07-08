@@ -1,14 +1,10 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Image/cowboy.png.meta
-guid: 0bc11d8ebc028ac49a332e5bd71efcc7
-========
-guid: f3eba9e2f9b229b4494ca4adb39fdcf4
->>>>>>>> origin/LIN:Assets/Image/cowboy_jump.png.meta
+guid: 358647be9cb92044199b8823b419eb8e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8795416430889428568
-    second: cowboy_jump_0
+      213: 1564820588122725543
+    second: cowboy_stand_S_black_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -104,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cowboy_jump_0
+      name: cowboy_stand_S_black_0
       rect:
         serializedVersion: 2
-        x: 123
-        y: 86
-        width: 676
-        height: 572
+        x: 139
+        y: 23
+        width: 686
+        height: 669
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8566ccec4a89f0a70800000000000000
-      internalID: 8795416430889428568
+      spriteID: 7acd54cb80c57b510800000000000000
+      internalID: 1564820588122725543
       vertices: []
       indices: 
       edges: []
@@ -139,11 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-<<<<<<<< HEAD:Assets/Image/cowboy.png.meta
-      cowboy_0: 5308448175360178355
-========
-      cowboy_jump_0: 8795416430889428568
->>>>>>>> origin/LIN:Assets/Image/cowboy_jump.png.meta
+      cowboy_stand_S_black_0: 1564820588122725543
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
