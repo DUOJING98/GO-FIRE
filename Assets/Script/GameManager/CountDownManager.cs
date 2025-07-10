@@ -5,71 +5,75 @@ using UnityEngine.UI;
 
 public class CountDownManager : MonoBehaviour
 {
+    float timeCnt, signalTimeCnt, timeInterval;
+    public GameObject signalTextObj, gameOverTextObj, player1, player2;
+    Text signalText;
+    bool startShowSignal, initTimeInterval;
+    [HideInInspector]
+    public bool canPress, gameOver;
+    string[] signals = new string[] { "DOG", "START", "WAIT", "HOLD" };
+    [HideInInspector]
+    public string signal;
 
-    public float minDelay = 1f;
-    public float maxDelay = 3f;
-    public float signalInterval = 1f;
-
-    public Text signalText;
-
-    public UnityEvent onReadyStart;
-    public UnityEvent onGoSignal;
-    public UnityEvent onFakeSignal;
-
-    private bool hasGoAppeared = false;
-
-    public void StartCountdown()
+    private void Start()
     {
-        StartCoroutine(nameof(CountdownRoutine));
-        hasGoAppeared = false;
+        signalText = signalTextObj.GetComponent<Text>();
+        signal = signals[Random.Range(0, 4)];
+        timeInterval = Random.Range(1f, 5.0f);
     }
-
-    IEnumerator CountdownRoutine()
+    private void Update()
     {
-        yield return ShowNumber("3");
-        yield return ShowNumber("2");
-        yield return ShowNumber("1");
-        signalText.text = "READY...";
-        onReadyStart?.Invoke();
-
-        yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
-
-        StartCoroutine(nameof(SignalLoop));
-
-    }
-
-    IEnumerator SignalLoop()
-    {
-        while (!hasGoAppeared)
+        if (gameOver)
         {
-            yield return new WaitForSeconds(signalInterval);
-            int rand = Random.Range(0, 3);//0:fake,1:Go!
-            if (rand == 0)
-            {
-                signalText.text = "GO!";
-                onGoSignal?.Invoke();
-                hasGoAppeared = true;
-
-            }
-            else
-            {
-                string[] fakeSignals = { "WAIT!", "DOG!", "START!", "HOLD!" };
-                string fake = fakeSignals[Random.Range(0, fakeSignals.Length)];
-                signalText.text = fake;
-                onFakeSignal?.Invoke();
-            }
-
+            signalText.text = "";
+            gameOverTextObj.SetActive(true);
+            gameOverTextObj.GetComponent<Text>().text = player1.GetComponent<Player>().hp <= 0 ? "PLAYER2WIN!" : "PLAYER1WIN";
+            Time.timeScale = 0;
+            return;
+        }
+        timeCnt += Time.deltaTime;
+        //dao ji shi
+        if (timeCnt >= 0 && timeCnt < 1)
+        {
+            signalText.text = "3";
+        }
+        else if (timeCnt < 2)
+        {
+            signalText.text = "2";
+        }
+        else if (timeCnt < 3)
+        {
+            signalText.text = "1";
+        }
+        else
+        {
+            showSignal();
         }
     }
-
-    IEnumerator ShowNumber(string number)
+    void showSignal()
     {
-        signalText.text = number;
-        yield return new WaitForSeconds(1f);
-    }
-
-    public void ClearText()
-    {
-        signalText.text = " ";
+        signalTimeCnt += Time.deltaTime;
+        if (signalTimeCnt > timeInterval + 1f)
+        {
+            initTimeInterval = false;
+        }
+        if (signalTimeCnt >= timeInterval && signalTimeCnt <= timeInterval + 1f)
+        {
+            signalText.text = signal;
+            canPress = true;
+        }
+        else
+        {
+            signalText.text = "";
+            canPress = false;
+            //xin hao xiao shi shun jian ,chong xin sui ji xin hao
+            if (!initTimeInterval)
+            {
+                signal = signals[Random.Range(0, 4)];
+                timeInterval = Random.Range(1f, 5.0f);
+                initTimeInterval = true;
+                signalTimeCnt = 0;
+            }
+        }
     }
 }

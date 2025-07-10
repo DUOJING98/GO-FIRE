@@ -2,76 +2,94 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static InputSystem_Actions;
 
-public class Push : MonoBehaviour
+public class Push : MonoBehaviour, InputSystem_Actions.IPlayer1Actions, InputSystem_Actions.IPlayer2Actions
 {
-
-    public string playerName = "P1";
-    public GameManager manager;
-
-    protected bool isTurn = false;
-
-    public Transform charaTransform;
-    private InputSystem_Actions action;
-
-    private bool canPress = false;
-    private bool isRealGo = false;
-    private bool hasPressed = false;
-    private bool hasTurn = false;
-    void Awake()
+    private InputSystem_Actions inputActions;
+    private CountDownManager cdm;
+    public GameObject player1, player2;
+    private void Awake()
     {
-        action = new InputSystem_Actions();
-
-        if (playerName == "P1")
-        {
-            action.Player1.Fire.performed += OnFire;
-        }
-        else if(playerName =="P2")
-        {
-            action.Player2.Fire.performed += OnFire;
-        }
+        cdm = GameObject.Find("CountDownManager").GetComponent<CountDownManager>();
+        inputActions = new InputSystem_Actions();
+        inputActions.Player1.SetCallbacks(this);
+        inputActions.Player2.SetCallbacks(this);
     }
-
-    public void BeginRound(bool isGO)
-    {
-        canPress = true;
-        isRealGo = isGO;
-        hasPressed = false;
-        hasTurn = false;
-    }
-
-    public void RestRound()
-    {
-        //turn back
-        if(charaTransform!=null)
-        {
-            charaTransform.rotation = Quaternion.identity;
-        }
-    }
-
     private void OnEnable()
     {
-        if (playerName == "P1") action.Player1.Enable();
-
-        else if(playerName =="P2") action.Player2.Enable();
+        inputActions.Player1.Enable();
+        inputActions.Player2.Enable();
     }
-
-    private void OnDisable()
+    void OnDisable()
     {
-        action.Player1.Disable();
-        action.Player2.Disable();
+        inputActions.Player1.Disable();
+        inputActions.Player2.Disable();
     }
-
-    void OnFire(InputAction.CallbackContext context)
+    void IPlayer1Actions.OnFire(InputAction.CallbackContext context)
     {
-        if (!canPress || hasPressed) return;
-        hasPressed = true;
-        Debug.Log("Fire");
-        if(!hasTurn&&charaTransform!=null)
+        if (context.performed)
         {
-            charaTransform.Rotate(0, 180, 0);
-            hasTurn = true;
-        }
-        manager.PlayerPressed(playerName, isRealGo);
-    }
+            float damage = player1.GetComponent<Player>().attackPower;
+            //que ren ji neng 
+            var control = context.control;
+            Debug.Log(control.name);
+            if (control.name == "digit1")
+            {
+                Debug.Log("attackpowerup");
+            }
+            if (control.name == "digit2")
+            {
 
+            }
+            if (control.name == "digit3")
+            {
+
+            }
+            if (cdm.signal == "START")
+            {
+                player2.GetComponent<Player>().hp -= damage;
+                cdm.canPress = false;
+            }
+            //shi bai ,zi ji kou xue
+            else
+            {
+                player1.GetComponent<Player>().hp -= damage;
+            }
+        }
+    }
+    void IPlayer2Actions.OnFire(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (cdm.canPress)
+            {
+                float damage = player2.GetComponent<Player>().attackPower;
+                //que ren ji neng 
+                var control = context.control;
+                if (control.name == "numpad1")
+                {
+                    damage *= 1.5f;
+                }
+                if (control.name == "numpad2")
+                {
+
+                }
+                if (control.name == "numpad3")
+                {
+
+                }
+               
+                //gong ji cheng gong
+                if (cdm.signal == "START")
+                {
+                    player1.GetComponent<Player>().hp -= damage;
+                    cdm.canPress = false;
+                }
+                //shi bai ,zi ji kou xue
+                else
+                {
+                    player2.GetComponent<Player>().hp -= damage;
+                }
+            }
+        }
+    }
 }
