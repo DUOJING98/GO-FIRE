@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class CountDownManager : MonoBehaviour
 {
-
     public float minDelay = 1f;
     public float maxDelay = 3f;
     public float signalInterval = 1f;
@@ -17,6 +16,8 @@ public class CountDownManager : MonoBehaviour
     public UnityEvent onFakeSignal;
 
     private bool hasGoAppeared = false;
+    public bool isRealSignal = false;
+    public bool canInput = true;
 
     public void StartCountdown()
     {
@@ -48,6 +49,7 @@ public class CountDownManager : MonoBehaviour
             {
                 signalText.text = "GO!";
                 onGoSignal?.Invoke();
+                isRealSignal = true;
                 hasGoAppeared = true;
 
             }
@@ -57,10 +59,14 @@ public class CountDownManager : MonoBehaviour
                 string fake = fakeSignals[Random.Range(0, fakeSignals.Length)];
                 signalText.text = fake;
                 onFakeSignal?.Invoke();
+                isRealSignal = false;
+
             }
 
         }
     }
+
+ 
 
     IEnumerator ShowNumber(string number)
     {

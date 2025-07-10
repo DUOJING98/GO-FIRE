@@ -1,32 +1,84 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static InputSystem_Actions;
 
 public class Push : MonoBehaviour
 {
-    [SerializeField]    InputSystem_Actions Turnaction;
+
+    public string playerName = " ";
+    public GameManager manager;
 
     protected bool isTurn = false;
 
+    public Transform charaTransform;
+    private InputSystem_Actions action;
 
-    protected virtual void OnEnable()
+    private bool canPress = false;
+    private bool isRealGo = false;
+    private bool hasPressed = false;
+    private bool hasTurn = false;
+    void Awake()
     {
-        Turnaction.Enable();
+        action = new InputSystem_Actions();
+
+        if (playerName == "P1")
+        {
+            action.Player1.Fire.performed += OnFire;
+        }
+        else if (playerName == "P2")
+        {
+            action.Player2.Fire.performed += OnFire;
+        }
     }
 
-    protected virtual void OnDisable( ) 
+    public void BeginRound(bool isGO)
     {
-        Turnaction.Disable();
+        canPress = true;
+        isRealGo = isGO;
+        hasPressed = false;
+        hasTurn = false;
     }
 
-    private void OnTurn()
+    public void RestRound()
     {
-        Flip();
+        //turn back
+        if (charaTransform != null)
+        {
+            charaTransform.rotation = Quaternion.identity;
+        }
     }
-    protected virtual void Flip()
+
+    private void OnEnable()
     {
-        isTurn = !isTurn;
-        Vector3 localScale = transform.localScale;
-        localScale.x *= -1;
-        transform.localScale = localScale;
+        if (playerName == "P1") action.Player1.Enable();
+
+        else if (playerName == "P2") action.Player2.Enable();
     }
+
+    private void OnDisable()
+    {
+        action.Player1.Disable();
+        action.Player2.Disable();
+    }
+
+    void OnFire(InputAction.CallbackContext context)
+    {
+        if (!canPress || hasPressed) return;
+        hasPressed = true;
+        Debug.Log("Fire");
+
+        
+
+        if (!hasTurn && charaTransform != null)
+        {
+            charaTransform.Rotate(0, 180, 0);
+            hasTurn = true;
+        }
+
+        //if (isRealGo)
+            manager.PlayerPressed(playerName, true);
+        //else
+        //    manager.PlayerPressed(playerName, false);
+    }
+
 }
