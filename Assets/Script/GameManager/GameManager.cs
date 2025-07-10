@@ -11,13 +11,21 @@ public class GameManager : MonoBehaviour
     [SerializeField]private int p1Hp =100,p2Hp =100;
     
     private bool roundEnded = false;
+    private bool currentIsRealSignal = false;
 
     private void Start()
     {
-        CDM.onGoSignal.AddListener(() => StartRound(true));
-        
+        CDM.onGoSignal.AddListener(() => {
+            currentIsRealSignal = true;
+            StartRound(true);
+        });
+
+        CDM.onFakeSignal.AddListener(() => {
+            currentIsRealSignal = false;
+            StartRound(true);
+        });
         StartNewRound();
-        
+
     }
 
     private void StartNewRound()
@@ -31,16 +39,16 @@ public class GameManager : MonoBehaviour
     void StartRound(bool isRealGo)
     {
         roundEnded = false;
-        p1.BeginRound(true);
-        p2.BeginRound(true);
+        p1.BeginRound(isRealGo);
+        p2.BeginRound(isRealGo);
     }
 
     public void PlayerPressed(string playerName,bool isCorrect)
     {
         Debug.Log($"PlayerPressed called with playerName={playerName}, isCorrect={isCorrect}");
         if (roundEnded) return;
-
-        if(CDM.RealSignal(true))
+        CDM.StopCoroutine("SignalLoop");
+        if (currentIsRealSignal)
         {
             if (playerName == "P1"&& isCorrect)
                 p2Hp -= 50;
