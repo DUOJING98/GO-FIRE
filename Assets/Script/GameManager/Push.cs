@@ -5,7 +5,7 @@ using static InputSystem_Actions;
 public class Push : MonoBehaviour
 {
 
-    public string playerName = "P1";
+    public string playerName = " ";
     public GameManager manager;
 
     protected bool isTurn = false;
@@ -25,7 +25,7 @@ public class Push : MonoBehaviour
         {
             action.Player1.Fire.performed += OnFire;
         }
-        else if(playerName =="P2")
+        else if (playerName == "P2")
         {
             action.Player2.Fire.performed += OnFire;
         }
@@ -42,7 +42,7 @@ public class Push : MonoBehaviour
     public void RestRound()
     {
         //turn back
-        if(charaTransform!=null)
+        if (charaTransform != null)
         {
             charaTransform.rotation = Quaternion.identity;
         }
@@ -52,7 +52,7 @@ public class Push : MonoBehaviour
     {
         if (playerName == "P1") action.Player1.Enable();
 
-        else if(playerName =="P2") action.Player2.Enable();
+        else if (playerName == "P2") action.Player2.Enable();
     }
 
     private void OnDisable()
@@ -66,12 +66,16 @@ public class Push : MonoBehaviour
         if (!canPress || hasPressed) return;
         hasPressed = true;
         Debug.Log("Fire");
-        if(!hasTurn&&charaTransform!=null)
+        if (!hasTurn && charaTransform != null)
         {
             charaTransform.Rotate(0, 180, 0);
             hasTurn = true;
         }
-        manager.PlayerPressed(playerName, isRealGo);
+
+        //if (isRealGo)
+            manager.PlayerPressed(playerName, true);
+        //else
+        //    manager.PlayerPressed(playerName, false);
     }
 
 }
