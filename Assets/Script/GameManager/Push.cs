@@ -66,7 +66,7 @@ public class Push : MonoBehaviour
         if (!canPress || hasPressed) return;
         hasPressed = true;
         Debug.Log("Fire");
-
+        
         
 
         if (!hasTurn && charaTransform != null)

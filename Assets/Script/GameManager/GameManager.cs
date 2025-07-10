@@ -8,21 +8,25 @@ public class GameManager : MonoBehaviour
     public Push p1;
     public Push p2;
 
-    [SerializeField]private int p1Hp =100,p2Hp =100;
-    
+    [SerializeField] private int p1Hp = 100, p2Hp = 100;
+
     private bool roundEnded = false;
     private bool currentIsRealSignal = false;
 
+    private string firstPlayerPressed = null;//早い方記録
+
     private void Start()
     {
-        CDM.onGoSignal.AddListener(() => {
+        CDM.onGoSignal.AddListener(() =>
+        {
             currentIsRealSignal = true;
             StartRound(true);
         });
 
-        CDM.onFakeSignal.AddListener(() => {
+        CDM.onFakeSignal.AddListener(() =>
+        {
             currentIsRealSignal = false;
-            StartRound(true);
+            StartRound(false);
         });
         StartNewRound();
 
@@ -30,8 +34,10 @@ public class GameManager : MonoBehaviour
 
     private void StartNewRound()
     {
+        firstPlayerPressed = null;
         p1.RestRound();
         p2.RestRound();
+        CDM.canInput = true;
         CDM.StartCountdown();
         roundEnded = false;
     }
@@ -43,28 +49,35 @@ public class GameManager : MonoBehaviour
         p2.BeginRound(isRealGo);
     }
 
-    public void PlayerPressed(string playerName,bool isCorrect)
+    public void PlayerPressed(string playerName, bool isCorrect)
     {
         Debug.Log($"PlayerPressed called with playerName={playerName}, isCorrect={isCorrect}");
         if (roundEnded) return;
+        if (!CDM.canInput) return;
         CDM.StopCoroutine("SignalLoop");
-        if (currentIsRealSignal)
+        if (firstPlayerPressed == null)
         {
-            if (playerName == "P1"&& isCorrect)
-                p2Hp -= 50;
-            else if(playerName =="P2"&& isCorrect)
-                p1Hp -= 50;
+            firstPlayerPressed = playerName;
+            CDM.canInput= false;
+            if (currentIsRealSignal && isCorrect)
+            {
+                if (playerName == "P1") p2Hp -= 50;
+                else if (playerName == "P2") p1Hp -= 50;
+            }
+            else if (!currentIsRealSignal && isCorrect)
+            {
+                if (playerName == "P1") p1Hp -= 50;
+                else if (playerName == "P2") p2Hp -= 50;
+            }
         }
         else
         {
-            if(playerName == "P1" && isCorrect)
-                p1Hp -= 50;
-            else if (playerName == "P2" && isCorrect)
-                p2Hp -= 50;
+            
+            Debug.Log($"{playerName}ボタン無効、{firstPlayerPressed} 先押した");
+            return;
         }
 
-
-        if (p1Hp<=0||p2Hp<=0)
+        if (p1Hp <= 0 || p2Hp <= 0)
         {
             EndGame();
         }
@@ -74,6 +87,7 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log($"P1 HP: {p1Hp}, P2 HP: {p2Hp}");
         roundEnded = true;
+    
     }
 
     private void EndGame()
@@ -81,7 +95,7 @@ public class GameManager : MonoBehaviour
         string winner;
         if (p1Hp <= 0 && p2Hp <= 0)
         {
-            winner = "平手";  // 両者のHPが同時にゼロになったときは引き分け
+            winner = "引分";  // 両者のHPが同時にゼロになったときは引き分け
         }
         else if (p1Hp <= 0)
         {
