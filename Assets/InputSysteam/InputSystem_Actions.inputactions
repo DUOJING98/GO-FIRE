@@ -13,22 +13,13 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "push2",
-                    "type": "Button",
-                    "id": "2d5227f8-d856-4680-90c3-146fcff89d72",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "82ffef04-0a21-4224-82f5-848101064e05",
-                    "path": "<Keyboard>/enter",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -56,22 +47,11 @@
                 {
                     "name": "",
                     "id": "f0d01425-5607-431f-b80b-2795a4323771",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Fire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7234f6ff-fcfb-494e-8630-55e1d490c9eb",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "push2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
