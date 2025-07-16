@@ -12,8 +12,9 @@ public class GameManager : MonoBehaviour
 
     private bool roundEnded = false;
     private bool currentIsRealSignal = false;
-
-    private string firstPlayerPressed = null;//早い方記録
+    private Coroutine signalLoopCoroutine;
+    private string firstPlayerPressed = null; // 最初にボタンを押したプレイヤー
+    public string FirstPlayerPressed => firstPlayerPressed;
 
     private void Start()
     {
@@ -35,8 +36,8 @@ public class GameManager : MonoBehaviour
     private void StartNewRound()
     {
         firstPlayerPressed = null;
-        p1.RestRound();
-        p2.RestRound();
+        p1.ResetRound();
+        p2.ResetRound();
         CDM.canInput = true;
         CDM.StartCountdown();
         roundEnded = false;
@@ -51,31 +52,30 @@ public class GameManager : MonoBehaviour
 
     public void PlayerPressed(string playerName, bool isCorrect)
     {
-        Debug.Log($"PlayerPressed called with playerName={playerName}, isCorrect={isCorrect}");
-        if (roundEnded) return;
-        if (!CDM.canInput) return;
-        CDM.StopCoroutine("SignalLoop");
-        if (firstPlayerPressed == null)
+        if (roundEnded || 
+            !CDM.canInput || 
+            firstPlayerPressed != null) return; // ラウンド終了、入力不可、または既に入力済みの場合は無視
+        firstPlayerPressed = playerName;
+        CDM.canInput = false;
+        CDM.StopLoop();
+
+        // ダメージ処理
+        bool isP1 = playerName == "P1";
+        bool damageOpponent = currentIsRealSignal && isCorrect;
+        bool damageSelf = !currentIsRealSignal && isCorrect;
+
+        if (damageOpponent)
         {
-            firstPlayerPressed = playerName;
-            CDM.canInput= false;
-            if (currentIsRealSignal && isCorrect)
-            {
-                if (playerName == "P1") p2Hp -= 50;
-                else if (playerName == "P2") p1Hp -= 50;
-            }
-            else if (!currentIsRealSignal && isCorrect)
-            {
-                if (playerName == "P1") p1Hp -= 50;
-                else if (playerName == "P2") p2Hp -= 50;
-            }
+            if (isP1) p2Hp -= 50;
+            else p1Hp -= 50;
         }
-        else
+        else if (damageSelf)
         {
-            
-            Debug.Log($"{playerName}ボタン無効、{firstPlayerPressed} 先押した");
-            return;
+            if (isP1) p1Hp -= 50;
+            else p2Hp -= 50;
         }
+
+        roundEnded = true;
 
         if (p1Hp <= 0 || p2Hp <= 0)
         {
@@ -85,9 +85,10 @@ public class GameManager : MonoBehaviour
         {
             Invoke(nameof(StartNewRound), 1f);
         }
+
         Debug.Log($"P1 HP: {p1Hp}, P2 HP: {p2Hp}");
-        roundEnded = true;
-    
+
+
     }
 
     private void EndGame()

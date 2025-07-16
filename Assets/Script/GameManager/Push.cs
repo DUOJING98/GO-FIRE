@@ -7,18 +7,23 @@ public class Push : MonoBehaviour
 
     public string playerName = " ";
     public GameManager manager;
+    private SpriteRenderer spriteRenderer;
+    [Header("姿勢")]
+    [SerializeField] Sprite standSprite;// 通常立ち
+    [SerializeField] Sprite fireStandSprite;// 立ち撃ち
+    [SerializeField] Sprite fireCrouchSprite;// しゃがみ撃ち
+    [SerializeField] Sprite fireJumpSprite;// ジャンプ撃ち
 
-    protected bool isTurn = false;
+    
 
-    public Transform charaTransform;
     private InputSystem_Actions action;
-
+    [Header("状態")]
     private bool canPress = false;
     private bool isRealGo = false;
     private bool hasPressed = false;
-    private bool hasTurn = false;
     void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         action = new InputSystem_Actions();
 
         if (playerName == "P1")
@@ -36,16 +41,14 @@ public class Push : MonoBehaviour
         canPress = true;
         isRealGo = isGO;
         hasPressed = false;
-        hasTurn = false;
+       
     }
 
-    public void RestRound()
+    public void ResetRound()
     {
-        //turn back
-        if (charaTransform != null)
-        {
-            charaTransform.rotation = Quaternion.identity;
-        }
+        // 回合終了後に立ち姿に戻す
+        if (spriteRenderer != null && standSprite != null)
+            spriteRenderer.sprite = standSprite;
     }
 
     private void OnEnable()
@@ -64,19 +67,18 @@ public class Push : MonoBehaviour
     void OnFire(InputAction.CallbackContext context)
     {
         if (!canPress || hasPressed) return;
+        // 他のプレイヤーが既にボタンを押していたら無効
+        if (!string.IsNullOrEmpty(manager.FirstPlayerPressed)) return;
         hasPressed = true;
         Debug.Log("Fire");
-        
-        
 
-        if (!hasTurn && charaTransform != null)
-        {
-            charaTransform.Rotate(0, 180, 0);
-            hasTurn = true;
-        }
+
+        // 姿勢を撃つ姿に変更
+        if (spriteRenderer != null && fireStandSprite != null)
+            spriteRenderer.sprite = fireStandSprite;
 
         //if (isRealGo)
-            manager.PlayerPressed(playerName, true);
+        manager.PlayerPressed(playerName, true);
         //else
         //    manager.PlayerPressed(playerName, false);
     }
