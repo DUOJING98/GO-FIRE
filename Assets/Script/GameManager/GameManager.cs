@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,12 +18,16 @@ public class GameManager : MonoBehaviour
     private string firstPlayerPressed = null; // 最初にボタンを押したプレイヤー
     public string FirstPlayerPressed => firstPlayerPressed;
 
+    private Coroutine timeoutCoroutine;     //タイムアウトの検査
+
     private void Start()
     {
         CDM.onGoSignal.AddListener(() =>
         {
             currentIsRealSignal = true;
             StartRound(true);
+
+            timeoutCoroutine = StartCoroutine(WaitForTimeout());
         });
 
         CDM.onFakeSignal.AddListener(() =>
@@ -35,16 +41,19 @@ public class GameManager : MonoBehaviour
 
     private void StartNewRound()
     {
+        CDM.UIText.text=" ";
         firstPlayerPressed = null;
         p1.ResetRound();
         p2.ResetRound();
-        CDM.canInput = true;
+        CDM.canInput = false;
         CDM.StartCountdown();
         roundEnded = false;
+        //StartRound(false );
     }
 
     void StartRound(bool isRealGo)
     {
+        CDM.canInput = true;
         roundEnded = false;
         p1.BeginRound(isRealGo);
         p2.BeginRound(isRealGo);
@@ -52,12 +61,18 @@ public class GameManager : MonoBehaviour
 
     public void PlayerPressed(string playerName, bool isCorrect)
     {
-        if (roundEnded || 
-            !CDM.canInput || 
+        if (roundEnded ||
+            !CDM.canInput ||
             firstPlayerPressed != null) return; // ラウンド終了、入力不可、または既に入力済みの場合は無視
         firstPlayerPressed = playerName;
         CDM.canInput = false;
         CDM.StopLoop();
+
+        if (timeoutCoroutine != null)
+        {
+            StopCoroutine(timeoutCoroutine);
+            timeoutCoroutine = null;
+        }
 
         // ダメージ処理
         bool isP1 = playerName == "P1";
@@ -83,22 +98,39 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Invoke(nameof(StartNewRound), 1f);
+            Invoke(nameof(StartNewRound), 2f);
         }
 
         Debug.Log($"P1 HP: {p1Hp}, P2 HP: {p2Hp}");
 
 
     }
+    //何秒経過後、ボタン押されていない場合、引分
+    private IEnumerator WaitForTimeout()
+    {
+        yield return new WaitForSeconds(1f);
+        if (!roundEnded && string.IsNullOrEmpty(firstPlayerPressed))
+        {
+            CDM.canInput = false;
+            CDM.StopLoop();
+            CDM.signalText.text = "";
+        yield return new WaitForSeconds(0.5f);
+            CDM.UIText.text = "DRAW";
+            Invoke(nameof(StartNewRound), 2f);
+            roundEnded = true;
+        }
+    }
+
+
 
     private void EndGame()
     {
         string winner;
-        if (p1Hp <= 0 && p2Hp <= 0)
-        {
-            winner = "引分";  // 両者のHPが同時にゼロになったときは引き分け
-        }
-        else if (p1Hp <= 0)
+        //if (p1Hp <= 0 && p2Hp <= 0)
+        //{
+        //    winner = "引分";  // 両者のHPが同時にゼロになったときは引き分け
+        //}
+        if (p1Hp <= 0)
         {
             winner = "P2";
         }
@@ -106,6 +138,6 @@ public class GameManager : MonoBehaviour
         {
             winner = "P1";
         }
-        CDM.signalText.text = $"{winner} WIN!";
+        CDM.UIText.text = $"{winner} WIN!";
     }
 }

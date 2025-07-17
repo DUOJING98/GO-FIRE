@@ -8,7 +8,7 @@ public class Push : MonoBehaviour
     public string playerName = " ";
     public GameManager manager;
     private SpriteRenderer spriteRenderer;
-    [Header("姿勢")]
+    [Header("姿丒")]
     [SerializeField] Sprite standSprite;// 通常立ち
     [SerializeField] Sprite fireStandSprite;// 立ち撃ち
     [SerializeField] Sprite fireCrouchSprite;// しゃがみ撃ち
@@ -66,14 +66,15 @@ public class Push : MonoBehaviour
 
     void OnFire(InputAction.CallbackContext context)
     {
+        if (!manager.CDM.canInput) return;
         if (!canPress || hasPressed) return;
-        // 他のプレイヤーが既にボタンを押していたら無効
+        // 他のプEぅ洎`が既にボタンを押していたら無丒
         if (!string.IsNullOrEmpty(manager.FirstPlayerPressed)) return;
         hasPressed = true;
         Debug.Log("Fire");
 
 
-        // 姿勢を撃つ姿に変更
+        // 姿丒を撃つ姿に変竵E
         if (spriteRenderer != null && fireStandSprite != null)
             spriteRenderer.sprite = fireStandSprite;
 
