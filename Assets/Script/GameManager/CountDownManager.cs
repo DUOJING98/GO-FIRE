@@ -19,6 +19,9 @@ public class CountDownManager : MonoBehaviour
     public bool isRealSignal = false;
     public bool canInput = true;
 
+
+
+
     public void StartCountdown()
     {
         StartCoroutine(nameof(CountdownRoutine));
@@ -39,7 +42,7 @@ public class CountDownManager : MonoBehaviour
 
     }
 
-    IEnumerator SignalLoop()
+    public IEnumerator SignalLoop()
     {
         while (!hasGoAppeared)
         {
@@ -66,7 +69,10 @@ public class CountDownManager : MonoBehaviour
         }
     }
 
- 
+    public void StopLoop()
+    {
+        StopCoroutine(nameof(SignalLoop));
+    }
 
     IEnumerator ShowNumber(string number)
     {
