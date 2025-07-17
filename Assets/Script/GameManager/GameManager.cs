@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -9,15 +9,23 @@ public class GameManager : MonoBehaviour
     public Push p2;
 
     [SerializeField]private int p1Hp =100,p2Hp =100;
-    [SerializeField]private int p1Wins=0,p2Wins=0;
+    
     private bool roundEnded = false;
+    private bool currentIsRealSignal = false;
 
     private void Start()
     {
-        CDM.onGoSignal.AddListener(() => StartRound(true));
-        CDM.onGoSignal.AddListener(()=>StartRound(false));
+        CDM.onGoSignal.AddListener(() => {
+            currentIsRealSignal = true;
+            StartRound(true);
+        });
+
+        CDM.onFakeSignal.AddListener(() => {
+            currentIsRealSignal = false;
+            StartRound(true);
+        });
         StartNewRound();
-        
+
     }
 
     private void StartNewRound()
@@ -37,19 +45,26 @@ public class GameManager : MonoBehaviour
 
     public void PlayerPressed(string playerName,bool isCorrect)
     {
-        if(roundEnded) return;
-        roundEnded = true;
-
-        if (playerName == "P1"&&isCorrect)
+        Debug.Log($"PlayerPressed called with playerName={playerName}, isCorrect={isCorrect}");
+        if (roundEnded) return;
+        CDM.StopCoroutine("SignalLoop");
+        if (currentIsRealSignal)
         {
-            p2Hp -= 50;
+            if (playerName == "P1"&& isCorrect)
+                p2Hp -= 50;
+            else if(playerName =="P2"&& isCorrect)
+                p1Hp -= 50;
         }
-        else if(playerName =="P2"&&isCorrect)
+        else
         {
-            p1Hp -= 50;
+            if(playerName == "P1" && isCorrect)
+                p1Hp -= 50;
+            else if (playerName == "P2" && isCorrect)
+                p2Hp -= 50;
         }
 
-        if(p1Wins==2||p2Wins==2)
+
+        if (p1Hp<=0||p2Hp<=0)
         {
             EndGame();
         }
@@ -57,11 +72,25 @@ public class GameManager : MonoBehaviour
         {
             Invoke(nameof(StartNewRound), 1f);
         }
+        Debug.Log($"P1 HP: {p1Hp}, P2 HP: {p2Hp}");
+        roundEnded = true;
     }
 
     private void EndGame()
     {
-        string winner = p1Wins == 2 ? "P1" : "P2";
-        CDM.signalText.text = $"{winner} �����I";
+        string winner;
+        if (p1Hp <= 0 && p2Hp <= 0)
+        {
+            winner = "平手";  // 両者のHPが同時にゼロになったときは引き分け
+        }
+        else if (p1Hp <= 0)
+        {
+            winner = "P2";
+        }
+        else
+        {
+            winner = "P1";
+        }
+        CDM.signalText.text = $"{winner} WIN!";
     }
 }
