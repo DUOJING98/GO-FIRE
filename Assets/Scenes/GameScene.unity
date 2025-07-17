@@ -1131,7 +1131,7 @@ MonoBehaviour:
   standSprite: {fileID: -8956492304416441916, guid: 42771a7ed14b08b42bc3a0c92df54802, type: 3}
   fireStandSprite: {fileID: -4013901361570327894, guid: 9c2c021447d0bf94b83dced46d9df17a, type: 3}
   fireCrouchSprite: {fileID: -7893365281429987114, guid: 36aae029e7d4d6a41b238a7d254820b6, type: 3}
-  fireJumpSprite: {fileID: 0}
+  fireJumpSprite: {fileID: 4393232579670885312, guid: 8939061a0ea80ca43b7a94f5cfc6069d, type: 3}
 --- !u!1 &2130635837
 GameObject:
   m_ObjectHideFlags: 0
