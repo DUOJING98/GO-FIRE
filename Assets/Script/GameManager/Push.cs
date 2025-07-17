@@ -8,16 +8,16 @@ public class Push : MonoBehaviour
     public string playerName = " ";
     public GameManager manager;
     private SpriteRenderer spriteRenderer;
-    [Header("姿勢")]
-    [SerializeField] Sprite standSprite;// 通常立ち
-    [SerializeField] Sprite fireStandSprite;// 立ち撃ち
-    [SerializeField] Sprite fireCrouchSprite;// しゃがみ撃ち
-    [SerializeField] Sprite fireJumpSprite;// ジャンプ撃ち
+    [Header("巔惃")]
+    [SerializeField] Sprite standSprite;// 棫偮
+    [SerializeField] Sprite fireStandSprite;// 偨偪寕偮
+    [SerializeField] Sprite fireCrouchSprite;// 偟傖偑傓寕偮
+    [SerializeField] Sprite fireJumpSprite;// 僕儍儞僾寕偮
 
     
 
     private InputSystem_Actions action;
-    [Header("状態")]
+    [Header("忬懺")]
     private bool canPress = false;
     private bool isRealGo = false;
     private bool hasPressed = false;
@@ -46,7 +46,7 @@ public class Push : MonoBehaviour
 
     public void ResetRound()
     {
-        // 回合終了後に立ち姿に戻す
+        //idle忬懺
         if (spriteRenderer != null && standSprite != null)
             spriteRenderer.sprite = standSprite;
     }
@@ -66,14 +66,15 @@ public class Push : MonoBehaviour
 
     void OnFire(InputAction.CallbackContext context)
     {
+        if (!manager.CDM.canInput) return;
         if (!canPress || hasPressed) return;
-        // 他のプレイヤーが既にボタンを押していたら無効
+        // 憗偄曽庢摼
         if (!string.IsNullOrEmpty(manager.FirstPlayerPressed)) return;
         hasPressed = true;
         Debug.Log("Fire");
 
 
-        // 姿勢を撃つ姿に変更
+        // 寕偮忬懺
         if (spriteRenderer != null && fireStandSprite != null)
             spriteRenderer.sprite = fireStandSprite;
 
