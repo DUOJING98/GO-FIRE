@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: c16dda57679e68c46bd70831df26adfd
+guid: 4eb74a7df09ac2d43bca46c7c7efe62a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1502180272991327084
-    second: cowboy_jump_black_0
+      213: -5040506972060975870
+    second: "dusty\u5C40\u90E82_0"
+  - first:
+      213: 1983625657271133539
+    second: "dusty\u5C40\u90E82_1"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,43 +99,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cowboy_jump_black_0
+      name: "dusty\u5C40\u90E82_0"
       rect:
         serializedVersion: 2
-        x: 123
-        y: 86
-        width: 676
-        height: 572
+        x: 7
+        y: 70
+        width: 37
+        height: 118
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +118,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c635f38dff0d8d410800000000000000
-      internalID: 1502180272991327084
+      spriteID: 20dfc6a5d958c0ab0800000000000000
+      internalID: -5040506972060975870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "dusty\u5C40\u90E82_1"
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 65
+        width: 36
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3652ffc8601478b10800000000000000
+      internalID: 1983625657271133539
       vertices: []
       indices: 
       edges: []
@@ -161,7 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      cowboy_jump_black_0: 1502180272991327084
+      "dusty\u5C40\u90E82_0": -5040506972060975870
+      "dusty\u5C40\u90E82_1": 1983625657271133539
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

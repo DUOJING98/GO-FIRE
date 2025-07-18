@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TitleSceneManager : MonoBehaviour
 {
     [SerializeField] private Button StartButton;         //開始
-    [SerializeField] private Button ManualButton;　//オープション＆説明
+    [SerializeField] private Button ManualButton;//オープション＆説明
     [SerializeField] private Button QuitButton;          //退出
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

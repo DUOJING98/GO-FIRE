@@ -7,18 +7,23 @@ public class Push : MonoBehaviour
 
     public string playerName = " ";
     public GameManager manager;
+    private SpriteRenderer spriteRenderer;
+    [Header("p¨")]
+    [SerializeField] Sprite standSprite;// —§‚Â
+    [SerializeField] Sprite fireStandSprite;// ‚½‚¿Œ‚‚Â
+    [SerializeField] Sprite fireCrouchSprite;// ‚µ‚á‚ª‚ŞŒ‚‚Â
+    [SerializeField] Sprite fireJumpSprite;// ƒWƒƒƒ“ƒvŒ‚‚Â
 
-    protected bool isTurn = false;
+    
 
-    public Transform charaTransform;
     private InputSystem_Actions action;
-
+    [Header("ó‘Ô")]
     private bool canPress = false;
     private bool isRealGo = false;
     private bool hasPressed = false;
-    private bool hasTurn = false;
     void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         action = new InputSystem_Actions();
 
         if (playerName == "P1")
@@ -36,16 +41,14 @@ public class Push : MonoBehaviour
         canPress = true;
         isRealGo = isGO;
         hasPressed = false;
-        hasTurn = false;
+       
     }
 
-    public void RestRound()
+    public void ResetRound()
     {
-        //turn back
-        if (charaTransform != null)
-        {
-            charaTransform.rotation = Quaternion.identity;
-        }
+        //idleó‘Ô
+        if (spriteRenderer != null && standSprite != null)
+            spriteRenderer.sprite = standSprite;
     }
 
     private void OnEnable()
@@ -63,20 +66,20 @@ public class Push : MonoBehaviour
 
     void OnFire(InputAction.CallbackContext context)
     {
+        if (!manager.CDM.canInput) return;
         if (!canPress || hasPressed) return;
+        // ‘‚¢•ûæ“¾
+        if (!string.IsNullOrEmpty(manager.FirstPlayerPressed)) return;
         hasPressed = true;
         Debug.Log("Fire");
 
-        
 
-        if (!hasTurn && charaTransform != null)
-        {
-            charaTransform.Rotate(0, 180, 0);
-            hasTurn = true;
-        }
+        // Œ‚‚Âó‘Ô
+        if (spriteRenderer != null && fireStandSprite != null)
+            spriteRenderer.sprite = fireStandSprite;
 
         //if (isRealGo)
-            manager.PlayerPressed(playerName, true);
+        manager.PlayerPressed(playerName, true);
         //else
         //    manager.PlayerPressed(playerName, false);
     }
