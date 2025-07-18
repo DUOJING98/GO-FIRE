@@ -155,7 +155,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 63.299988, y: 14.758301}
+  m_AnchoredPosition: {x: 63.30005, y: 14.758301}
   m_SizeDelta: {x: 100, y: 70.4835}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &64365489
@@ -446,7 +446,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 9
+  m_SortingOrder: 7
   m_Sprite: {fileID: 21300000, guid: 9ed1a552cdba94743a90cc859c74f159, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -792,7 +792,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 9
+  m_SortingOrder: 7
   m_Sprite: {fileID: -5040506972060975870, guid: 4eb74a7df09ac2d43bca46c7c7efe62a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -952,8 +952,8 @@ Transform:
   m_GameObject: {fileID: 818526032}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.97, y: -0.8, z: 2.8297474}
-  m_LocalScale: {x: 0.052864984, y: 0.042289328, z: 0.10382477}
+  m_LocalPosition: {x: 1.9094, y: -0.8303, z: 2.8297474}
+  m_LocalScale: {x: 0.04499339, y: 0.046103824, z: 0.10382477}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 375786044}
@@ -1205,8 +1205,8 @@ Transform:
   m_GameObject: {fileID: 1036671255}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.91, y: -1.1, z: 2.8297474}
-  m_LocalScale: {x: 0.0941433, y: 0.072803825, z: 1}
+  m_LocalPosition: {x: -5.9857, y: -1.1303, z: 2.8297474}
+  m_LocalScale: {x: 0.08430532, y: 0.076618746, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 375786044}
@@ -1254,7 +1254,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 8
   m_Sprite: {fileID: 420112834779779217, guid: 99f036bfd6a08504b8b894a27253802a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
