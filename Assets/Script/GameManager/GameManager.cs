@@ -7,8 +7,11 @@ public class GameManager : MonoBehaviour
 {
     public CountDownManager CDM;
 
-    public Push p1;
-    public Push p2;
+    [SerializeField] Push p1;
+    [SerializeField] Push p2;
+    [SerializeField] HealthBar p1HPBar;
+    [SerializeField] HealthBar p2HPBar;
+
 
     [SerializeField] private int p1Hp = 100, p2Hp = 100;
 
@@ -49,6 +52,7 @@ public class GameManager : MonoBehaviour
         CDM.StartCountdown();
         roundEnded = false;
         //StartRound(false );
+        
     }
 
     void StartRound(bool isRealGo)
@@ -83,11 +87,15 @@ public class GameManager : MonoBehaviour
         {
             if (isP1) p2Hp -= 50;
             else p1Hp -= 50;
+            p1HPBar.setHP(p1Hp);
+            p2HPBar.setHP(p2Hp);
         }
         else if (damageSelf)
         {
             if (isP1) p1Hp -= 50;
             else p2Hp -= 50;
+            p1HPBar.setHP(p1Hp);
+            p2HPBar.setHP(p2Hp);
         }
 
         roundEnded = true;

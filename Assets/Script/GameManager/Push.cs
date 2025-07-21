@@ -8,16 +8,16 @@ public class Push : MonoBehaviour
     public string playerName = " ";
     public GameManager manager;
     private SpriteRenderer spriteRenderer;
-    [Header("ﾗﾋ・")]
-    [SerializeField] Sprite standSprite;// ﾍｨｳ｣ﾁ｢､ﾁ
-    [SerializeField] Sprite fireStandSprite;// ﾁ｢､ﾁ篤､ﾁ
-    [SerializeField] Sprite fireCrouchSprite;// ､ｷ､网ｬ､ﾟ篤､ﾁ
-    [SerializeField] Sprite fireJumpSprite;// ･ｸ･罕ﾗ篤､ﾁ
+    [Header("姿勢")]
+    [SerializeField] Sprite standSprite;// 立つ
+    [SerializeField] Sprite fireStandSprite;// たち撃つ
+    [SerializeField] Sprite fireCrouchSprite;// しゃがむ撃つ
+    [SerializeField] Sprite fireJumpSprite;// ジャンプ撃つ
 
     
 
     private InputSystem_Actions action;
-    [Header("ﾗｴ腺")]
+    [Header("状態")]
     private bool canPress = false;
     private bool isRealGo = false;
     private bool hasPressed = false;
@@ -46,7 +46,7 @@ public class Push : MonoBehaviour
 
     public void ResetRound()
     {
-        // ｻﾘｺﾏｽKﾁﾋ矣､ﾋﾁ｢､ﾁﾗﾋ､ﾋ諾､ｹ
+        //idle状態
         if (spriteRenderer != null && standSprite != null)
             spriteRenderer.sprite = standSprite;
     }
@@ -68,13 +68,13 @@ public class Push : MonoBehaviour
     {
         if (!manager.CDM.canInput) return;
         if (!canPress || hasPressed) return;
-        // ﾋ訷ﾎ･ﾗ･・､･茫`､ｬｼﾈ､ﾋ･ﾜ･ｿ･ｺ､ｷ､ﾆ､､､ｿ､髻o・
+        // 早い方取得
         if (!string.IsNullOrEmpty(manager.FirstPlayerPressed)) return;
         hasPressed = true;
         Debug.Log("Fire");
 
 
-        // ﾗﾋ・､ﾄ､ﾄﾗﾋ､ﾋ我ｸ・
+        // 撃つ状態
         if (spriteRenderer != null && fireStandSprite != null)
             spriteRenderer.sprite = fireStandSprite;
 
