@@ -8,16 +8,16 @@ public class Push : MonoBehaviour
     public string playerName = " ";
     public GameManager manager;
     private SpriteRenderer spriteRenderer;
-    [Header("")]
+    [Header("pose")]
     [SerializeField] Sprite standSprite;// 
     [SerializeField] Sprite fireStandSprite;// 
-    [SerializeField] Sprite fireCrouchSprite;// 
-    [SerializeField] Sprite fireJumpSprite;// 
+    //[SerializeField] Sprite fireCrouchSprite;// 
+    //[SerializeField] Sprite fireJumpSprite;// 
 
     
 
     private InputSystem_Actions action;
-    [Header("")]
+    [Header("item")]
     private bool canPress = false;
     private bool isRealGo = false;
     private bool hasPressed = false;
@@ -75,7 +75,7 @@ public class Push : MonoBehaviour
         // 
         if (!string.IsNullOrEmpty(manager.FirstPlayerPressed)) return;
         hasPressed = true;
-        Debug.Log("Fire");
+        //Debug.Log("Fire");
 
 
         // 
@@ -84,8 +84,6 @@ public class Push : MonoBehaviour
 
         //if (isRealGo)
         manager.PlayerPressed(playerName, true);
-        //else
-        //    manager.PlayerPressed(playerName, false);
     }
 
 }

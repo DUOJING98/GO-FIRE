@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
         currentIsRealSignal = false; // 初始化为false，避免意外  
         CDM.StartCountdown();
         roundEnded = false;
-        //StartRound(false );
+        
         
     }
 
@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
         CDM.StopLoop();
 
 
-        CDM.StopTimer(); // ✅ 按下时停止计时器
+        CDM.StopTimer(); //  按下时停止计时器
         if (timeoutCoroutine != null)
         {
             StopCoroutine(timeoutCoroutine);
@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour
             //  Perfect 命中
             if (isP1) p2Hp -= 100;
             else p1Hp -= 100;
-            CDM.UIText.text = $"{playerName} PERFECT!!";
+            CDM.UIText.text = "PERFECT!!";
         }
 
         else if (damageOpponent)
@@ -141,7 +141,7 @@ public class GameManager : MonoBehaviour
             Invoke(nameof(StartNewRound), 2f);
         }
 
-        Debug.Log($"P1 HP: {p1Hp}, P2 HP: {p2Hp}");
+        //Debug.Log($"P1 HP: {p1Hp}, P2 HP: {p2Hp}");
 
 
     }
@@ -166,6 +166,7 @@ public class GameManager : MonoBehaviour
 
     private void EndGame()
     {
+        CDM.signalText.text = null;
         string winner;
       
         if (p1Hp <= 0)

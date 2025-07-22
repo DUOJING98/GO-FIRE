@@ -36,7 +36,7 @@ public class CountDownManager : MonoBehaviour
             StopCoroutine(timerCoroutine);
 
         timerValue = 0.1f;
-        timerText.text = "0.0s"; // ✅ 立即归零显示
+        timerText.text = "0.0s"; //  归零
         timerCoroutine = StartCoroutine(UpdateTimer());
     }
 
