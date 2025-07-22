@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
     private string firstPlayerPressed = null; // 最初にボタンを押したプレイヤー
     public string FirstPlayerPressed => firstPlayerPressed;
 
+    private float goSignalTime = -1f;
     private Coroutine timeoutCoroutine;     //タイムアウトの検査
 
     private void Start()
@@ -28,8 +30,11 @@ public class GameManager : MonoBehaviour
         CDM.onGoSignal.AddListener(() =>
         {
             currentIsRealSignal = true;
-            StartRound(true);
+            goSignalTime = Time.time; //  记录 GO! 出现的时刻
 
+            CDM.StartTimer(); //  开始计时器
+
+            StartRound(true);
             timeoutCoroutine = StartCoroutine(WaitForTimeout());
         });
 
@@ -40,15 +45,17 @@ public class GameManager : MonoBehaviour
         });
         StartNewRound();
 
+        
     }
-
     private void StartNewRound()
     {
+        CDM.timerText.text = "0.0";
         CDM.UIText.text=" ";
         firstPlayerPressed = null;
         p1.ResetRound();
         p2.ResetRound();
         CDM.canInput = false;
+        currentIsRealSignal = false; // 初始化为false，避免意外  
         CDM.StartCountdown();
         roundEnded = false;
         //StartRound(false );
@@ -66,12 +73,15 @@ public class GameManager : MonoBehaviour
     public void PlayerPressed(string playerName, bool isCorrect)
     {
         if (roundEnded ||
-            !CDM.canInput ||
+           !CDM.canInput ||
             firstPlayerPressed != null) return; // ラウンド終了、入力不可、または既に入力済みの場合は無視
+
         firstPlayerPressed = playerName;
         CDM.canInput = false;
         CDM.StopLoop();
 
+
+        CDM.StopTimer(); // ✅ 按下时停止计时器
         if (timeoutCoroutine != null)
         {
             StopCoroutine(timeoutCoroutine);
@@ -80,23 +90,45 @@ public class GameManager : MonoBehaviour
 
         // ダメージ処理
         bool isP1 = playerName == "P1";
+        //Perfectチェック
+        bool isPerfect = false;
+        if (currentIsRealSignal && isCorrect && goSignalTime > 0)
+        {
+            float timeSinceGo = Time.time - goSignalTime;
+            if (timeSinceGo <= 0.2f)
+            {
+                isPerfect = true;
+            }
+        }
+
         bool damageOpponent = currentIsRealSignal && isCorrect;
         bool damageSelf = !currentIsRealSignal && isCorrect;
 
-        if (damageOpponent)
+        if (isPerfect)
+        {
+            //  Perfect 命中
+            if (isP1) p2Hp -= 100;
+            else p1Hp -= 100;
+            CDM.UIText.text = $"{playerName} PERFECT!!";
+        }
+
+        else if (damageOpponent)
         {
             if (isP1) p2Hp -= 50;
             else p1Hp -= 50;
-            p1HPBar.setHP(p1Hp);
-            p2HPBar.setHP(p2Hp);
+            CDM.UIText.text = $"{playerName} 命中!";
+           
         }
         else if (damageSelf)
         {
             if (isP1) p1Hp -= 50;
             else p2Hp -= 50;
-            p1HPBar.setHP(p1Hp);
-            p2HPBar.setHP(p2Hp);
+            CDM.UIText.text = $"{playerName} ミス!";
+            
         }
+
+        p1HPBar.setHP(p1Hp);
+        p2HPBar.setHP(p2Hp);
 
         roundEnded = true;
 
@@ -119,6 +151,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         if (!roundEnded && string.IsNullOrEmpty(firstPlayerPressed))
         {
+            CDM.StopTimer();
             CDM.canInput = false;
             CDM.StopLoop();
             CDM.signalText.text = "";
@@ -134,10 +167,7 @@ public class GameManager : MonoBehaviour
     private void EndGame()
     {
         string winner;
-        //if (p1Hp <= 0 && p2Hp <= 0)
-        //{
-        //    winner = "引分";  // 両者のHPが同時にゼロになったときは引き分け
-        //}
+      
         if (p1Hp <= 0)
         {
             winner = "P2";
