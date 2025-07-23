@@ -8,16 +8,16 @@ public class Push : MonoBehaviour
     public string playerName = " ";
     public GameManager manager;
     private SpriteRenderer spriteRenderer;
-    [Header("p¨")]
-    [SerializeField] Sprite standSprite;// —§‚Â
-    [SerializeField] Sprite fireStandSprite;// ‚½‚¿Œ‚‚Â
-    [SerializeField] Sprite fireCrouchSprite;// ‚µ‚á‚ª‚ŞŒ‚‚Â
-    [SerializeField] Sprite fireJumpSprite;// ƒWƒƒƒ“ƒvŒ‚‚Â
+    [Header("pose")]
+    [SerializeField] Sprite standSprite;// 
+    [SerializeField] Sprite fireStandSprite;// 
+    //[SerializeField] Sprite fireCrouchSprite;// 
+    //[SerializeField] Sprite fireJumpSprite;// 
 
     
 
     private InputSystem_Actions action;
-    [Header("ó‘Ô")]
+    [Header("item")]
     private bool canPress = false;
     private bool isRealGo = false;
     private bool hasPressed = false;
@@ -46,7 +46,7 @@ public class Push : MonoBehaviour
 
     public void ResetRound()
     {
-        //idleó‘Ô
+        //
         if (spriteRenderer != null && standSprite != null)
             spriteRenderer.sprite = standSprite;
     }
@@ -66,22 +66,24 @@ public class Push : MonoBehaviour
 
     void OnFire(InputAction.CallbackContext context)
     {
-        if (!manager.CDM.canInput) return;
+        if (!manager.CDM.canInput)
+        {
+            manager.PlayerPressed(playerName, false);
+            return;
+        }
         if (!canPress || hasPressed) return;
-        // ‘‚¢•ûæ“¾
+        // 
         if (!string.IsNullOrEmpty(manager.FirstPlayerPressed)) return;
         hasPressed = true;
-        Debug.Log("Fire");
+        //Debug.Log("Fire");
 
 
-        // Œ‚‚Âó‘Ô
+        // 
         if (spriteRenderer != null && fireStandSprite != null)
             spriteRenderer.sprite = fireStandSprite;
 
         //if (isRealGo)
         manager.PlayerPressed(playerName, true);
-        //else
-        //    manager.PlayerPressed(playerName, false);
     }
 
 }
