@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
@@ -12,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Push p2;
     [SerializeField] HealthBar p1HPBar;
     [SerializeField] HealthBar p2HPBar;
-
+    [SerializeField] Text Perfect;
 
     [SerializeField] private int p1Hp = 100, p2Hp = 100;
 
@@ -24,6 +26,13 @@ public class GameManager : MonoBehaviour
 
     private float goSignalTime = -1f;
     private Coroutine timeoutCoroutine;     //タイムアウトの検査
+
+    [Header("Ready")]
+    //開始前の準備
+    public bool isWaitingForReady = true;
+    private bool P1Ready = false;
+    private bool P2Ready = false;
+
 
     private void Start()
     {
@@ -43,14 +52,24 @@ public class GameManager : MonoBehaviour
             currentIsRealSignal = false;
             StartRound(false);
         });
-        StartNewRound();
+        //StartNewRound();
+        StartPreparationPhase();
 
-        
+    }
+    void StartPreparationPhase()
+    {
+        CDM.UIText.text = "PRESS TO READY";
+        CDM.signalText.text = null;
+        Perfect.text = null;
+        isWaitingForReady = true;
+        P1Ready = false;
+        P2Ready = false;
     }
     private void StartNewRound()
     {
+        Perfect.text = null;
         CDM.timerText.text = "0.0";
-        CDM.UIText.text=" ";
+        CDM.UIText.text = null;
         firstPlayerPressed = null;
         p1.ResetRound();
         p2.ResetRound();
@@ -58,8 +77,8 @@ public class GameManager : MonoBehaviour
         currentIsRealSignal = false; // 初始化为false，避免意外  
         CDM.StartCountdown();
         roundEnded = false;
-        
-        
+        //p1.ClearReady();
+        //p2.ClearReady();
     }
 
     void StartRound(bool isRealGo)
@@ -72,6 +91,23 @@ public class GameManager : MonoBehaviour
 
     public void PlayerPressed(string playerName, bool isCorrect)
     {
+        //ボタンを押すと準備完了
+        if (isWaitingForReady)
+        {
+            if (playerName == "P1") P1Ready = true;
+            if (playerName == "P2") P2Ready = true;
+
+            //重複押す防止
+            if(P1Ready && P2Ready)
+            {
+                isWaitingForReady= false;
+                CDM.UIText.text= null;
+                StartNewRound();//ゲーム開始
+            }
+            return;
+        }
+
+
         if (roundEnded ||
            !CDM.canInput ||
             firstPlayerPressed != null) return; // ラウンド終了、入力不可、または既に入力済みの場合は無視
@@ -95,7 +131,7 @@ public class GameManager : MonoBehaviour
         if (currentIsRealSignal && isCorrect && goSignalTime > 0)
         {
             float timeSinceGo = Time.time - goSignalTime;
-            if (timeSinceGo <= 0.2f)
+            if (timeSinceGo <= 0.25f)
             {
                 isPerfect = true;
             }
@@ -109,22 +145,23 @@ public class GameManager : MonoBehaviour
             //  Perfect 命中
             if (isP1) p2Hp -= 100;
             else p1Hp -= 100;
-            CDM.UIText.text = "PERFECT!!";
+            Perfect.text = "PERFECT!!";
+
         }
 
         else if (damageOpponent)
         {
             if (isP1) p2Hp -= 50;
             else p1Hp -= 50;
-            CDM.UIText.text = $"{playerName} 命中!";
-           
+            CDM.UIText.text = $"{playerName} HIT!";
+
         }
         else if (damageSelf)
         {
             if (isP1) p1Hp -= 50;
             else p2Hp -= 50;
-            CDM.UIText.text = $"{playerName} ミス!";
-            
+            CDM.UIText.text = $"{playerName} MISS!";
+
         }
 
         p1HPBar.setHP(p1Hp);
@@ -155,7 +192,7 @@ public class GameManager : MonoBehaviour
             CDM.canInput = false;
             CDM.StopLoop();
             CDM.signalText.text = "";
-        yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.5f);
             CDM.UIText.text = "DRAW";
             Invoke(nameof(StartNewRound), 2f);
             roundEnded = true;
@@ -168,15 +205,24 @@ public class GameManager : MonoBehaviour
     {
         CDM.signalText.text = null;
         string winner;
-      
+
         if (p1Hp <= 0)
         {
             winner = "P2";
+            CDM.UIText.rectTransform.anchoredPosition = new Vector2(688, -348);
         }
         else
         {
             winner = "P1";
+            CDM.UIText.rectTransform.anchoredPosition = new Vector2(-688, -348);
         }
+
         CDM.UIText.text = $"{winner} WIN!";
+
+        Invoke(nameof(ToGameover), 2f);
+    }
+    void ToGameover()
+    {
+        SceneManager.LoadScene("EndingScene");
     }
 }
