@@ -36,6 +36,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        //文字表示演出
+        CDM.signalText.gameObject.SetActive(true);
+        CDM.UIText.gameObject.SetActive(true);
+        Perfect.gameObject.SetActive(true);
+
         CDM.onGoSignal.AddListener(() =>
         {
             currentIsRealSignal = true;
@@ -66,7 +71,7 @@ public class GameManager : MonoBehaviour
         P2Ready = false;
     }
     private void StartNewRound()
-    {
+    { 
         Perfect.text = null;
         CDM.timerText.text = "0.0";
         CDM.UIText.text = null;
