@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -9,22 +9,56 @@ public class CountDownManager : MonoBehaviour
     public float maxDelay = 6f;
     public float signalInterval = 1f;
 
-    public Text signalText;
-    public Text UIText;
+    public Text signalText;     //信号
+    public Text UIText;         //UI文字
+    public Text timerText;      //タイマー
 
     public UnityEvent onReadyStart;
     public UnityEvent onGoSignal;
     public UnityEvent onFakeSignal;
 
-    private bool hasGoAppeared = false;
+    public bool hasGoAppeared = false;
     public bool isRealSignal = false;
     public bool canInput = true;
-
+    //タイマー要
+    private Coroutine timerCoroutine;
+    public float timerValue = 0f;
 
     private void Awake()
     {
         UIText.text = " ";
     }
+
+    //计时器协程
+    public void StartTimer()
+    {
+        if (timerCoroutine != null)
+            StopCoroutine(timerCoroutine);
+
+        timerValue = 0.1f;
+        timerText.text = "0.0s"; //  归零
+        timerCoroutine = StartCoroutine(UpdateTimer());
+    }
+
+    public void StopTimer()
+    {
+        if (timerCoroutine != null)
+        {
+            StopCoroutine(timerCoroutine);
+            timerCoroutine = null;
+        }
+    }
+
+    private IEnumerator UpdateTimer()
+    {
+        while (true)
+        {
+            timerText.text = timerValue.ToString("0.0");
+            yield return new WaitForSeconds(0.1f);
+            timerValue += 0.1f;
+        }
+    }
+
 
     public void StartCountdown()
     {
@@ -34,6 +68,7 @@ public class CountDownManager : MonoBehaviour
 
     IEnumerator CountdownRoutine()
     {
+        
         yield return ShowNumber("3");
         yield return ShowNumber("2");
         yield return ShowNumber("1");
@@ -45,7 +80,7 @@ public class CountDownManager : MonoBehaviour
 
         yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
         StartCoroutine(nameof(SignalLoop));
-
+        
     }
 
     public IEnumerator SignalLoop()
