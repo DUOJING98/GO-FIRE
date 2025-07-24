@@ -12,20 +12,29 @@ public class CountDownManager : MonoBehaviour
     public Text signalText;     //信号
     public Text UIText;         //UI文字
     public Text timerText;      //タイマー
+    public Text reactionText;   //タイマー
 
     public UnityEvent onReadyStart;
     public UnityEvent onGoSignal;
     public UnityEvent onFakeSignal;
 
+    //SE信号
+    [Header("SE")]
+    [SerializeField] AudioClip goClip;
+    [SerializeField] AudioClip fakeClip;
+    private AudioSource audioSource;
+    [Header("チェック")]
     public bool hasGoAppeared = false;
     public bool isRealSignal = false;
     public bool canInput = true;
     //タイマー要
     private Coroutine timerCoroutine;
     public float timerValue = 0f;
+    private float TimeStartTime=0f;
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         UIText.text = " ";
     }
 
@@ -35,8 +44,9 @@ public class CountDownManager : MonoBehaviour
         if (timerCoroutine != null)
             StopCoroutine(timerCoroutine);
 
-        timerValue = 0.1f;
-        timerText.text = "0.0s"; // ✅ 立即归零显示
+        TimeStartTime = Time.time;
+        //timerValue = 0.10f;
+        timerText.text = "0.00s"; //  归零
         timerCoroutine = StartCoroutine(UpdateTimer());
     }
 
@@ -53,9 +63,11 @@ public class CountDownManager : MonoBehaviour
     {
         while (true)
         {
-            timerText.text = timerValue.ToString("0.0");
-            yield return new WaitForSeconds(0.1f);
-            timerValue += 0.1f;
+            float elapsed = Time.time - TimeStartTime;
+            timerValue = elapsed;
+            timerText.text = elapsed.ToString("0.00");
+            yield return null;
+            //timerValue += 0.10f;
         }
     }
 
@@ -95,18 +107,22 @@ public class CountDownManager : MonoBehaviour
                 onGoSignal?.Invoke();
                 isRealSignal = true;
                 hasGoAppeared = true;
-
+                if (audioSource != null && goClip != null)
+                {
+                    audioSource.PlayOneShot(goClip);
+                }
             }
             else
             {
-                string[] fakeSignals = { "WAIT!", "DOG!", "START!", " "," " };
+                string[] fakeSignals = { "WAIT!", "DOG!", "START!" };
                 string fake = fakeSignals[Random.Range(0, fakeSignals.Length)];
                 signalText.text = fake;
                 onFakeSignal?.Invoke();
                 isRealSignal = false;
-                //yield return new WaitForSeconds(1f);
-                //ClearText() ;
-
+                if (audioSource != null && fakeClip != null)
+                {
+                    audioSource.PlayOneShot(fakeClip);
+                }
             }
 
         }
@@ -128,4 +144,10 @@ public class CountDownManager : MonoBehaviour
         signalText.text = " ";
         UIText.text = " ";
     }
+
+    public float GetCurrentReactionTime()
+    {
+        return timerValue;
+    }
+
 }

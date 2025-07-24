@@ -8,16 +8,17 @@ public class Push : MonoBehaviour
     public string playerName = " ";
     public GameManager manager;
     private SpriteRenderer spriteRenderer;
-    [Header("")]
+    [Header("pose")]
     [SerializeField] Sprite standSprite;// 
     [SerializeField] Sprite fireStandSprite;// 
-    [SerializeField] Sprite fireCrouchSprite;// 
-    [SerializeField] Sprite fireJumpSprite;// 
+    //[SerializeField] Sprite fireCrouchSprite;// 
+    //[SerializeField] Sprite fireJumpSprite;// 
 
-    
+   // [SerializeField] GameObject readyPrefab;
+   // private GameObject readyText;
 
     private InputSystem_Actions action;
-    [Header("")]
+    [Header("item")]
     private bool canPress = false;
     private bool isRealGo = false;
     private bool hasPressed = false;
@@ -41,7 +42,7 @@ public class Push : MonoBehaviour
         canPress = true;
         isRealGo = isGO;
         hasPressed = false;
-       
+
     }
 
     public void ResetRound()
@@ -66,6 +67,16 @@ public class Push : MonoBehaviour
 
     void OnFire(InputAction.CallbackContext context)
     {
+        if (manager.isWaitingForReady)
+        {
+            manager.PlayerPressed(playerName, true);
+            //if (readyPrefab != null && readyText == null)
+            //{
+            //    Vector3 avoveHead = transform.position + new Vector3(0, 1.5f, 0);
+            //    readyText = Instantiate(readyPrefab, avoveHead, Quaternion.identity);
+            //}
+            return;
+        }
         if (!manager.CDM.canInput)
         {
             manager.PlayerPressed(playerName, false);
@@ -75,7 +86,7 @@ public class Push : MonoBehaviour
         // 
         if (!string.IsNullOrEmpty(manager.FirstPlayerPressed)) return;
         hasPressed = true;
-        Debug.Log("Fire");
+        //Debug.Log("Fire");
 
 
         // 
@@ -84,8 +95,15 @@ public class Push : MonoBehaviour
 
         //if (isRealGo)
         manager.PlayerPressed(playerName, true);
-        //else
-        //    manager.PlayerPressed(playerName, false);
     }
+
+    //public void ClearReady()
+    //{
+    //    if (readyText != null)
+    //    {
+    //        Destroy(readyText);
+    //        readyText = null;
+    //    }
+    //}
 
 }
