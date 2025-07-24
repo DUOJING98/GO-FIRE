@@ -221,8 +221,8 @@ MonoBehaviour:
   onFakeSignal:
     m_PersistentCalls:
       m_Calls: []
-  goClip: {fileID: 8300000, guid: f018bf214b7dc9342804ffc451be44e8, type: 3}
-  fakeClip: {fileID: 8300000, guid: fb870db451f6ba74aa934592331fbf9d, type: 3}
+  goClip: {fileID: 8300000, guid: 994ca4e1b5e351c42b31a3ccd54c34dd, type: 3}
+  fakeClip: {fileID: 8300000, guid: 994ca4e1b5e351c42b31a3ccd54c34dd, type: 3}
   hasGoAppeared: 0
   isRealSignal: 0
   canInput: 1

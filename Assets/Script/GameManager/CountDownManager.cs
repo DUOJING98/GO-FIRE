@@ -99,7 +99,7 @@ public class CountDownManager : MonoBehaviour
     {
         while (!hasGoAppeared)
         {
-            float delay = Random.Range(minDelay, maxDelay);
+            float delay = Random.Range(2, 3);
             yield return new WaitForSeconds(delay);
             int rand = Random.Range(0, 3);//0:fake,1:Go!
             if (rand == 0)
