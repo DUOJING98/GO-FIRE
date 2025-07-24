@@ -8,7 +8,7 @@ public class HealthBar : MonoBehaviour
 
 
     [SerializeField] float maxHP = 100f;
-    [SerializeField] float currentHP = 100f;
+    //[SerializeField] float currentHP = 100f;
     [SerializeField] float targetHP = 100f;
 
 

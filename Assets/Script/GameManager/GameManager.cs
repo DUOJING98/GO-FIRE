@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] HealthBar p1HPBar;
     [SerializeField] HealthBar p2HPBar;
     [SerializeField] Text Perfect;
+    [SerializeField] AudioClip audioClip;
+    private AudioSource audioSource;
 
     [SerializeField] private int p1Hp = 100, p2Hp = 100;
 
@@ -36,6 +39,16 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        //SE
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = audioClip;
+        
+        //文字表示演出
+        CDM.signalText.gameObject.SetActive(true);
+        CDM.UIText.gameObject.SetActive(true);
+        Perfect.gameObject.SetActive(true);
+        
+
         CDM.onGoSignal.AddListener(() =>
         {
             currentIsRealSignal = true;
@@ -66,7 +79,7 @@ public class GameManager : MonoBehaviour
         P2Ready = false;
     }
     private void StartNewRound()
-    {
+    { 
         Perfect.text = null;
         CDM.timerText.text = "0.0";
         CDM.UIText.text = null;
@@ -77,6 +90,7 @@ public class GameManager : MonoBehaviour
         currentIsRealSignal = false; // 初始化为false，避免意外  
         CDM.StartCountdown();
         roundEnded = false;
+        CDM.reactionText.gameObject.SetActive(false);
         //p1.ClearReady();
         //p2.ClearReady();
     }
@@ -131,7 +145,7 @@ public class GameManager : MonoBehaviour
         if (currentIsRealSignal && isCorrect && goSignalTime > 0)
         {
             float timeSinceGo = Time.time - goSignalTime;
-            if (timeSinceGo <= 0.25f)
+            if (timeSinceGo <= 0.3f)
             {
                 isPerfect = true;
             }
@@ -140,28 +154,36 @@ public class GameManager : MonoBehaviour
         bool damageOpponent = currentIsRealSignal && isCorrect;
         bool damageSelf = !currentIsRealSignal && isCorrect;
 
+        //反応時間表示
+        float reaction = CDM.GetCurrentReactionTime();
+        reaction = MathF.Round(reaction * 100f) / 100f;
         if (isPerfect)
         {
             //  Perfect 命中
             if (isP1) p2Hp -= 100;
             else p1Hp -= 100;
+            CDM.reactionText.gameObject.SetActive(true);
             Perfect.text = "PERFECT!!";
-
+            CDM.reactionText.text = $"{reaction:0.00}s";
         }
 
         else if (damageOpponent)
         {
             if (isP1) p2Hp -= 50;
             else p1Hp -= 50;
+            CDM.reactionText.gameObject.SetActive(true);
             CDM.UIText.text = $"{playerName} HIT!";
-
+            CDM.reactionText.text = $"{reaction:0.00}s";
+            audioSource.Play();
         }
         else if (damageSelf)
         {
             if (isP1) p1Hp -= 50;
             else p2Hp -= 50;
             CDM.UIText.text = $"{playerName} MISS!";
-
+            
+            audioSource .Play();
+            
         }
 
         p1HPBar.setHP(p1Hp);
