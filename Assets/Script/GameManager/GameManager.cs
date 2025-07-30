@@ -35,19 +35,23 @@ public class GameManager : MonoBehaviour
     public bool isWaitingForReady = true;
     private bool P1Ready = false;
     private bool P2Ready = false;
+    [SerializeField] Text p1ready;
+    [SerializeField] Text p2ready;
 
+    [Header("TEST")]
+    [SerializeField] float perfectTime = 3.0f;
 
     private void Start()
     {
         //SE
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = audioClip;
-        
+
         //文字表示演出
         CDM.signalText.gameObject.SetActive(true);
         CDM.UIText.gameObject.SetActive(true);
         Perfect.gameObject.SetActive(true);
-        
+
 
         CDM.onGoSignal.AddListener(() =>
         {
@@ -79,7 +83,7 @@ public class GameManager : MonoBehaviour
         P2Ready = false;
     }
     private void StartNewRound()
-    { 
+    {
         Perfect.text = null;
         CDM.timerText.text = "0.0";
         CDM.UIText.text = null;
@@ -91,6 +95,8 @@ public class GameManager : MonoBehaviour
         CDM.StartCountdown();
         roundEnded = false;
         CDM.reactionText.gameObject.SetActive(false);
+        p1ready.gameObject.SetActive(false);
+        p2ready.gameObject.SetActive(false);
         //p1.ClearReady();
         //p2.ClearReady();
     }
@@ -110,13 +116,15 @@ public class GameManager : MonoBehaviour
         {
             if (playerName == "P1") P1Ready = true;
             if (playerName == "P2") P2Ready = true;
+            if (P1Ready) p1ready.gameObject.SetActive(true);
+            if (P2Ready) p2ready.gameObject.SetActive(true);
 
             //重複押す防止
-            if(P1Ready && P2Ready)
+            if (P1Ready && P2Ready)
             {
-                isWaitingForReady= false;
-                CDM.UIText.text= null;
-                StartNewRound();//ゲーム開始
+                isWaitingForReady = false;
+                CDM.UIText.text = null;
+                Invoke(nameof(StartNewRound), 0.5f);//ゲーム開始
             }
             return;
         }
@@ -145,7 +153,7 @@ public class GameManager : MonoBehaviour
         if (currentIsRealSignal && isCorrect && goSignalTime > 0)
         {
             float timeSinceGo = Time.time - goSignalTime;
-            if (timeSinceGo <= 0.3f)
+            if (timeSinceGo <= perfectTime)
             {
                 isPerfect = true;
             }
@@ -181,9 +189,9 @@ public class GameManager : MonoBehaviour
             if (isP1) p1Hp -= 50;
             else p2Hp -= 50;
             CDM.UIText.text = $"{playerName} MISS!";
-            
-            audioSource .Play();
-            
+
+            audioSource.Play();
+
         }
 
         p1HPBar.setHP(p1Hp);
@@ -197,7 +205,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Invoke(nameof(StartNewRound), 2f);
+            Invoke(nameof(StartNewRound), 2.5f);
         }
 
         //Debug.Log($"P1 HP: {p1Hp}, P2 HP: {p2Hp}");
@@ -241,10 +249,18 @@ public class GameManager : MonoBehaviour
 
         CDM.UIText.text = $"{winner} WIN!";
 
-        Invoke(nameof(ToGameover), 2f);
+        Invoke(nameof(ToGameover), 1f);
     }
+
+    IEnumerator AnyKeyDown()
+    {
+        yield return new WaitUntil(() => Input.anyKeyDown);
+        SceneManager.LoadScene("EndingScene");
+
+    }
+
     void ToGameover()
     {
-        SceneManager.LoadScene("EndingScene");
+        StartCoroutine(nameof(AnyKeyDown));
     }
 }

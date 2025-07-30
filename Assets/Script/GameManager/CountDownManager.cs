@@ -115,7 +115,7 @@ public class CountDownManager : MonoBehaviour
             }
             else
             {
-                string[] fakeSignals = { "WAIT!", "DOG!", "START!"," " };
+                string[] fakeSignals = { "WAIT!", "DOG!", "START!"," "," "," " };
                 string fake = fakeSignals[Random.Range(0, fakeSignals.Length)];
                 signalText.text = fake;
                 onFakeSignal?.Invoke();
