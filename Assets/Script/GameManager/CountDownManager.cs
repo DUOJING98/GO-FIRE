@@ -46,7 +46,7 @@ public class CountDownManager : MonoBehaviour
 
         TimeStartTime = Time.time;
         //timerValue = 0.10f;
-        timerText.text = "0.00s"; //  归零
+        timerText.text = "0.000s"; //  归零
         timerCoroutine = StartCoroutine(UpdateTimer());
     }
 
@@ -99,7 +99,8 @@ public class CountDownManager : MonoBehaviour
     {
         while (!hasGoAppeared)
         {
-            yield return new WaitForSeconds(signalInterval);
+            float delay = Random.Range(2, 3);
+            yield return new WaitForSeconds(delay);
             int rand = Random.Range(0, 3);//0:fake,1:Go!
             if (rand == 0)
             {
@@ -114,12 +115,12 @@ public class CountDownManager : MonoBehaviour
             }
             else
             {
-                string[] fakeSignals = { "WAIT!", "DOG!", "START!" };
+                string[] fakeSignals = { "WAIT!", "DOG!", "START!"," "," "," " };
                 string fake = fakeSignals[Random.Range(0, fakeSignals.Length)];
                 signalText.text = fake;
                 onFakeSignal?.Invoke();
                 isRealSignal = false;
-                if (audioSource != null && fakeClip != null)
+                if (audioSource != null && fakeClip != null&&!string.IsNullOrWhiteSpace(fake))
                 {
                     audioSource.PlayOneShot(fakeClip);
                 }
