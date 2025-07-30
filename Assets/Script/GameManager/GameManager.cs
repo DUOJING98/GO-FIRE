@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour
 
         //反応時間表示
         float reaction = CDM.GetCurrentReactionTime();
-        reaction = MathF.Round(reaction * 100f) / 100f;
+        reaction = MathF.Round(reaction * 1000f) / 1000f;
         if (isPerfect)
         {
             //  Perfect 命中
@@ -172,7 +172,7 @@ public class GameManager : MonoBehaviour
             else p1Hp -= 100;
             CDM.reactionText.gameObject.SetActive(true);
             Perfect.text = "PERFECT!!";
-            CDM.reactionText.text = $"{reaction:0.00}s";
+            CDM.reactionText.text = $"{reaction:0.000}s";
         }
 
         else if (damageOpponent)
@@ -181,7 +181,7 @@ public class GameManager : MonoBehaviour
             else p1Hp -= 50;
             CDM.reactionText.gameObject.SetActive(true);
             CDM.UIText.text = $"{playerName} HIT!";
-            CDM.reactionText.text = $"{reaction:0.00}s";
+            CDM.reactionText.text = $"{reaction:0.000}s";
             audioSource.Play();
         }
         else if (damageSelf)
@@ -238,16 +238,17 @@ public class GameManager : MonoBehaviour
 
         if (p1Hp <= 0)
         {
-            winner = "P2";
-            CDM.UIText.rectTransform.anchoredPosition = new Vector2(688, -348);
+            //winner = "P2";
+            CDM.UIText.rectTransform.anchoredPosition = new Vector2(688, -448);
         }
         else
         {
-            winner = "P1";
-            CDM.UIText.rectTransform.anchoredPosition = new Vector2(-688, -348);
+            //winner = "P1";
+            CDM.UIText.rectTransform.anchoredPosition = new Vector2(-688, -448);
         }
 
-        CDM.UIText.text = $"{winner} WIN!";
+        //CDM.UIText.text = $"{winner} WIN!";
+        CDM.UIText.text = "WIN!";
 
         Invoke(nameof(ToGameover), 1f);
     }

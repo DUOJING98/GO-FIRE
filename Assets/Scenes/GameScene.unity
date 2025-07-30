@@ -1198,7 +1198,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0.00s
+  m_Text: 0.000s
 --- !u!222 &581186288
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3129,7 +3129,7 @@ MonoBehaviour:
   isWaitingForReady: 1
   p1ready: {fileID: 1337467425}
   p2ready: {fileID: 634358398}
-  perfectTime: 5
+  perfectTime: 0.3
 --- !u!82 &1885399654
 AudioSource:
   m_ObjectHideFlags: 0
