@@ -38,6 +38,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] Text p1ready;
     [SerializeField] Text p2ready;
 
+    [Header("GameOver")]
+    [SerializeField] Text gameOverText;
+
     [Header("TEST")]
     [SerializeField] float perfectTime = 3.0f;
 
@@ -97,6 +100,7 @@ public class GameManager : MonoBehaviour
         CDM.reactionText.gameObject.SetActive(false);
         p1ready.gameObject.SetActive(false);
         p2ready.gameObject.SetActive(false);
+        gameOverText.gameObject.SetActive(false);
         //p1.ClearReady();
         //p2.ClearReady();
     }
@@ -249,7 +253,7 @@ public class GameManager : MonoBehaviour
 
         //CDM.UIText.text = $"{winner} WIN!";
         CDM.UIText.text = "WIN!";
-
+        gameOverText.gameObject.SetActive(true);
         Invoke(nameof(ToGameover), 1f);
     }
 
@@ -257,7 +261,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitUntil(() => Input.anyKeyDown);
         SceneManager.LoadScene("EndingScene");
-
+        
     }
 
     void ToGameover()
