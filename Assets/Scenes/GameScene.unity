@@ -902,9 +902,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-<<<<<<< HEAD
---- !u!1 &516848978
-=======
 --- !u!1 &506114187
 >>>>>>> main
 GameObject:
@@ -914,12 +911,6 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-<<<<<<< HEAD
-  - component: {fileID: 516848980}
-  - component: {fileID: 516848979}
-  m_Layer: 0
-  m_Name: GameObject
-=======
   - component: {fileID: 506114188}
   - component: {fileID: 506114190}
   - component: {fileID: 506114189}
@@ -931,11 +922,6 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-<<<<<<< HEAD
-  m_IsActive: 1
---- !u!114 &516848979
-MonoBehaviour:
-=======
   m_IsActive: 0
 --- !u!224 &506114188
 RectTransform:
@@ -944,26 +930,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
-  m_GameObject: {fileID: 516848978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5199ec3338862164b8482cac7f19407a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  KusaPrefab: {fileID: 3146800401370697159, guid: 5b18f4e5860d1704a98b11de463f27b1, type: 3}
-  spawnerInterval: 5
-  spawnY: -2
-  spawnXRange: 9
---- !u!4 &516848980
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 516848978}
-  serializedVersion: 2
-=======
   m_GameObject: {fileID: 506114187}
 >>>>>>> main
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -971,10 +937,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-<<<<<<< HEAD
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-=======
   m_Father: {fileID: 2141987781}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
