@@ -1,16 +1,23 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Kusa : MonoBehaviour
 {
     public float moveSpeed = 2f;
     public float rotateSpeed = 180f;
+<<<<<<< Updated upstream
     public float endX = 12f;
+=======
+    public float rightX = 10f;
+    public float leftX = -10f;
+>>>>>>> Stashed changes
 
     private int direction = 1;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+<<<<<<< Updated upstream
         if (transform.position.x > 0)
         {
             direction = -1;
@@ -22,6 +29,14 @@ public class Kusa : MonoBehaviour
             direction = -1;
             rotateSpeed = -Mathf.Abs(rotateSpeed);
         }
+=======
+        direction = transform.position.x > 0 ? -1 : 1;
+
+        if (direction == -1)
+        {
+            FlipSprite();
+        }
+>>>>>>> Stashed changes
     }
 
     // Update is called once per frame
@@ -29,12 +44,24 @@ public class Kusa : MonoBehaviour
     {
         transform.Translate(Vector3.right * direction * moveSpeed * Time.deltaTime, Space.World);
 
+<<<<<<< Updated upstream
         transform.Rotate(Vector3.forward, rotateSpeed * Time.deltaTime);
 
         if ((direction == 1 && transform.position.x > endX)||
             (direction == -1 && transform.position.x < -endX)) 
+=======
+        transform.Rotate(Vector3.forward, -rotateSpeed * direction * moveSpeed * Time.deltaTime);
+
+        if (direction == 1 && transform.position.x > rightX)
+>>>>>>> Stashed changes
         {
-            Destroy(gameObject);
+            direction = -1;
+            FlipSprite();
+        }
+        else if (direction == -1 && transform.position.x < leftX)
+        {
+            direction = 1;
+            FlipSprite();
         }
     }
 
