@@ -70,11 +70,7 @@ public class Push : MonoBehaviour
         if (manager.isWaitingForReady)
         {
             manager.PlayerPressed(playerName, true);
-            //if (readyPrefab != null && readyText == null)
-            //{
-            //    Vector3 avoveHead = transform.position + new Vector3(0, 1.5f, 0);
-            //    readyText = Instantiate(readyPrefab, avoveHead, Quaternion.identity);
-            //}
+          
             return;
         }
         if (!manager.CDM.canInput)

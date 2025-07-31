@@ -54,7 +54,7 @@ public class TitleSceneManager : MonoBehaviour
 
         Application.Quit();
 #if UNITY_EDITOR
-        Debug.Log("GameOver");
+       // Debug.Log("GameOver");
 #endif
     }
 }
