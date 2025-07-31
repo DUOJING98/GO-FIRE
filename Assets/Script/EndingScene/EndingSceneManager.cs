@@ -4,11 +4,17 @@ using UnityEngine.UI;
 
 public class EndingSceneManager : MonoBehaviour
 {
+    [SerializeField] private Button TitleButton;   //ゲーム再開
     [SerializeField] private Button ReStartButton;   //ゲーム再開
     [SerializeField] private Button QuitButton;      //退出
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (TitleButton != null)
+        {
+            TitleButton.onClick.AddListener(ToTitle);
+        }
+
         if(ReStartButton != null)
         {
             ReStartButton.onClick.AddListener(OnReStartGame);
@@ -23,7 +29,16 @@ public class EndingSceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
+    void ToTitle()
+    {
+        SceneManager.LoadScene("TitleScene");
+
     }
 
     void OnReStartGame()
