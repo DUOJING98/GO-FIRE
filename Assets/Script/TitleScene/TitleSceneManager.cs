@@ -14,7 +14,7 @@ public class TitleSceneManager : MonoBehaviour
     {
         if (StartButton != null)
         {
-            StartButton.onClick.AddListener(OnStartGame);
+            StartButton.onClick.AddListener(OnOpenManual);
         }
 
         if (ManualButton != null)
@@ -31,7 +31,10 @@ public class TitleSceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     void OnStartGame()
@@ -46,6 +49,9 @@ public class TitleSceneManager : MonoBehaviour
 
     void OnQuitGame()
     {
+       
+
+
         Application.Quit();
 #if UNITY_EDITOR
         Debug.Log("GameOver");

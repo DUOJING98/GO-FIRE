@@ -105,6 +105,14 @@ public class GameManager : MonoBehaviour
         //p2.ClearReady();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
     void StartRound(bool isRealGo)
     {
         CDM.canInput = true;
@@ -263,6 +271,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("EndingScene");
         
     }
+
 
     void ToGameover()
     {
