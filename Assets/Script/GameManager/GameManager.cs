@@ -238,7 +238,7 @@ public class GameManager : MonoBehaviour
     private void EndGame()
     {
         CDM.signalText.text = null;
-        string winner;
+        //string winner;
 
         if (p1Hp <= 0)
         {
