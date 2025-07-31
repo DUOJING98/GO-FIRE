@@ -35,19 +35,26 @@ public class GameManager : MonoBehaviour
     public bool isWaitingForReady = true;
     private bool P1Ready = false;
     private bool P2Ready = false;
+    [SerializeField] Text p1ready;
+    [SerializeField] Text p2ready;
 
+    [Header("GameOver")]
+    [SerializeField] Text gameOverText;
+
+    [Header("TEST")]
+    [SerializeField] float perfectTime = 3.0f;
 
     private void Start()
     {
         //SE
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = audioClip;
-        
+
         //文字表示演出
         CDM.signalText.gameObject.SetActive(true);
         CDM.UIText.gameObject.SetActive(true);
         Perfect.gameObject.SetActive(true);
-        
+
 
         CDM.onGoSignal.AddListener(() =>
         {
@@ -79,7 +86,7 @@ public class GameManager : MonoBehaviour
         P2Ready = false;
     }
     private void StartNewRound()
-    { 
+    {
         Perfect.text = null;
         CDM.timerText.text = "0.0";
         CDM.UIText.text = null;
@@ -91,6 +98,9 @@ public class GameManager : MonoBehaviour
         CDM.StartCountdown();
         roundEnded = false;
         CDM.reactionText.gameObject.SetActive(false);
+        p1ready.gameObject.SetActive(false);
+        p2ready.gameObject.SetActive(false);
+        gameOverText.gameObject.SetActive(false);
         //p1.ClearReady();
         //p2.ClearReady();
     }
@@ -110,13 +120,15 @@ public class GameManager : MonoBehaviour
         {
             if (playerName == "P1") P1Ready = true;
             if (playerName == "P2") P2Ready = true;
+            if (P1Ready) p1ready.gameObject.SetActive(true);
+            if (P2Ready) p2ready.gameObject.SetActive(true);
 
             //重複押す防止
-            if(P1Ready && P2Ready)
+            if (P1Ready && P2Ready)
             {
-                isWaitingForReady= false;
-                CDM.UIText.text= null;
-                StartNewRound();//ゲーム開始
+                isWaitingForReady = false;
+                CDM.UIText.text = null;
+                Invoke(nameof(StartNewRound), 0.5f);//ゲーム開始
             }
             return;
         }
@@ -145,7 +157,7 @@ public class GameManager : MonoBehaviour
         if (currentIsRealSignal && isCorrect && goSignalTime > 0)
         {
             float timeSinceGo = Time.time - goSignalTime;
-            if (timeSinceGo <= 0.3f)
+            if (timeSinceGo <= perfectTime)
             {
                 isPerfect = true;
             }
@@ -156,7 +168,7 @@ public class GameManager : MonoBehaviour
 
         //反応時間表示
         float reaction = CDM.GetCurrentReactionTime();
-        reaction = MathF.Round(reaction * 100f) / 100f;
+        reaction = MathF.Round(reaction * 1000f) / 1000f;
         if (isPerfect)
         {
             //  Perfect 命中
@@ -164,7 +176,7 @@ public class GameManager : MonoBehaviour
             else p1Hp -= 100;
             CDM.reactionText.gameObject.SetActive(true);
             Perfect.text = "PERFECT!!";
-            CDM.reactionText.text = $"{reaction:0.00}s";
+            CDM.reactionText.text = $"{reaction:0.000}s";
         }
 
         else if (damageOpponent)
@@ -173,7 +185,7 @@ public class GameManager : MonoBehaviour
             else p1Hp -= 50;
             CDM.reactionText.gameObject.SetActive(true);
             CDM.UIText.text = $"{playerName} HIT!";
-            CDM.reactionText.text = $"{reaction:0.00}s";
+            CDM.reactionText.text = $"{reaction:0.000}s";
             audioSource.Play();
         }
         else if (damageSelf)
@@ -181,9 +193,9 @@ public class GameManager : MonoBehaviour
             if (isP1) p1Hp -= 50;
             else p2Hp -= 50;
             CDM.UIText.text = $"{playerName} MISS!";
-            
-            audioSource .Play();
-            
+
+            audioSource.Play();
+
         }
 
         p1HPBar.setHP(p1Hp);
@@ -197,7 +209,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Invoke(nameof(StartNewRound), 2f);
+            Invoke(nameof(StartNewRound), 2.5f);
         }
 
         //Debug.Log($"P1 HP: {p1Hp}, P2 HP: {p2Hp}");
@@ -230,21 +242,30 @@ public class GameManager : MonoBehaviour
 
         if (p1Hp <= 0)
         {
-            winner = "P2";
-            CDM.UIText.rectTransform.anchoredPosition = new Vector2(688, -348);
+            //winner = "P2";
+            CDM.UIText.rectTransform.anchoredPosition = new Vector2(688, -448);
         }
         else
         {
-            winner = "P1";
-            CDM.UIText.rectTransform.anchoredPosition = new Vector2(-688, -348);
+            //winner = "P1";
+            CDM.UIText.rectTransform.anchoredPosition = new Vector2(-688, -448);
         }
 
-        CDM.UIText.text = $"{winner} WIN!";
-
-        Invoke(nameof(ToGameover), 2f);
+        //CDM.UIText.text = $"{winner} WIN!";
+        CDM.UIText.text = "WIN!";
+        gameOverText.gameObject.SetActive(true);
+        Invoke(nameof(ToGameover), 1f);
     }
+
+    IEnumerator AnyKeyDown()
+    {
+        yield return new WaitUntil(() => Input.anyKeyDown);
+        SceneManager.LoadScene("EndingScene");
+        
+    }
+
     void ToGameover()
     {
-        SceneManager.LoadScene("EndingScene");
+        StartCoroutine(nameof(AnyKeyDown));
     }
 }

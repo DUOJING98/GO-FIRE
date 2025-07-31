@@ -46,7 +46,7 @@ public class CountDownManager : MonoBehaviour
 
         TimeStartTime = Time.time;
         //timerValue = 0.10f;
-        timerText.text = "0.00s"; //  归零
+        timerText.text = "0.000s"; //  归零
         timerCoroutine = StartCoroutine(UpdateTimer());
     }
 
@@ -115,7 +115,7 @@ public class CountDownManager : MonoBehaviour
             }
             else
             {
-                string[] fakeSignals = { "WAIT!", "DOG!", "START!"," " };
+                string[] fakeSignals = { "WAIT!", "DOG!", "START!"," "," "," " };
                 string fake = fakeSignals[Random.Range(0, fakeSignals.Length)];
                 signalText.text = fake;
                 onFakeSignal?.Invoke();
