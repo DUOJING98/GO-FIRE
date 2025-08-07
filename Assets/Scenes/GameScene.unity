@@ -2000,10 +2000,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfff2214a913dee4e85ec7b6187229d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 3
   rotateSpeed: 180
+<<<<<<< HEAD
   rightX: 10
   leftX: -10
+=======
+  rightX: 15
+  leftX: -15
+>>>>>>> 94e94da47c44a97e4d10cbcd314641e391d633b6
 --- !u!1 &969554552
 GameObject:
   m_ObjectHideFlags: 0
@@ -2195,8 +2200,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   rotateSpeed: 180
+<<<<<<< HEAD
   rightX: 10
   leftX: -10
+=======
+  rightX: 15
+  leftX: -15
+>>>>>>> 94e94da47c44a97e4d10cbcd314641e391d633b6
 --- !u!1 &1097104321
 GameObject:
   m_ObjectHideFlags: 0
