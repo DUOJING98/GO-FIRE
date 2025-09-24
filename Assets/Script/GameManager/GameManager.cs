@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
     public bool isWaitingForReady = true;
     private bool P1Ready = false;
     private bool P2Ready = false;
+
+    [SerializeField] Text ForReady;
     [SerializeField] Text p1ready;
     [SerializeField] Text p2ready;
 
@@ -78,7 +80,8 @@ public class GameManager : MonoBehaviour
     }
     void StartPreparationPhase()
     {
-        CDM.UIText.text = "PRESS TO READY";
+        CDM.UIText.text = " ";
+        ForReady.gameObject.SetActive(true);
         CDM.signalText.text = null;
         Perfect.text = null;
         isWaitingForReady = true;
@@ -87,6 +90,7 @@ public class GameManager : MonoBehaviour
     }
     private void StartNewRound()
     {
+        ForReady.gameObject.SetActive(false);
         Perfect.text = null;
         CDM.timerText.text = "0.0";
         CDM.UIText.text = null;
