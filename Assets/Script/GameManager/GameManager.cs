@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
             CDM.StartUpdateTimer(); //  开始计时器
 
             StartRound(true);
-            timeoutCoroutine = StartCoroutine(WaitForTimeout());
+            StartCoroutine(nameof(WaitForTimeout));
         });
 
         CDM.onFakeSignal.AddListener(() =>
@@ -86,6 +86,8 @@ public class GameManager : MonoBehaviour
     }
     private void StartNewRound()
     {
+        Debug.Log("start new round");
+        roundEnded = false;
         Perfect.text = null;
         CDM.timerText.text = "0.0";
         CDM.UIText.text = null;
@@ -93,9 +95,9 @@ public class GameManager : MonoBehaviour
         p1.ResetRound();
         p2.ResetRound();
         CDM.canInput = false;
+        CDM.hasGoAppeared = false;
         currentIsRealSignal = false; // 初始化为false，避免意外  
         CDM.StartCountdown();
-        roundEnded = false;
         CDM.reactionText.gameObject.SetActive(false);
         p1ready.gameObject.SetActive(false);
         p2ready.gameObject.SetActive(false);
@@ -148,7 +150,6 @@ public class GameManager : MonoBehaviour
         } 
 
         firstPlayerPressed = playerName;
-        CDM.canInput = false;
         CDM.StopLoop(); 
         CDM.StopUpdateTimer(); //按下时停止计时器
         CDM.StopCountdown(); //stop time count
@@ -231,7 +232,6 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             CDM.UIText.text = "DRAW";
             Invoke(nameof(StartNewRound), 2f);
-            roundEnded = true;
         }
     }
 
