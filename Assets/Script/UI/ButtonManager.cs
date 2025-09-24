@@ -12,6 +12,8 @@ public class ButtonManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
 
         EventSystem.current.SetSelectedGameObject(firstSelected);
+
+
     }
 
 }
