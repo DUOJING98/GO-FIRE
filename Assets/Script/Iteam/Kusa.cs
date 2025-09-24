@@ -8,7 +8,7 @@ public class Kusa : MonoBehaviour
     public float rotateSpeed = 180f;
     public float rightX = 10f;
     public float leftX = -10f;
->>>>>>> Stashed changes
+
 
     private int direction = 1;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -20,7 +20,7 @@ public class Kusa : MonoBehaviour
         {
             FlipSprite();
         }
->>>>>>> Stashed changes
+
     }
 
     // Update is called once per frame
@@ -31,7 +31,7 @@ public class Kusa : MonoBehaviour
         transform.Rotate(Vector3.forward, -rotateSpeed * direction * moveSpeed * Time.deltaTime);
 
         if (direction == 1 && transform.position.x > rightX)
->>>>>>> Stashed changes
+
         {
             direction = -1;
             FlipSprite();
