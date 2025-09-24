@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -18,6 +19,7 @@ public class CountDownManager : MonoBehaviour
     public UnityEvent onGoSignal;
     public UnityEvent onFakeSignal;
 
+
     //SE信号
     [Header("SE")]
     [SerializeField] AudioClip goClip;
@@ -26,11 +28,12 @@ public class CountDownManager : MonoBehaviour
     [Header("チェック")]
     public bool hasGoAppeared = false;
     public bool isRealSignal = false;
-    public bool canInput = true;
+    public bool canInput = false;
     //タイマー要
-    private Coroutine timerCoroutine;
     public float timerValue = 0f;
-    private float TimeStartTime=0f;
+    private float TimeStartTime = 0f;
+
+    public Coroutine UpdateTimerCoroutine, CountdownRoutineCoroutine, SignalLoopCoroutine, timerCoroutine;
 
     private void Awake()
     {
@@ -38,25 +41,24 @@ public class CountDownManager : MonoBehaviour
         UIText.text = " ";
     }
 
-    //计时器协程
-    public void StartTimer()
+    private void Update()
     {
-        if (timerCoroutine != null)
-            StopCoroutine(timerCoroutine);
 
+    }
+
+    //计时器协程
+    public void StartUpdateTimer()
+    {
+        StopCoroutine(nameof(UpdateTimer));
         TimeStartTime = Time.time;
         //timerValue = 0.10f;
         timerText.text = "0.000s"; //  归零
-        timerCoroutine = StartCoroutine(UpdateTimer());
+        UpdateTimerCoroutine = StartCoroutine(nameof(UpdateTimer));
     }
 
-    public void StopTimer()
+    public void StopUpdateTimer()
     {
-        if (timerCoroutine != null)
-        {
-            StopCoroutine(timerCoroutine);
-            timerCoroutine = null;
-        }
+        StopCoroutine(nameof(UpdateTimer));
     }
 
     private IEnumerator UpdateTimer()
@@ -75,28 +77,32 @@ public class CountDownManager : MonoBehaviour
     public void StartCountdown()
     {
         StartCoroutine(nameof(CountdownRoutine));
-        hasGoAppeared = false;
+    }
+
+    public void StopCountdown()
+    {
+        StopCoroutine(nameof(CountdownRoutine));
     }
 
     IEnumerator CountdownRoutine()
     {
-        
-        yield return ShowNumber("3");
-        yield return ShowNumber("2");
-        yield return ShowNumber("1");
+        signalText.text = "3";
+        yield return new WaitForSeconds(1f);
+        signalText.text = "2";
+        yield return new WaitForSeconds(1f);
+        signalText.text = "1";
+        yield return new WaitForSeconds(1f);
         signalText.text = "READY...";
-        
         onReadyStart?.Invoke();
         yield return new WaitForSeconds(1f);
         ClearText();
-
-        yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
-        StartCoroutine(nameof(SignalLoop));
-        
+        //yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
+        SignalLoopCoroutine = StartCoroutine(nameof(SignalLoop));
     }
 
     public IEnumerator SignalLoop()
     {
+        canInput = true;
         while (!hasGoAppeared)
         {
             float delay = Random.Range(2, 3);
@@ -108,6 +114,7 @@ public class CountDownManager : MonoBehaviour
                 onGoSignal?.Invoke();
                 isRealSignal = true;
                 hasGoAppeared = true;
+                //GameManager.currentIsRealSignal = true;
                 if (audioSource != null && goClip != null)
                 {
                     audioSource.PlayOneShot(goClip);
@@ -115,17 +122,17 @@ public class CountDownManager : MonoBehaviour
             }
             else
             {
-                string[] fakeSignals = { "WAIT!", "DOG!", "START!"," "," "," " };
+                string[] fakeSignals = { "WAIT!", "DOG!", "START!", " ", " ", " " };
                 string fake = fakeSignals[Random.Range(0, fakeSignals.Length)];
                 signalText.text = fake;
                 onFakeSignal?.Invoke();
                 isRealSignal = false;
-                if (audioSource != null && fakeClip != null&&!string.IsNullOrWhiteSpace(fake))
+                Debug.Log("currentIsRealSignal=" + GameManager.currentIsRealSignal);
+                if (audioSource != null && fakeClip != null && !string.IsNullOrWhiteSpace(fake))
                 {
                     audioSource.PlayOneShot(fakeClip);
                 }
             }
-
         }
     }
 

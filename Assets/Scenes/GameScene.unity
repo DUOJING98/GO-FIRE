@@ -2128,7 +2128,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   rotateSpeed: 180
-  endX: 10
+  rightX: 10
+  leftX: -10
 --- !u!1 &969554552
 GameObject:
   m_ObjectHideFlags: 0
@@ -2320,7 +2321,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   rotateSpeed: 180
-  endX: 10
+  rightX: 10
+  leftX: -10
 --- !u!1 &1097104321
 GameObject:
   m_ObjectHideFlags: 0

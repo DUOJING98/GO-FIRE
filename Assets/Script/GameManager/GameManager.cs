@@ -22,22 +22,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int p1Hp = 100, p2Hp = 100;
 
     private bool roundEnded = false;
-    private bool currentIsRealSignal = false;
+    public static bool currentIsRealSignal = false;
     private Coroutine signalLoopCoroutine;
     private string firstPlayerPressed = null; // 最初にボタンを押したプレイヤー
     public string FirstPlayerPressed => firstPlayerPressed;
-
     private float goSignalTime = -1f;
     private Coroutine timeoutCoroutine;     //タイムアウトの検査
 
     [Header("Ready")]
     //開始前の準備
-    public AudioSource readySE;
     public bool isWaitingForReady = true;
     private bool P1Ready = false;
     private bool P2Ready = false;
-
-    [SerializeField] Text ForReady;
     [SerializeField] Text p1ready;
     [SerializeField] Text p2ready;
 
@@ -64,7 +60,7 @@ public class GameManager : MonoBehaviour
             currentIsRealSignal = true;
             goSignalTime = Time.time; //  记录 GO! 出现的时刻
 
-            CDM.StartTimer(); //  开始计时器
+            CDM.StartUpdateTimer(); //  开始计时器
 
             StartRound(true);
             timeoutCoroutine = StartCoroutine(WaitForTimeout());
@@ -81,8 +77,7 @@ public class GameManager : MonoBehaviour
     }
     void StartPreparationPhase()
     {
-        CDM.UIText.text = " ";
-        ForReady.gameObject.SetActive(true);
+        CDM.UIText.text = "PRESS TO READY";
         CDM.signalText.text = null;
         Perfect.text = null;
         isWaitingForReady = true;
@@ -91,7 +86,6 @@ public class GameManager : MonoBehaviour
     }
     private void StartNewRound()
     {
-        ForReady.gameObject.SetActive(false);
         Perfect.text = null;
         CDM.timerText.text = "0.0";
         CDM.UIText.text = null;
@@ -128,26 +122,14 @@ public class GameManager : MonoBehaviour
 
     public void PlayerPressed(string playerName, bool isCorrect)
     {
-
-
+        CDM.canInput = false;
         //ボタンを押すと準備完了
         if (isWaitingForReady)
         {
-            if (playerName == "P1")
-            {
-                P1Ready = true;
-                if (readySE != null)
-                    readySE.Play();
-            }
-            if (playerName == "P2")
-            {
-                P2Ready = true;
-                if (readySE != null)
-                    readySE.Play();
-            }
+            if (playerName == "P1") P1Ready = true;
+            if (playerName == "P2") P2Ready = true;
             if (P1Ready) p1ready.gameObject.SetActive(true);
             if (P2Ready) p2ready.gameObject.SetActive(true);
-
             //重複押す防止
             if (P1Ready && P2Ready)
             {
@@ -158,22 +140,23 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-
-        if (roundEnded ||
-           !CDM.canInput ||
-            firstPlayerPressed != null) return; // ラウンド終了、入力不可、または既に入力済みの場合は無視
+        // ラウンド終了、入力不可、または既に入力済みの場合は無視
+        if (roundEnded || firstPlayerPressed != null)
+        {
+            Debug.Log("round end,can not input");
+            return;
+        } 
 
         firstPlayerPressed = playerName;
         CDM.canInput = false;
-        CDM.StopLoop();
-
-
-        CDM.StopTimer(); //  按下时停止计时器
-        if (timeoutCoroutine != null)
-        {
-            StopCoroutine(timeoutCoroutine);
-            timeoutCoroutine = null;
-        }
+        CDM.StopLoop(); 
+        CDM.StopUpdateTimer(); //按下时停止计时器
+        CDM.StopCountdown(); //stop time count
+        //if (timeoutCoroutine != null)
+        //{
+        //    StopCoroutine(timeoutCoroutine);
+        //    timeoutCoroutine = null;
+        //}
 
         // ダメージ処理
         bool isP1 = playerName == "P1";
@@ -188,9 +171,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        bool damageOpponent = currentIsRealSignal && isCorrect;
-        bool damageSelf = !currentIsRealSignal && isCorrect;
-
         //反応時間表示
         float reaction = CDM.GetCurrentReactionTime();
         reaction = MathF.Round(reaction * 1000f) / 1000f;
@@ -203,8 +183,7 @@ public class GameManager : MonoBehaviour
             Perfect.text = "PERFECT!!";
             CDM.reactionText.text = $"{reaction:0.000}s";
         }
-
-        else if (damageOpponent)
+        else if (currentIsRealSignal)
         {
             if (isP1) p2Hp -= 50;
             else p1Hp -= 50;
@@ -213,14 +192,12 @@ public class GameManager : MonoBehaviour
             CDM.reactionText.text = $"{reaction:0.000}s";
             audioSource.Play();
         }
-        else if (damageSelf)
+        else if (!currentIsRealSignal)
         {
             if (isP1) p1Hp -= 50;
             else p2Hp -= 50;
             CDM.UIText.text = $"{playerName} MISS!";
-
             audioSource.Play();
-
         }
 
         p1HPBar.setHP(p1Hp);
@@ -247,7 +224,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         if (!roundEnded && string.IsNullOrEmpty(firstPlayerPressed))
         {
-            CDM.StopTimer();
+            //CDM.StopTimer();
             CDM.canInput = false;
             CDM.StopLoop();
             CDM.signalText.text = "";
@@ -286,7 +263,6 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitUntil(() => Input.anyKeyDown);
         SceneManager.LoadScene("EndingScene");
-
     }
 
 

@@ -11,11 +11,11 @@ public class Push : MonoBehaviour
     [Header("pose")]
     [SerializeField] Sprite standSprite;// 
     [SerializeField] Sprite fireStandSprite;// 
-    //[SerializeField] Sprite fireCrouchSprite;// 
-    //[SerializeField] Sprite fireJumpSprite;// 
+                                            //[SerializeField] Sprite fireCrouchSprite;// 
+                                            //[SerializeField] Sprite fireJumpSprite;// 
 
-   // [SerializeField] GameObject readyPrefab;
-   // private GameObject readyText;
+    // [SerializeField] GameObject readyPrefab;
+    // private GameObject readyText;
 
     private InputSystem_Actions action;
     [Header("item")]
@@ -69,28 +69,29 @@ public class Push : MonoBehaviour
     {
         if (manager.isWaitingForReady)
         {
+            Debug.Log("waiting ready state");
             manager.PlayerPressed(playerName, true);
-          
             return;
         }
+
         if (!manager.CDM.canInput)
         {
-            manager.PlayerPressed(playerName, false);
             return;
         }
-        if (!canPress || hasPressed) return;
-        // 
-        if (!string.IsNullOrEmpty(manager.FirstPlayerPressed)) return;
-        hasPressed = true;
-        //Debug.Log("Fire");
 
+        Debug.Log("can input state");
+        manager.PlayerPressed(playerName, true);
+        // 
+        //if (!string.IsNullOrEmpty(manager.FirstPlayerPressed)) return;
+        ////hasPressed = true;
+        //Debug.Log("Fire");
 
         // 
         if (spriteRenderer != null && fireStandSprite != null)
             spriteRenderer.sprite = fireStandSprite;
 
         //if (isRealGo)
-        manager.PlayerPressed(playerName, true);
+
     }
 
     //public void ClearReady()
