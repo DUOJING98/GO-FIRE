@@ -97,11 +97,12 @@ public class CountDownManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         ClearText();
         //yield return new WaitForSeconds(Random.Range(minDelay, maxDelay));
-        SignalLoopCoroutine = StartCoroutine(nameof(SignalLoop));
+        StartCoroutine(nameof(SignalLoop));
     }
 
     public IEnumerator SignalLoop()
     {
+        Debug.Log("start loop");
         canInput = true;
         while (!hasGoAppeared)
         {
@@ -127,7 +128,6 @@ public class CountDownManager : MonoBehaviour
                 signalText.text = fake;
                 onFakeSignal?.Invoke();
                 isRealSignal = false;
-                Debug.Log("currentIsRealSignal=" + GameManager.currentIsRealSignal);
                 if (audioSource != null && fakeClip != null && !string.IsNullOrWhiteSpace(fake))
                 {
                     audioSource.PlayOneShot(fakeClip);
