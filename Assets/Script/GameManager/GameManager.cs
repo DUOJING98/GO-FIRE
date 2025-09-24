@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Ready")]
     //開始前の準備
+    public AudioSource readySE;
     public bool isWaitingForReady = true;
     private bool P1Ready = false;
     private bool P2Ready = false;
@@ -127,11 +128,23 @@ public class GameManager : MonoBehaviour
 
     public void PlayerPressed(string playerName, bool isCorrect)
     {
+
+
         //ボタンを押すと準備完了
         if (isWaitingForReady)
         {
-            if (playerName == "P1") P1Ready = true;
-            if (playerName == "P2") P2Ready = true;
+            if (playerName == "P1")
+            {
+                P1Ready = true;
+                if (readySE != null)
+                    readySE.Play();
+            }
+            if (playerName == "P2")
+            {
+                P2Ready = true;
+                if (readySE != null)
+                    readySE.Play();
+            }
             if (P1Ready) p1ready.gameObject.SetActive(true);
             if (P2Ready) p2ready.gameObject.SetActive(true);
 
@@ -273,7 +286,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitUntil(() => Input.anyKeyDown);
         SceneManager.LoadScene("EndingScene");
-        
+
     }
 
 
