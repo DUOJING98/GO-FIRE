@@ -1,3 +1,4 @@
+﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static InputSystem_Actions;
@@ -10,9 +11,9 @@ public class Push : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     [Header("pose")]
     [SerializeField] Sprite standSprite;// 
-    [SerializeField] Sprite fireStandSprite;// 
-                                            //[SerializeField] Sprite fireCrouchSprite;// 
-                                            //[SerializeField] Sprite fireJumpSprite;// 
+    [SerializeField] Sprite[] fireStandSprite;// 
+                                              //[SerializeField] Sprite fireCrouchSprite;// 
+                                              //[SerializeField] Sprite fireJumpSprite;// 
 
     // [SerializeField] GameObject readyPrefab;
     // private GameObject readyText;
@@ -67,10 +68,13 @@ public class Push : MonoBehaviour
 
     void OnFire(InputAction.CallbackContext context)
     {
+        string keyName = context.control.displayName; // 按键名称
+        var digits = new string(keyName.Where(char.IsDigit).ToArray());
+        int num = digits.Length > 0 ? int.Parse(digits) : 1;
         if (manager.isWaitingForReady)
         {
             Debug.Log("waiting ready state");
-            manager.PlayerPressed(playerName, true);
+            manager.PlayerPressed(playerName, true, num);
             return;
         }
 
@@ -80,7 +84,7 @@ public class Push : MonoBehaviour
         }
 
         Debug.Log("can input state");
-        manager.PlayerPressed(playerName, true);
+        manager.PlayerPressed(playerName, true, num);
         // 
         //if (!string.IsNullOrEmpty(manager.FirstPlayerPressed)) return;
         ////hasPressed = true;
@@ -88,7 +92,7 @@ public class Push : MonoBehaviour
 
         // 
         if (spriteRenderer != null && fireStandSprite != null)
-            spriteRenderer.sprite = fireStandSprite;
+            spriteRenderer.sprite = fireStandSprite[num - 1];
 
         //if (isRealGo)
 

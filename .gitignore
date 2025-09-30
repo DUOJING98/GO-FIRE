@@ -1,0 +1,57 @@
+# This .gitignore file should be placed at the root of your Unity project directory
+
+# Ignore the Library folder
+Library/
+
+# Ignore temporary files
+Temp/
+Obj/
+Build/
+Builds/
+Logs/
+UserSettings/
+
+# Ignore Unity generated files
+MemoryCaptures/
+
+# Ignore auto-generated VS/IDE files
+.vscode/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+
+# Ignore Rider files
+.idea/
+
+# Ignore crash logs
+sysinfo.txt
+
+# Ignore Unity cache server folder
+Cache/
+
+# Ignore Auto-generated JSON files
+*.pidb.meta
+
+# Ignore build artifacts
+*.apk
+*.aab
+*.xcodeproj
+*.xcworkspace
+*.xcuserdata
+
+# Ignore asset store tools folder
+Assets/AssetStoreTools*
+
+# Ignore JetBrains Rider and VSCode settings
+.idea/
+.vscode/
+
+# Ignore generated files from Unity Collaborate
+.collabignore

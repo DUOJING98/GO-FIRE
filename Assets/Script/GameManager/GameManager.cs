@@ -122,7 +122,7 @@ public class GameManager : MonoBehaviour
         p2.BeginRound(isRealGo);
     }
 
-    public void PlayerPressed(string playerName, bool isCorrect)
+    public void PlayerPressed(string playerName, bool isCorrect,int attackNum)
     {
         CDM.canInput = false;
         //ボタンを押すと準備完了

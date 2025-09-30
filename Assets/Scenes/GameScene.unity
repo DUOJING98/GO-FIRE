@@ -448,7 +448,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &267310197
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1899,7 +1899,10 @@ MonoBehaviour:
   playerName: P1
   manager: {fileID: 1885399653}
   standSprite: {fileID: -3094375360393090321, guid: 71cc413c83edca6429b4d5bc590d2eec, type: 3}
-  fireStandSprite: {fileID: 1564820588122725543, guid: 358647be9cb92044199b8823b419eb8e, type: 3}
+  fireStandSprite:
+  - {fileID: 1564820588122725543, guid: 358647be9cb92044199b8823b419eb8e, type: 3}
+  - {fileID: -4086727292227006206, guid: b57b2cb9e58c86b4cb827e0dcaa26a3c, type: 3}
+  - {fileID: 1502180272991327084, guid: c16dda57679e68c46bd70831df26adfd, type: 3}
 --- !u!1 &759607416
 GameObject:
   m_ObjectHideFlags: 0
@@ -3349,7 +3352,6 @@ MonoBehaviour:
   p1Hp: 100
   p2Hp: 100
   isWaitingForReady: 1
-  ForReady: {fileID: 267310199}
   p1ready: {fileID: 1337467425}
   p2ready: {fileID: 634358398}
   gameOverText: {fileID: 506114189}
@@ -3644,7 +3646,10 @@ MonoBehaviour:
   playerName: P2
   manager: {fileID: 1885399653}
   standSprite: {fileID: -8956492304416441916, guid: 42771a7ed14b08b42bc3a0c92df54802, type: 3}
-  fireStandSprite: {fileID: -4013901361570327894, guid: 9c2c021447d0bf94b83dced46d9df17a, type: 3}
+  fireStandSprite:
+  - {fileID: 1564820588122725543, guid: 358647be9cb92044199b8823b419eb8e, type: 3}
+  - {fileID: -4086727292227006206, guid: b57b2cb9e58c86b4cb827e0dcaa26a3c, type: 3}
+  - {fileID: 1502180272991327084, guid: c16dda57679e68c46bd70831df26adfd, type: 3}
 --- !u!1 &2100205987
 GameObject:
   m_ObjectHideFlags: 0
