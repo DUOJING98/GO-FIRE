@@ -70,6 +70,7 @@
     <Compile Include="Assets\Script\UI\HealthBar.cs" />
     <Compile Include="Assets\InputSysteam\InputSystem_Actions.cs" />
     <Compile Include="Assets\Script\UI\ButtonManager.cs" />
+    <Compile Include="Assets\Script\Effect\DustController.cs" />
     <Compile Include="Assets\Script\GameManager\GameManager.cs" />
     <Compile Include="Assets\Script\GameManager\Push.cs" />
     <Compile Include="Assets\ManualManager.cs" />

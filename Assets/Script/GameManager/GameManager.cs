@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 using UnityEngine.Audio;
+using UnityEditor.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] HealthBar p1HPBar;
     [SerializeField] HealthBar p2HPBar;
     [SerializeField] Text Perfect;
+    [SerializeField] GameObject crow;
     [SerializeField] AudioClip audioClip;
     private AudioSource audioSource;
 
@@ -45,6 +47,13 @@ public class GameManager : MonoBehaviour
     [Header("TEST")]
     [SerializeField] float perfectTime = 3.0f;
 
+    [Header("Crow")]
+    [SerializeField] float idleThreshold = 3f;
+    [SerializeField] float crowFlash = 0.2f;
+    private float idleTimer = 0f;
+    private Coroutine crowFlashCoroutine;
+
+
     private void Start()
     {
         //SE
@@ -55,6 +64,8 @@ public class GameManager : MonoBehaviour
         CDM.signalText.gameObject.SetActive(true);
         CDM.UIText.gameObject.SetActive(true);
         Perfect.gameObject.SetActive(true);
+        //カラス演出
+        if (crow) crow.SetActive(false);
 
 
         CDM.onGoSignal.AddListener(() =>
@@ -106,6 +117,14 @@ public class GameManager : MonoBehaviour
         p1ready.gameObject.SetActive(false);
         p2ready.gameObject.SetActive(false);
         gameOverText.gameObject.SetActive(false);
+
+        idleTimer = 0f;
+        if (crow) crow.SetActive(false);
+        if (crowFlashCoroutine != null)
+        {
+            StopCoroutine(crowFlashCoroutine);
+            crowFlashCoroutine = null;
+        }
         //p1.ClearReady();
         //p2.ClearReady();
     }
@@ -115,6 +134,16 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
+        }
+
+        if (!isWaitingForReady && CDM.canInput && !roundEnded)
+        {
+            idleTimer += Time.deltaTime;
+            if (idleTimer > idleThreshold)
+            {
+                TryFlashCrow();
+                idleTimer = 0f;
+            }
         }
     }
 
@@ -128,6 +157,12 @@ public class GameManager : MonoBehaviour
 
     public void PlayerPressed(string playerName, bool isCorrect)
     {
+        //カラス演出効果
+        idleTimer = 0f;
+        if (crow) crow.SetActive(false);
+        if (crowFlashCoroutine != null) { StopCoroutine(crowFlashCoroutine); crowFlashCoroutine = null; }
+
+
         CDM.canInput = false;
         //ボタンを押すと準備完了
         if (isWaitingForReady)
@@ -249,7 +284,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void TryFlashCrow()
+    {
 
+
+        if (UnityEngine.Random.value < 0.1f)
+        {
+            if (crowFlashCoroutine != null)
+                StopCoroutine(crowFlashCoroutine);
+            crowFlashCoroutine = StartCoroutine(FlashCrow());
+        }
+        
+    }
+
+    private IEnumerator FlashCrow()
+    {
+        Debug.Log("!!!!!");
+        crow.SetActive(true);
+        yield return new WaitForSeconds(crowFlash);
+        crow.SetActive(false);
+        crowFlashCoroutine = null;
+    }
 
     private void EndGame()
     {
