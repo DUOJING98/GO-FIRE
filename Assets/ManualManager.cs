@@ -10,11 +10,11 @@ public class ManualManager : MonoBehaviour
 
     private void Awake()
     {
-        if (ToGame != null)
+        if (ToManual != null)
         {
-            ToGame.onClick.AddListener(ToManualScene);
+            ToManual.onClick.AddListener(ToManualScene);
         }
-        if (ToGame != null)
+        if ( ToGame!= null)
         {
             ToGame.onClick.AddListener(ToGameScene);
         }
