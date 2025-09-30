@@ -74,7 +74,7 @@ public class Push : MonoBehaviour
         if (manager.isWaitingForReady)
         {
             Debug.Log("waiting ready state");
-            manager.PlayerPressed(playerName, true, num);
+            manager.PlayerPressed(playerName, num);
             return;
         }
 
@@ -84,7 +84,7 @@ public class Push : MonoBehaviour
         }
 
         Debug.Log("can input state");
-        manager.PlayerPressed(playerName, true, num);
+        manager.PlayerPressed(playerName, num);
         // 
         //if (!string.IsNullOrEmpty(manager.FirstPlayerPressed)) return;
         ////hasPressed = true;

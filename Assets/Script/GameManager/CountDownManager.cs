@@ -17,6 +17,7 @@ public class CountDownManager : MonoBehaviour
 
     public UnityEvent onReadyStart;
     public UnityEvent onGoSignal;
+    public UnityEvent onFirstPlayerPushSignal;
     public UnityEvent onFakeSignal;
 
 
@@ -142,6 +143,13 @@ public class CountDownManager : MonoBehaviour
     }
 
     IEnumerator ShowNumber(string number)
+    {
+        signalText.text = number;
+        yield return new WaitForSeconds(1f);
+    }
+
+
+    IEnumerator FightingCountDownRoutine(string number)
     {
         signalText.text = number;
         yield return new WaitForSeconds(1f);
