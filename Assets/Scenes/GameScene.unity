@@ -448,7 +448,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &267310197
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3410,9 +3410,9 @@ MonoBehaviour:
   audioClip: {fileID: 8300000, guid: c6b04ab9c83705c478edf4e65837eb2d, type: 3}
   p1Hp: 100
   p2Hp: 100
-  readySE: {fileID: 1561268787}
   isWaitingForReady: 1
-  ForReady: {fileID: 267310199}
+  readySE: {fileID: 1561268787}
+  PushToReady: {fileID: 267310199}
   p1ready: {fileID: 1337467425}
   p2ready: {fileID: 634358398}
   gameOverText: {fileID: 506114189}

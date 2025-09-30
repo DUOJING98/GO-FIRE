@@ -32,8 +32,10 @@ public class GameManager : MonoBehaviour
     [Header("Ready")]
     //開始前の準備
     public bool isWaitingForReady = true;
+    public AudioSource readySE;
     private bool P1Ready = false;
     private bool P2Ready = false;
+    [SerializeField] Text PushToReady;
     [SerializeField] Text p1ready;
     [SerializeField] Text p2ready;
 
@@ -77,7 +79,8 @@ public class GameManager : MonoBehaviour
     }
     void StartPreparationPhase()
     {
-        CDM.UIText.text = "PRESS TO READY";
+        CDM.UIText.text = " ";
+        PushToReady.gameObject.SetActive(true);
         CDM.signalText.text = null;
         Perfect.text = null;
         isWaitingForReady = true;
@@ -87,6 +90,7 @@ public class GameManager : MonoBehaviour
     private void StartNewRound()
     {
         Debug.Log("start new round");
+        PushToReady.gameObject.SetActive(false);
         roundEnded = false;
         Perfect.text = null;
         CDM.timerText.text = "0.0";
@@ -128,8 +132,18 @@ public class GameManager : MonoBehaviour
         //ボタンを押すと準備完了
         if (isWaitingForReady)
         {
-            if (playerName == "P1") P1Ready = true;
-            if (playerName == "P2") P2Ready = true;
+            if (playerName == "P1")
+            {
+                P1Ready = true;
+                if (readySE != null)
+                    readySE.Play();
+            }
+            if (playerName == "P2")
+            {
+                P2Ready = true;
+                if (readySE != null)
+                    readySE.Play();
+            }
             if (P1Ready) p1ready.gameObject.SetActive(true);
             if (P2Ready) p2ready.gameObject.SetActive(true);
             //重複押す防止
@@ -147,10 +161,10 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("round end,can not input");
             return;
-        } 
+        }
 
         firstPlayerPressed = playerName;
-        CDM.StopLoop(); 
+        CDM.StopLoop();
         CDM.StopUpdateTimer(); //按下时停止计时器
         CDM.StopCountdown(); //stop time count
         //if (timeoutCoroutine != null)
