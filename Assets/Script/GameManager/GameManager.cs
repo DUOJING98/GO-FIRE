@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] HealthBar p1HPBar;
     [SerializeField] HealthBar p2HPBar;
     [SerializeField] Text Perfect;
-   // [SerializeField] GameObject crow;
+    // [SerializeField] GameObject crow;
     [SerializeField] AudioClip audioClip;
     private AudioSource audioSource;
 
@@ -44,6 +44,10 @@ public class GameManager : MonoBehaviour
     [Header("TEST")]
     [SerializeField] float perfectTime = 3.0f;
 
+    [Header("Perfact")]
+    [SerializeField] GameObject perfactBG;
+    [SerializeField] GameObject BlackBG;
+
     //[Header("Crow")]
     //[SerializeField] float idleThreshold = 3f;
     //[SerializeField] float crowFlash = 0.2f;
@@ -62,7 +66,7 @@ public class GameManager : MonoBehaviour
         CDM.UIText.gameObject.SetActive(true);
         Perfect.gameObject.SetActive(true);
         //カラス演出
-       // if (crow) crow.SetActive(false);
+        // if (crow) crow.SetActive(false);
 
 
         CDM.onGoSignal.AddListener(() =>
@@ -221,12 +225,28 @@ public class GameManager : MonoBehaviour
             }
         }
 
+
+        void SetPerfect()
+        {
+            p1HPBar.gameObject.SetActive(false);
+            p2HPBar.gameObject.SetActive(false);
+            StartCoroutine(PerfactShow());
+        }
+        
+        IEnumerator PerfactShow()
+        {
+            perfactBG.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.2f);
+            BlackBG.gameObject.SetActive(true);
+        }
+
         //反応時間表示
         float reaction = CDM.GetCurrentReactionTime();
         reaction = MathF.Round(reaction * 1000f) / 1000f;
         if (isPerfect)
         {
             //  Perfect 命中
+            SetPerfect();
             if (isP1) p2Hp -= 100;
             else p1Hp -= 100;
             CDM.reactionText.gameObject.SetActive(true);
@@ -244,7 +264,7 @@ public class GameManager : MonoBehaviour
         }
         else if (!currentIsRealSignal)
         {
-            if (isP1){ p1Hp -= 50; p1.GetComponent<DamageFlash>().TakeDamage(); }
+            if (isP1) { p1Hp -= 50; p1.GetComponent<DamageFlash>().TakeDamage(); }
             else { p2Hp -= 50; p2.GetComponent<DamageFlash>().TakeDamage(); }
             CDM.UIText.text = $"{playerName} MISS!";
             audioSource.Play();
@@ -267,7 +287,7 @@ public class GameManager : MonoBehaviour
         //Debug.Log($"P1 HP: {p1Hp}, P2 HP: {p2Hp}");
 
 
-    //何秒経過後、ボタン押されていない場合、引分
+        //何秒経過後、ボタン押されていない場合、引分
     }
     private IEnumerator WaitForTimeout()
     {
@@ -294,7 +314,7 @@ public class GameManager : MonoBehaviour
     //            StopCoroutine(crowFlashCoroutine);
     //        crowFlashCoroutine = StartCoroutine(FlashCrow());
     //    }
-        
+
     //}
 
     //private IEnumerator FlashCrow()
