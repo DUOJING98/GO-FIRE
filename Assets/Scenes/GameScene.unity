@@ -1045,7 +1045,7 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 0
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -2005,11 +2005,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfff2214a913dee4e85ec7b6187229d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
-  rotateSpeed: 180
-  rightX: 10
-  leftX: -10
---- !u!1 &969554552
+leftX: -10
+rightX: 10
+minSpeed: 1
+maxSpeed: 3
+rotateSpeed: 180
+speedChangeInterval: {x: 2, y: 5}
+stutterChance: 0.15
+stutterSpeedScale: 0.55
+stutterDuration: 0.15
+bobAmplitude: 0.08
+bobFrequency: 2.2
+bobNoise: 0.4
+hopInterval: {x: 0.8, y: 1.8}
+hopInitialVelocity: 1.6
+gravity: 9.8
+squashMin: 0.82
+squashRecover: 12--- !u!1 &969554552
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2198,10 +2210,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfff2214a913dee4e85ec7b6187229d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
-  rotateSpeed: 180
-  rightX: 10
+  direction: 1
   leftX: -10
+  rightX: 10
+  minSpeed: 1
+  maxSpeed: 3
+  rotateSpeed: 180
+  speedChangeInterval: {x: 2, y: 5}
+  stutterChance: 0.15
+  stutterSpeedScale: 0.55
+  stutterDuration: 0.15
+  bobAmplitude: 0.08
+  bobFrequency: 2.2
+  bobNoise: 0.4
+  hopInterval: {x: 0.8, y: 1.8}
+  hopInitialVelocity: 1.6
+  gravity: 9.8
+  squashMin: 0.82
+  squashRecover: 12
 --- !u!1 &1097104321
 GameObject:
   m_ObjectHideFlags: 0
