@@ -18,10 +18,10 @@ public class Push : MonoBehaviour
     // private GameObject readyText;
 
     private InputSystem_Actions action;
-    [Header("item")]
-    private bool canPress = false;
-    private bool isRealGo = false;
-    private bool hasPressed = false;
+    //[Header("item")]
+    //private bool canPress = false;
+    //private bool isRealGo = false;
+    //private bool hasPressed = false;
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -37,19 +37,31 @@ public class Push : MonoBehaviour
         }
     }
 
-    public void BeginRound(bool isGO)
-    {
-        canPress = true;
-        isRealGo = isGO;
-        hasPressed = false;
+    //public void BeginRound(bool isGO)
+    //{
+    //    //canPress = true;
+    //    //isRealGo = isGO;
+    //    //hasPressed = false;
 
+    //}
+    public void SetFirePose()
+    {
+        if (spriteRenderer != null && fireStandSprite != null)
+            spriteRenderer.sprite = fireStandSprite;
+    }
+
+    public void SetStandPose()
+    {
+        if (spriteRenderer != null && standSprite != null)
+            spriteRenderer.sprite = standSprite;
     }
 
     public void ResetRound()
     {
-        //
-        if (spriteRenderer != null && standSprite != null)
-            spriteRenderer.sprite = standSprite;
+        //if (spriteRenderer != null && standSprite != null)
+        //    spriteRenderer.sprite = standSprite;
+        SetStandPose();
+
     }
 
     private void OnEnable()
@@ -61,8 +73,8 @@ public class Push : MonoBehaviour
 
     private void OnDisable()
     {
-        action.Player1.Disable();
-        action.Player2.Disable();
+        if (playerName == "P1") action.Player1.Disable();
+        else if (playerName == "P2") action.Player2.Disable();
     }
 
     void OnFire(InputAction.CallbackContext context)
@@ -87,8 +99,6 @@ public class Push : MonoBehaviour
         //Debug.Log("Fire");
 
         // 
-        if (spriteRenderer != null && fireStandSprite != null)
-            spriteRenderer.sprite = fireStandSprite;
 
         //if (isRealGo)
 

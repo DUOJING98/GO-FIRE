@@ -104,8 +104,10 @@ public class GameManager : MonoBehaviour
         CDM.timerText.text = "0.0";
         CDM.UIText.text = null;
         firstPlayerPressed = null;
-        p1.ResetRound();
-        p2.ResetRound();
+        //p1.ResetRound();
+        //p2.ResetRound();
+        p1.SetStandPose();
+        p2.SetStandPose();
         CDM.canInput = false;
         CDM.hasGoAppeared = false;
         currentIsRealSignal = false; // 初始化为false，避免意外  
@@ -149,8 +151,6 @@ public class GameManager : MonoBehaviour
     {
         CDM.canInput = true;
         roundEnded = false;
-        p1.BeginRound(isRealGo);
-        p2.BeginRound(isRealGo);
     }
 
     public void PlayerPressed(string playerName, bool isCorrect)
@@ -197,6 +197,8 @@ public class GameManager : MonoBehaviour
         }
 
         firstPlayerPressed = playerName;
+        p1.SetFirePose();
+        p2.SetFirePose();
         CDM.StopLoop();
         CDM.StopUpdateTimer(); //按下时停止计时器
         CDM.StopCountdown(); //stop time count
