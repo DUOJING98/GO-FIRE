@@ -233,8 +233,8 @@ public class GameManager : MonoBehaviour
         }
         else if (currentIsRealSignal)
         {
-            if (isP1) p2Hp -= 50;
-            else p1Hp -= 50;
+            if (isP1) { p2Hp -= 50; p2.GetComponent<DamageFlash>().TakeDamage(); }
+            else { p1Hp -= 50; p1.GetComponent<DamageFlash>().TakeDamage(); }
             CDM.reactionText.gameObject.SetActive(true);
             CDM.UIText.text = $"{playerName} HIT!";
             CDM.reactionText.text = $"{reaction:0.000}s";
@@ -242,8 +242,8 @@ public class GameManager : MonoBehaviour
         }
         else if (!currentIsRealSignal)
         {
-            if (isP1) p1Hp -= 50;
-            else p2Hp -= 50;
+            if (isP1){ p1Hp -= 50; p1.GetComponent<DamageFlash>().TakeDamage(); }
+            else { p2Hp -= 50; p2.GetComponent<DamageFlash>().TakeDamage(); }
             CDM.UIText.text = $"{playerName} MISS!";
             audioSource.Play();
         }
