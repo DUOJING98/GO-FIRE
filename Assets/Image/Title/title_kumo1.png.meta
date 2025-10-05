@@ -159,7 +159,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      title_kumo1_0: 373794394855273569
+      title_kumo1_1: -8857129281241822721
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
