@@ -226,19 +226,19 @@ public class GameManager : MonoBehaviour
         }
 
 
-        void SetPerfect()
-        {
-            p1HPBar.gameObject.SetActive(false);
-            p2HPBar.gameObject.SetActive(false);
-            StartCoroutine(PerfactShow());
-        }
+        //void SetPerfect()
+        //{
+        //    p1HPBar.gameObject.SetActive(false);
+        //    p2HPBar.gameObject.SetActive(false);
+        //    StartCoroutine(PerfactShow());
+        //}
         
-        IEnumerator PerfactShow()
-        {
-            perfactBG.gameObject.SetActive(true);
-            yield return new WaitForSeconds(0.2f);
-            BlackBG.gameObject.SetActive(true);
-        }
+        //IEnumerator PerfactShow()
+        //{
+        //    perfactBG.gameObject.SetActive(true);
+        //    yield return new WaitForSeconds(0.2f);
+        //    BlackBG.gameObject.SetActive(true);
+        //}
 
         //反応時間表示
         float reaction = CDM.GetCurrentReactionTime();
@@ -246,7 +246,7 @@ public class GameManager : MonoBehaviour
         if (isPerfect)
         {
             //  Perfect 命中
-            SetPerfect();
+            //SetPerfect();
             if (isP1) p2Hp -= 100;
             else p1Hp -= 100;
             CDM.reactionText.gameObject.SetActive(true);
