@@ -1,3 +1,4 @@
+﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static InputSystem_Actions;
@@ -10,12 +11,12 @@ public class Push : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     [Header("pose")]
     [SerializeField] Sprite standSprite;// 
-    [SerializeField] Sprite fireStandSprite;// 
-    //[SerializeField] Sprite fireCrouchSprite;// 
-    //[SerializeField] Sprite fireJumpSprite;// 
+    [SerializeField] Sprite[] fireStandSprite;// 
+                                              //[SerializeField] Sprite fireCrouchSprite;// 
+                                              //[SerializeField] Sprite fireJumpSprite;// 
 
-   // [SerializeField] GameObject readyPrefab;
-   // private GameObject readyText;
+    // [SerializeField] GameObject readyPrefab;
+    // private GameObject readyText;
 
     private InputSystem_Actions action;
     [Header("item")]
@@ -67,34 +68,38 @@ public class Push : MonoBehaviour
 
     void OnFire(InputAction.CallbackContext context)
     {
+        string keyName = context.control.displayName; // 按键名称
+        var digits = new string(keyName.Where(char.IsDigit).ToArray());
+        int num = digits.Length > 0 ? int.Parse(digits) : -1;
         if (manager.isWaitingForReady)
         {
-            manager.PlayerPressed(playerName, true);
-            //if (readyPrefab != null && readyText == null)
-            //{
-            //    Vector3 avoveHead = transform.position + new Vector3(0, 1.5f, 0);
-            //    readyText = Instantiate(readyPrefab, avoveHead, Quaternion.identity);
-            //}
+            Debug.Log("waiting ready state");
+            manager.PlayerPressed(playerName, num);
             return;
         }
+
         if (!manager.CDM.canInput)
         {
-            manager.PlayerPressed(playerName, false);
             return;
         }
-        if (!canPress || hasPressed) return;
+
+        if (num > 0)
+        {
+            //manager.PlayerPressed(playerName, num);
+        }
         // 
-        if (!string.IsNullOrEmpty(manager.FirstPlayerPressed)) return;
-        hasPressed = true;
+        //if (!string.IsNullOrEmpty(manager.FirstPlayerPressed)) return;
+        ////hasPressed = true;
         //Debug.Log("Fire");
 
-
         // 
-        if (spriteRenderer != null && fireStandSprite != null)
-            spriteRenderer.sprite = fireStandSprite;
-
+        if (spriteRenderer != null && fireStandSprite != null && num > 0)
+        {
+            spriteRenderer.sprite = fireStandSprite[num - 1];
+            manager.PlayerPressed(playerName, num);
+        }
         //if (isRealGo)
-        manager.PlayerPressed(playerName, true);
+
     }
 
     //public void ClearReady()

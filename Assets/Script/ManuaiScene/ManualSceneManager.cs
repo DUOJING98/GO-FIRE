@@ -4,15 +4,15 @@ using UnityEngine.UI;
 
 public class ManualSceneManager : MonoBehaviour
 {
-    [SerializeField] Button ToGame;
+    [SerializeField] Button ToManual;
     [SerializeField] Button ToTitle;
 
 
     private void Awake()
     {
-        if (ToGame != null)
+        if (ToManual != null)
         {
-            ToGame.onClick.AddListener(ToGameScene);
+            ToManual.onClick.AddListener(ToManual2);
         }
         if(ToTitle != null)
         {
@@ -20,11 +20,17 @@ public class ManualSceneManager : MonoBehaviour
         }
     }
 
-
-
-    void ToGameScene()
+    private void Update()
     {
-        SceneManager.LoadScene("GameScene");
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
+    void ToManual2()
+    {
+        SceneManager.LoadScene("ManualScene2");
     }
 
     void ToTitleScene()
@@ -37,7 +43,7 @@ public class ManualSceneManager : MonoBehaviour
     {
         Application.Quit();
 #if UNITY_EDITOR
-        Debug.Log("GameOver");
+        //Debug.Log("GameOver");
 #endif
     }
 }

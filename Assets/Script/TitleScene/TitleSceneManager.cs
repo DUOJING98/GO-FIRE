@@ -20,35 +20,42 @@ public class TitleSceneManager : MonoBehaviour
         if (ManualButton != null)
         {
             ManualButton.onClick.AddListener(OnOpenManual);
+
+
+            if (QuitButton != null)
+            {
+                QuitButton.onClick.AddListener(OnQuitGame);
+            }
         }
 
-        if (QuitButton != null)
+        // Update is called once per frame
+        //void Update()
+        //{
+        //    if (Input.GetKeyDown(KeyCode.Escape))
+        //    {
+        //        Application.Quit();
+        //    }
+        //}
+
+        void OnStartGame()
         {
-            QuitButton.onClick.AddListener(OnQuitGame);
+            SceneManager.LoadScene("GameScene");
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        void OnOpenManual()
+        {
+            SceneManager.LoadScene("ManualScene1");
+        }
 
-    void OnStartGame()
-    {
-        SceneManager.LoadScene("GameScene");
-    }
+        void OnQuitGame()
+        {
 
-    void OnOpenManual()
-    {
-        SceneManager.LoadScene("ManualScene");
-    }
 
-    void OnQuitGame()
-    {
-        Application.Quit();
+
+            Application.Quit();
 #if UNITY_EDITOR
-        Debug.Log("GameOver");
+            // Debug.Log("GameOver");
 #endif
+        }
     }
 }
