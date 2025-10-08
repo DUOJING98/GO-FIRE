@@ -430,7 +430,7 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 0
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -911,7 +911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f813bd6e606f5a24a8998ff7898fe5e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ToGame: {fileID: 1356024363}
+  ToManual: {fileID: 0}
   ToTitle: {fileID: 1159846604}
 --- !u!4 &1200141025
 Transform:
