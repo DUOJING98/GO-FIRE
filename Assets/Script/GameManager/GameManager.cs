@@ -3,10 +3,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements;
-using UnityEngine.Audio;
-using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +14,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] HealthBar p2HPBar;
     [SerializeField] Text Perfect;
     [SerializeField] AudioClip audioClip;
+    [SerializeField] GameObject ReadySE;
+    [SerializeField] GameObject DamageSE;
     private AudioSource audioSource;
 
     [SerializeField] private int p1Hp = 100, p2Hp = 100, BaseDamage = 20, damage, firstAttackNum;
@@ -140,8 +138,17 @@ public class GameManager : MonoBehaviour
         //ボタンを押すと準備完了
         if (isWaitingForReady)
         {
-            if (playerName == "P1") P1Ready = true;
-            if (playerName == "P2") P2Ready = true;
+            if (playerName == "P1")
+            {
+                P1Ready = true;
+                ReadySE.GetComponent<PlaySE>().PlaySound();
+            }
+            if (playerName == "P2")
+            {
+                P2Ready = true;
+                ReadySE.GetComponent<PlaySE>().PlaySound();
+
+            }
             if (P1Ready) p1ready.gameObject.SetActive(true);
             if (P2Ready) p2ready.gameObject.SetActive(true);
             //重複押す防止
@@ -284,8 +291,16 @@ public class GameManager : MonoBehaviour
         reaction = MathF.Round(reaction * 1000f) / 1000f;
         if (currentIsRealSignal)
         {
-            if (playerName == "P1") p2Hp -= damage;
-            else p1Hp -= damage;
+            if (playerName == "P1")
+            {
+                p2Hp -= damage;
+                p2.GetComponent<DamageFlash>().TakeDamage(); // 被弾演出
+            }
+            else
+            {
+                p1Hp -= damage;
+                p1.GetComponent<DamageFlash>().TakeDamage(); // 被弾演出
+            }
             CDM.reactionText.gameObject.SetActive(true);
             CDM.UIText.text = isPerfect ? "PERFECT!!" : $"{playerName} HIT!";
             CDM.reactionText.text = $"{reaction:0.000}s";
@@ -299,6 +314,7 @@ public class GameManager : MonoBehaviour
             audioSource.Play();
         }
 
+        DamageSE.GetComponent<PlaySE>().PlaySound();
         p1HPBar.setHP(p1Hp);
         p2HPBar.setHP(p2Hp);
 

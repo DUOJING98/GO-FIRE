@@ -395,6 +395,9 @@ MonoBehaviour:
   onGoSignal:
     m_PersistentCalls:
       m_Calls: []
+  onFirstPlayerPushSignal:
+    m_PersistentCalls:
+      m_Calls: []
   onFakeSignal:
     m_PersistentCalls:
       m_Calls: []
@@ -1608,6 +1611,7 @@ GameObject:
   m_Component:
   - component: {fileID: 543755326}
   - component: {fileID: 543755325}
+  - component: {fileID: 543755327}
   m_Layer: 0
   m_Name: DamageSE
   m_TagString: Untagged
@@ -1720,13 +1724,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 543755324}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.3386626, y: -1.0891255, z: -11.361219}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 834346903}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &543755327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543755324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0eb240c8894c384c8905cb0be58fc5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 543755325}
 --- !u!1 &581186285
 GameObject:
   m_ObjectHideFlags: 0
@@ -2356,7 +2373,10 @@ MonoBehaviour:
   playerName: P1
   manager: {fileID: 1885399653}
   standSprite: {fileID: -3094375360393090321, guid: 71cc413c83edca6429b4d5bc590d2eec, type: 3}
-  fireStandSprite: {fileID: 1564820588122725543, guid: 358647be9cb92044199b8823b419eb8e, type: 3}
+  fireStandSprite:
+  - {fileID: 1502180272991327084, guid: c16dda57679e68c46bd70831df26adfd, type: 3}
+  - {fileID: 1564820588122725543, guid: 358647be9cb92044199b8823b419eb8e, type: 3}
+  - {fileID: -4086727292227006206, guid: b57b2cb9e58c86b4cb827e0dcaa26a3c, type: 3}
 --- !u!114 &756262335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2632,6 +2652,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1561268789}
+  - {fileID: 543755326}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &883792202
@@ -8517,11 +8538,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8046f8aad2a92ed40974d5c224e2e415, type: 3}
---- !u!82 &1561268787 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 5923212722483541772, guid: 8046f8aad2a92ed40974d5c224e2e415, type: 3}
-  m_PrefabInstance: {fileID: 1561268786}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1561268789 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8385837037006462622, guid: 8046f8aad2a92ed40974d5c224e2e415, type: 3}
@@ -9188,13 +9204,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1885399651}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.052335896, z: 0, w: 0.9986295}
   m_LocalPosition: {x: 1013.4489, y: 449.16214, z: -2.460929}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 6, z: 0}
 --- !u!114 &1885399653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9214,22 +9230,18 @@ MonoBehaviour:
   p2HPBar: {fileID: 699238497}
   Perfect: {fileID: 1691079733}
   audioClip: {fileID: 8300000, guid: c6b04ab9c83705c478edf4e65837eb2d, type: 3}
+  ReadySE: {fileID: 2123343194}
+  DamageSE: {fileID: 543755324}
   p1Hp: 100
   p2Hp: 100
+  BaseDamage: 20
+  damage: 0
+  firstAttackNum: 0
   isWaitingForReady: 1
-  readySE: {fileID: 1561268787}
-  PushToReady: {fileID: 267310199}
   p1ready: {fileID: 1337467425}
   p2ready: {fileID: 634358398}
   gameOverText: {fileID: 506114189}
   perfectTime: 0.2
-  perfactBG: {fileID: 604537752}
-  BlackBG: {fileID: 93885973}
-  Flash1: {fileID: 1065907476}
-  muzzlePoint1: {fileID: 1578130780}
-  muzzlePoint2: {fileID: 1306749696}
-  muzzleFlash1: {fileID: 1578130783}
-  muzzleFlash2: {fileID: 1306749697}
 --- !u!82 &1885399654
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9521,7 +9533,10 @@ MonoBehaviour:
   playerName: P2
   manager: {fileID: 1885399653}
   standSprite: {fileID: -8956492304416441916, guid: 42771a7ed14b08b42bc3a0c92df54802, type: 3}
-  fireStandSprite: {fileID: -4013901361570327894, guid: 9c2c021447d0bf94b83dced46d9df17a, type: 3}
+  fireStandSprite:
+  - {fileID: 4393232579670885312, guid: 8939061a0ea80ca43b7a94f5cfc6069d, type: 3}
+  - {fileID: -4013901361570327894, guid: 9c2c021447d0bf94b83dced46d9df17a, type: 3}
+  - {fileID: -7893365281429987114, guid: 36aae029e7d4d6a41b238a7d254820b6, type: 3}
 --- !u!114 &2095286745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9626,6 +9641,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2100205987}
   m_CullTransparentMesh: 1
+--- !u!1 &2123343194 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5660852665199537762, guid: 8046f8aad2a92ed40974d5c224e2e415, type: 3}
+  m_PrefabInstance: {fileID: 1561268786}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2130635837
 GameObject:
   m_ObjectHideFlags: 0
@@ -9883,4 +9903,3 @@ SceneRoots:
   - {fileID: 2141987781}
   - {fileID: 1254156323}
   - {fileID: 834346903}
-  - {fileID: 543755326}
