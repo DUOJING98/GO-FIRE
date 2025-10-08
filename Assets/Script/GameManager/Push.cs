@@ -9,11 +9,13 @@ public class Push : MonoBehaviour
     public string playerName = " ";
     public GameManager manager;
     private SpriteRenderer spriteRenderer;
+    public GameObject RPS;
     [Header("pose")]
     [SerializeField] Sprite standSprite;// 
     [SerializeField] Sprite[] fireStandSprite;// 
-                                              //[SerializeField] Sprite fireCrouchSprite;// 
-                                              //[SerializeField] Sprite fireJumpSprite;// 
+    [SerializeField] Sprite[] RPSSprite;// 
+                                        //[SerializeField] Sprite fireCrouchSprite;// 
+                                        //[SerializeField] Sprite fireJumpSprite;// 
 
     // [SerializeField] GameObject readyPrefab;
     // private GameObject readyText;
@@ -52,6 +54,7 @@ public class Push : MonoBehaviour
         //
         if (spriteRenderer != null && standSprite != null)
             spriteRenderer.sprite = standSprite;
+        RPS.SetActive(false);
     }
 
 
@@ -101,7 +104,6 @@ public class Push : MonoBehaviour
         int num = digits.Length > 0 ? int.Parse(digits) : -1;
         if (manager.isWaitingForReady)
         {
-            Debug.Log("waiting ready state");
             manager.PlayerPressed(playerName, num);
             return;
         }
@@ -126,6 +128,8 @@ public class Push : MonoBehaviour
             if (GameManager.currentIsRealSignal)
             {
                 spriteRenderer.sprite = fireStandSprite[num - 1];
+                RPS.SetActive(true);
+                RPS.GetComponent<SpriteRenderer>().sprite = RPSSprite[num - 1];
             }
             manager.PlayerPressed(playerName, num);
         }

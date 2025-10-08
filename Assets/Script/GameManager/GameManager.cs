@@ -101,6 +101,7 @@ public class GameManager : MonoBehaviour
         isPerfect = false;
         CDM.timerText.text = "0.0";
         CDM.UIText.text = null;
+        CDM.PerfectText.text = null;
         firstPlayerPressed = null;
         p1.ResetRound();
         p2.ResetRound();
@@ -269,9 +270,13 @@ public class GameManager : MonoBehaviour
     {
         //damage calc
         damage = BaseDamage;
-        if (firstAttackNum > attackNum || (firstAttackNum == 1 && attackNum == 3) || !(P1Inputed && P2Inputed))
+        if (firstAttackNum - attackNum == 1 || firstAttackNum - attackNum == -2 || !(P1Inputed && P2Inputed))
         {
-            damage += 20;
+            damage += 10;
+        }
+        else if (firstAttackNum != attackNum)
+        {
+            damage -= 10;
         }
         if (isPerfect)
         {
@@ -285,7 +290,9 @@ public class GameManager : MonoBehaviour
             if (playerName == "P1") p2Hp -= damage;
             else p1Hp -= damage;
             CDM.reactionText.gameObject.SetActive(true);
-            CDM.UIText.text = isPerfect ? "PERFECT!!" : $"{playerName} HIT!";
+            CDM.UIText.text = $"{playerName}" + (damage > BaseDamage ? " HEAVY HIT!" : damage == BaseDamage ? " HIT!" : " LIGHT HIT!");
+            Debug.Log("damage=" + damage);
+            CDM.PerfectText.text = isPerfect ? "Perfect!" : null;
             CDM.reactionText.text = $"{reaction:0.000}s";
             audioSource.Play();
         }
