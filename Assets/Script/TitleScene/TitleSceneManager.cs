@@ -14,7 +14,7 @@ public class TitleSceneManager : MonoBehaviour
     {
         if (StartButton != null)
         {
-            StartButton.onClick.AddListener(OnOpenManual);
+            StartButton.onClick.AddListener(OnStartGame);
         }
 
         if (ManualButton != null)
@@ -44,7 +44,7 @@ public class TitleSceneManager : MonoBehaviour
 
     void OnOpenManual()
     {
-        SceneManager.LoadScene("ManualScene");
+        SceneManager.LoadScene("ManualScene1");
     }
 
     void OnQuitGame()
