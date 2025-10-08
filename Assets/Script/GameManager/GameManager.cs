@@ -262,7 +262,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("firstNum=" + firstAttackNum + "  secondNum=" + attackNum);
         //damage calc
         damage = BaseDamage;
-        if (firstAttackNum > attackNum || (firstAttackNum == 1 && attackNum == 3))
+        if (firstAttackNum > attackNum || (firstAttackNum == 1 && attackNum == 3) || !(P1Inputed && P2Inputed))
         {
             damage += 20;
         }
