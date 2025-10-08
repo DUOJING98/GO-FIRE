@@ -69,11 +69,11 @@ MonoBehaviour:
     material: {fileID: 2100000, guid: de535ca4e0e9d09479345b59043b3219, type: 2}
     injectionPoint: 500
     intensity: 1
-    tint: {r: 0.8879232, g: 0.6444799, b: 0.36130688, a: 1}
+    tint: {r: 0.93011117, g: 0.597202, b: 0.27467737, a: 1}
     noiseScale: 0.7
     distort: 0
     grain: 0.5
     streak: 0.5
-    vignette: 0.5
+    vignette: 0.1
     windDir: {x: 1, y: 0.15}
     speed: 0.5
