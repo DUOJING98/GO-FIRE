@@ -3,7 +3,11 @@
 public class Kusa : MonoBehaviour
 {
     [Header("風・移動")]
+<<<<<<< Updated upstream
     public int direction = 1; // 1 右向き, -1 左向き
+=======
+    public int direction = 1;            // 1 右向き, -1 左向き
+>>>>>>> Stashed changes
     public float leftX = -10f;
     public float rightX = 10f;
 
@@ -15,7 +19,11 @@ public class Kusa : MonoBehaviour
     [Tooltip("速度変化の更新間隔の範囲（秒）")]
     public Vector2 speedChangeInterval = new Vector2(2f, 5f);
     [Tooltip("スタッターが発生する確率（0~1）")]
+<<<<<<< Updated upstream
     [Range(0f, 1f)] public float stutterChance = 0f; // 抽動を避けるためデフォルト0
+=======
+    [Range(0f, 1f)] public float stutterChance = 0f;   // 抽動を避けるためデフォルト0
+>>>>>>> Stashed changes
     [Tooltip("スタッター時の速度割合（0~1）")]
     [Range(0.2f, 1f)] public float stutterSpeedScale = 0.55f;
     [Tooltip("スタッターの持続時間（秒）")]
@@ -27,7 +35,11 @@ public class Kusa : MonoBehaviour
     [Tooltip("バウンスの周波数（Hz）")]
     public float bobFrequency = 1.8f;
     [Tooltip("バウンスのランダム位相/ノイズ強度（不規則さを抑えるなら0推奨）")]
+<<<<<<< Updated upstream
     public float bobNoise = 0f; // 不規則な揺れを減らすためデフォルト0
+=======
+    public float bobNoise = 0f;          // 不規則な揺れを減らすためデフォルト0
+>>>>>>> Stashed changes
 
     [Header("ホップ / 小さなジャンプ")]
     [Tooltip("ジャンプ間隔の範囲（秒）")]
@@ -47,7 +59,11 @@ public class Kusa : MonoBehaviour
     [Tooltip("1フレームあたりの最大回転角度（度）")]
     public float maxDegPerFrame = 720f;
 
+<<<<<<< Updated upstream
     private float baseY; // 地面の基準高さ
+=======
+    private float baseY;                 // 地面の基準高さ
+>>>>>>> Stashed changes
     private float curSpeed;
     private float targetSpeed;
     private float speedTimer = 0f;
@@ -69,11 +85,19 @@ public class Kusa : MonoBehaviour
 
     // スクワッシュ＆ストレッチ
     private Vector3 baseScale;
+<<<<<<< Updated upstream
     private float squash = 1f; // 1 通常；<1 垂直方向につぶれ
 
     // 回転（無滑り）
     private float lastX;
     private float accumDeg; // 積算角度（度）
+=======
+    private float squash = 1f;   // 1 通常；<1 垂直方向につぶれ
+
+    // 回転（無滑り）
+    private float lastX;
+    private float accumDeg;      // 積算角度（度）
+>>>>>>> Stashed changes
 
     void Start()
     {
@@ -189,7 +213,11 @@ public class Kusa : MonoBehaviour
         if (direction == 1 && transform.position.x > rightX)
         {
             transform.position = new Vector3(leftX, transform.position.y, transform.position.z);
+<<<<<<< Updated upstream
             lastX = transform.position.x; // dx暴発防止
+=======
+            lastX = transform.position.x;  // dx暴発防止
+>>>>>>> Stashed changes
         }
         else if (direction == -1 && transform.position.x < leftX)
         {
@@ -200,6 +228,7 @@ public class Kusa : MonoBehaviour
         // —— スクワッシュ回復（時間経過で元に戻る） ——
         squash = Mathf.Lerp(squash, 1f, dt * squashRecover);
         transform.localScale = new Vector3(
+<<<<<<< Updated upstream
         baseScale.x / Mathf.Sqrt(Mathf.Max(0.0001f, squash)),
         baseScale.y * squash,
         baseScale.z
@@ -207,3 +236,11 @@ public class Kusa : MonoBehaviour
     }
 }
 
+=======
+            baseScale.x / Mathf.Sqrt(Mathf.Max(0.0001f, squash)),
+            baseScale.y * squash,
+            baseScale.z
+        );
+    }
+}
+>>>>>>> Stashed changes
