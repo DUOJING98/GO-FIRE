@@ -75,10 +75,10 @@ public class Push : MonoBehaviour
     /// <summary>
     /// ラウンド開始時の表示初期化（将来拡張に備え、メソッドとして分離）。
     /// </summary>
-    public void ResetRound()
-    {
-        SetStandPose(false);
-    }
+    //public void ResetRound()
+    //{
+    //    SetStandPose(false);
+    //}
 
 
     private void OnEnable()

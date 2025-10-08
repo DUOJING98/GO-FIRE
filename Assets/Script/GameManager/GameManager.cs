@@ -96,7 +96,6 @@ public class GameManager : MonoBehaviour
     }
     private void StartNewRound()
     {
-        Debug.Log("start new round");
         roundEnded = false;
         Perfect.text = null;
         isPerfect = false;
