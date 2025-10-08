@@ -27,15 +27,9 @@ public class GameManager : MonoBehaviour
     private Coroutine signalLoopCoroutine;
     private string firstPlayerPressed = null; // 最初にボタンを押したプレイヤー
     public string FirstPlayerPressed => firstPlayerPressed;
-
     private float goSignalTime = -1f, firstPlayerPushSignalTime = -1f;
     private Coroutine timeoutCoroutine;     //タイムアウトの検査
     private Coroutine WaitForSecondPlayerTimeoutCoroutine;
-
-
-    private float goSignalTime = -1f;               // GOが出た時刻（Perfect判定用）
-    private Coroutine timeoutCoroutine;             // タイムアウト監視用（使用例はWaitForTimeoutに集約）
-    public bool isMiss;
 
     [Header("Ready")]
     //開始前の準備
@@ -51,32 +45,8 @@ public class GameManager : MonoBehaviour
     [Header("GameOver")]
     [SerializeField] Text gameOverText;
 
-    [Header("Perfect 判定")]
-    [SerializeField] float perfectTime = 3.0f;      // GO後、何秒以内ならPerfect扱いにするか
-
-    [Header("Perfect 演出（未使用サンプル）")]
-    [SerializeField] GameObject perfactBG;          // Perfect背景（使用例はコメント化）
-    [SerializeField] GameObject BlackBG;            // 演出用黒背景（使用例はコメント化）
-
-    [Header("FireFlash")]
-    public Flash1 Flash1;
-    [SerializeField] Transform muzzlePoint1;
-    [SerializeField] Transform muzzlePoint2;
-    [SerializeField] Flash muzzleFlash1;
-    [SerializeField] Flash muzzleFlash2;
-
-    private void Awake()
-    {
-        if (!muzzlePoint1 && muzzlePoint1 != null)
-        {
-            muzzleFlash1 = muzzlePoint1.GetComponent<Flash>();
-        }
-        if (!muzzlePoint2 && muzzlePoint2 != null)
-        {
-            muzzleFlash2 = muzzlePoint2.GetComponent<Flash>();
-        }
-        p1.SetStandPose(false); p2.SetStandPose(false);
-    }
+    [Header("TEST")]
+    [SerializeField] float perfectTime = 1.0f;
 
     private void Start()
     {
@@ -126,7 +96,6 @@ public class GameManager : MonoBehaviour
     }
     private void StartNewRound()
     {
-
         Debug.Log("start new round");
         roundEnded = false;
         Perfect.text = null;
@@ -134,17 +103,8 @@ public class GameManager : MonoBehaviour
         CDM.timerText.text = "0.0";
         CDM.UIText.text = null;
         firstPlayerPressed = null;
-
         p1.ResetRound();
         p2.ResetRound();
-
-
-        // プレイヤー姿勢をスタンドにリセット
-        p1.SetStandPose(false);
-        p2.SetStandPose(false);
-
-        // 入力とシグナル状態の初期化
-
         CDM.canInput = false;
         CDM.hasGoAppeared = false;
         currentIsRealSignal = false; // 初始化为false，避免意外  
@@ -221,57 +181,11 @@ public class GameManager : MonoBehaviour
         }
         if (playerName == "P1")
         {
-
             P1Inputed = true;
         }
         else
         {
             P2Inputed = true;
-
-            isMiss = false;
-            // 本物のGO中に正しく押せた：相手へ50ダメージ
-            if (isP1)
-            {
-                if (muzzleFlash1) muzzleFlash1.TriggerFlash();
-                if (Flash1) Flash1.TriggerFlash();
-                p2Hp -= 50;
-                p2.GetComponent<DamageFlash>().TakeDamage(); // 被弾演出
-            }
-            else
-            {
-                if (muzzleFlash2) muzzleFlash2.TriggerFlash();
-
-                if (Flash1) Flash1.TriggerFlash();
-                p1Hp -= 50;
-                p1.GetComponent<DamageFlash>().TakeDamage();
-            }
-            CDM.reactionText.gameObject.SetActive(true);
-            CDM.UIText.text = $"{playerName} HIT!";
-            CDM.reactionText.text = $"{reaction:0.000}s";
-
-            audioSource.Play();
-        }
-        else
-        {
-            isMiss = true;
-            // フェイク中に押した：自傷50ダメージ（ミス）
-            if (isP1)
-            {
-                p1.SetStandPose(true);
-                p2.SetFirePose();
-                p1Hp -= 50;
-                p1.GetComponent<DamageFlash>().TakeDamage();
-            }
-            else
-            {
-                p2.SetStandPose(true);
-                p1.SetFirePose();
-                p2Hp -= 50;
-                p2.GetComponent<DamageFlash>().TakeDamage();
-            }
-            CDM.UIText.text = $"{playerName} MISS!";
-            audioSource.Play();
-
         }
 
         CDM.StopLoop();
