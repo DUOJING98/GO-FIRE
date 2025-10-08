@@ -72,6 +72,10 @@ public class Push : MonoBehaviour
             spriteRenderer.sprite = standSprite;
     }
 
+    //public void SetMissPose()
+    //{
+        
+    //}
     /// <summary>
     /// ラウンド開始時の表示初期化（将来拡張に備え、メソッドとして分離）。
     /// </summary>

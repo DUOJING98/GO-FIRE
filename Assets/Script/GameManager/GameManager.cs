@@ -61,6 +61,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject perfactBG;          // Perfect背景（使用例はコメント化）
     [SerializeField] GameObject BlackBG;            // 演出用黒背景（使用例はコメント化）
 
+    [Header("FireFlash")]
+    public Flash1 Flash1;
+    [SerializeField] Transform muzzlePoint1;
+    [SerializeField] Transform muzzlePoint2;
+    [SerializeField] Flash muzzleFlash1;
+    [SerializeField] Flash muzzleFlash2;
+
+    private void Awake()
+    {
+        if (!muzzlePoint1 && muzzlePoint1 != null)
+        {
+            muzzleFlash1 = muzzlePoint1.GetComponent<Flash>();
+        }
+        if (!muzzlePoint2 && muzzlePoint2 != null)
+        {
+            muzzleFlash2 = muzzlePoint2.GetComponent<Flash>();
+        }
+    }
+
     private void Start()
     {
         // --- SE初期化 ---
@@ -210,8 +229,8 @@ public class GameManager : MonoBehaviour
         firstPlayerPressed = playerName;
 
         // 双方発砲ポーズに切替（演出）
-        p1.SetFirePose();
-        p2.SetFirePose();
+        //p1.SetFirePose();
+        //p2.SetFirePose();
 
         // カウント/ループ停止（反応時間計測の締め）
         CDM.StopLoop();
@@ -251,17 +270,23 @@ public class GameManager : MonoBehaviour
             // 本物のGO中に正しく押せた：相手へ50ダメージ
             if (isP1)
             {
+                if (muzzleFlash1) muzzleFlash1.TriggerFlash();
+                if (Flash1) Flash1.TriggerFlash();
                 p2Hp -= 50;
                 p2.GetComponent<DamageFlash>().TakeDamage(); // 被弾演出
             }
             else
             {
+                if (muzzleFlash2) muzzleFlash2.TriggerFlash();
+
+                if (Flash1) Flash1.TriggerFlash();
                 p1Hp -= 50;
                 p1.GetComponent<DamageFlash>().TakeDamage();
             }
             CDM.reactionText.gameObject.SetActive(true);
             CDM.UIText.text = $"{playerName} HIT!";
             CDM.reactionText.text = $"{reaction:0.000}s";
+
             audioSource.Play();
         }
         else
@@ -269,11 +294,15 @@ public class GameManager : MonoBehaviour
             // フェイク中に押した：自傷50ダメージ（ミス）
             if (isP1)
             {
+                p1.GetComponent<SpriteRenderer>().transform.localScale = new Vector3(0, 180, 0);
+                p2.SetFirePose();
                 p1Hp -= 50;
                 p1.GetComponent<DamageFlash>().TakeDamage();
             }
             else
             {
+                p2.GetComponent<SpriteRenderer>().transform.localScale = new Vector3(0, 180, 0);
+                p1.SetFirePose();
                 p2Hp -= 50;
                 p2.GetComponent<DamageFlash>().TakeDamage();
             }
