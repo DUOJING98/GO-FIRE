@@ -156,7 +156,6 @@ public class GameManager : MonoBehaviour
         // ラウンド終了、入力不可、または既に入力済みの場合は無視
         if (roundEnded || firstPlayerPressed == playerName)
         {
-            Debug.Log("can not input !!");
             return;
         }
         // ダメージ処理
@@ -293,9 +292,9 @@ public class GameManager : MonoBehaviour
         else
         {
             if (playerName == "P1") p1Hp -= BaseDamage;
-            else p2Hp -= damage;
+            else p2Hp -= BaseDamage;
             CDM.UIText.text = $"{playerName} MISS!";
-            audioSource.Play();
+            //audioSource.Play();
         }
 
         p1HPBar.setHP(p1Hp);

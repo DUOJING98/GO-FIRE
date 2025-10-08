@@ -123,7 +123,10 @@ public class Push : MonoBehaviour
         // 
         if (spriteRenderer != null && fireStandSprite != null && num > 0)
         {
-            spriteRenderer.sprite = fireStandSprite[num - 1];
+            if (GameManager.currentIsRealSignal)
+            {
+                spriteRenderer.sprite = fireStandSprite[num - 1];
+            }
             manager.PlayerPressed(playerName, num);
         }
         //if (isRealGo)
