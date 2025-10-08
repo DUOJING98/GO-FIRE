@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioClip audioClip;
     private AudioSource audioSource;
 
-    [SerializeField] private int p1Hp = 100, p2Hp = 100, BaseDamage = 30, damage, firstAttackNum;
+    [SerializeField] private int p1Hp = 100, p2Hp = 100, BaseDamage = 20, damage, firstAttackNum;
 
     private bool roundEnded = false;
     public static bool currentIsRealSignal = false;
@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour
             CDM.StopUpdateTimer(); //按下时停止计时器
             StartCoroutine(nameof(WaitForSecondPlayerTimeout));
         }
-        if (playerName == "p1")
+        if (playerName == "P1")
         {
             P1Inputed = true;
         }
@@ -192,6 +192,7 @@ public class GameManager : MonoBehaviour
         //次の人が撃てるのかを判断する
         if (P1Inputed && P2Inputed)
         {
+            Debug.Log("P1Inputed && P2Inputed,attackNum=" + attackNum);
             StopCoroutine(nameof(WaitForSecondPlayerTimeout));
             CDM.canInput = false;
             playerAttack(isPerfect, firstPlayerPressed, attackNum);
