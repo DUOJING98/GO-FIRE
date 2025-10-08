@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     public string FirstPlayerPressed => firstPlayerPressed;
     private float goSignalTime = -1f;               // GOが出た時刻（Perfect判定用）
     private Coroutine timeoutCoroutine;             // タイムアウト監視用（使用例はWaitForTimeoutに集約）
-
+    public bool isMiss;
     [Header("Ready")]
     /// <summary>試合開始前の「準備OK?」フェーズのフラグ。</summary>
     public bool isWaitingForReady = true;
@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
         {
             muzzleFlash2 = muzzlePoint2.GetComponent<Flash>();
         }
+        p1.SetStandPose(false); p2.SetStandPose(false);
     }
 
     private void Start()
@@ -132,6 +133,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void StartNewRound()
     {
+
         Debug.Log("start new round");
 
         // 案内非表示＆状態初期化
@@ -143,8 +145,8 @@ public class GameManager : MonoBehaviour
         firstPlayerPressed = null;
 
         // プレイヤー姿勢をスタンドにリセット
-        p1.SetStandPose();
-        p2.SetStandPose();
+        p1.SetStandPose(false);
+        p2.SetStandPose(false);
 
         // 入力とシグナル状態の初期化
         CDM.canInput = false;
@@ -267,6 +269,7 @@ public class GameManager : MonoBehaviour
         }
         else if (currentIsRealSignal)
         {
+            isMiss = false;
             // 本物のGO中に正しく押せた：相手へ50ダメージ
             if (isP1)
             {
@@ -291,17 +294,18 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            isMiss = true;
             // フェイク中に押した：自傷50ダメージ（ミス）
             if (isP1)
             {
-                p1.GetComponent<SpriteRenderer>().transform.localScale = new Vector3(0, 180, 0);
+                p1.SetStandPose(true);
                 p2.SetFirePose();
                 p1Hp -= 50;
                 p1.GetComponent<DamageFlash>().TakeDamage();
             }
             else
             {
-                p2.GetComponent<SpriteRenderer>().transform.localScale = new Vector3(0, 180, 0);
+                p2.SetStandPose(true);
                 p1.SetFirePose();
                 p2Hp -= 50;
                 p2.GetComponent<DamageFlash>().TakeDamage();

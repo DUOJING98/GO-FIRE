@@ -66,22 +66,26 @@ public class Push : MonoBehaviour
     /// <summary>
     /// 待機（スタンド）ポーズへ切替（演出）。
     /// </summary>
-    public void SetStandPose()
+    public void SetStandPose(bool isMiss)
     {
-        if (spriteRenderer != null && standSprite != null)
-            spriteRenderer.sprite = standSprite;
+        if (isMiss)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else
+        {
+            if (spriteRenderer != null && standSprite != null)
+                spriteRenderer.sprite = standSprite;
+        }
     }
 
-    //public void SetMissPose()
-    //{
-        
-    //}
+
     /// <summary>
     /// ラウンド開始時の表示初期化（将来拡張に備え、メソッドとして分離）。
     /// </summary>
     public void ResetRound()
     {
-        SetStandPose();
+        SetStandPose(false);
     }
 
     private void OnEnable()
