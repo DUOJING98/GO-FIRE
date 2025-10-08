@@ -1,0 +1,86 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\UnityGame\\Github\\GO-FIRE\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3E6FA60D-2C8D-992C-6513-B2700DB2C53A}|Assembly-CSharp.csproj|e:\\unitygame\\github\\go-fire\\assets\\script\\ui\\healthbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E6FA60D-2C8D-992C-6513-B2700DB2C53A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\ui\\healthbar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E6FA60D-2C8D-992C-6513-B2700DB2C53A}|Assembly-CSharp.csproj|e:\\unitygame\\github\\go-fire\\assets\\script\\gamemanager\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E6FA60D-2C8D-992C-6513-B2700DB2C53A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\gamemanager\\gamemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E6FA60D-2C8D-992C-6513-B2700DB2C53A}|Assembly-CSharp.csproj|E:\\UnityGame\\Github\\GO-FIRE\\assets\\script\\gamemanager\\countdownmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E6FA60D-2C8D-992C-6513-B2700DB2C53A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\gamemanager\\countdownmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E6FA60D-2C8D-992C-6513-B2700DB2C53A}|Assembly-CSharp.csproj|E:\\UnityGame\\Github\\GO-FIRE\\assets\\script\\gamemanager\\push.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E6FA60D-2C8D-992C-6513-B2700DB2C53A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\gamemanager\\push.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "HealthBar.cs",
+              "DocumentMoniker": "E:\\UnityGame\\Github\\GO-FIRE\\Assets\\Script\\UI\\HealthBar.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\UI\\HealthBar.cs",
+              "ToolTip": "E:\\UnityGame\\Github\\GO-FIRE\\Assets\\Script\\UI\\HealthBar.cs",
+              "RelativeToolTip": "Assets\\Script\\UI\\HealthBar.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-23T13:41:48.768Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Push.cs",
+              "DocumentMoniker": "E:\\UnityGame\\Github\\GO-FIRE\\Assets\\Script\\GameManager\\Push.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\GameManager\\Push.cs",
+              "ToolTip": "E:\\UnityGame\\Github\\GO-FIRE\\Assets\\Script\\GameManager\\Push.cs",
+              "RelativeToolTip": "Assets\\Script\\GameManager\\Push.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T12:02:18.248Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CountDownManager.cs",
+              "DocumentMoniker": "E:\\UnityGame\\Github\\GO-FIRE\\Assets\\Script\\GameManager\\CountDownManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\GameManager\\CountDownManager.cs",
+              "ToolTip": "E:\\UnityGame\\Github\\GO-FIRE\\Assets\\Script\\GameManager\\CountDownManager.cs",
+              "RelativeToolTip": "Assets\\Script\\GameManager\\CountDownManager.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAIwCUAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T12:03:24.669Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GameManager.cs",
+              "DocumentMoniker": "E:\\UnityGame\\Github\\GO-FIRE\\Assets\\Script\\GameManager\\GameManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\GameManager\\GameManager.cs",
+              "ToolTip": "E:\\UnityGame\\Github\\GO-FIRE\\Assets\\Script\\GameManager\\GameManager.cs",
+              "RelativeToolTip": "Assets\\Script\\GameManager\\GameManager.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAYwEoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-16T11:51:08.617Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
