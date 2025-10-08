@@ -293,7 +293,7 @@ public class GameManager : MonoBehaviour
         }
         else if (!currentIsRealSignal)
         {
-            if (playerName == "P1") p1Hp -= damage;
+            if (playerName == "P1") p1Hp -= BaseDamage;
             else p2Hp -= damage;
             CDM.UIText.text = $"{playerName} MISS!";
             audioSource.Play();
