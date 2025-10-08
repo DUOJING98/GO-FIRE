@@ -291,7 +291,6 @@ public class GameManager : MonoBehaviour
             else p1Hp -= damage;
             CDM.reactionText.gameObject.SetActive(true);
             CDM.UIText.text = $"{playerName}" + (damage > BaseDamage ? " HEAVY HIT!" : damage == BaseDamage ? " HIT!" : " LIGHT HIT!");
-            Debug.Log("damage=" + damage);
             CDM.PerfectText.text = isPerfect ? "Perfect!" : null;
             CDM.reactionText.text = $"{reaction:0.000}s";
             audioSource.Play();

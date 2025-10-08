@@ -1903,11 +1903,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: P1
   manager: {fileID: 1885399653}
+  RPS: {fileID: 1253111353}
   standSprite: {fileID: -3094375360393090321, guid: 71cc413c83edca6429b4d5bc590d2eec, type: 3}
   fireStandSprite:
   - {fileID: 1564820588122725543, guid: 358647be9cb92044199b8823b419eb8e, type: 3}
   - {fileID: -4086727292227006206, guid: b57b2cb9e58c86b4cb827e0dcaa26a3c, type: 3}
   - {fileID: 1502180272991327084, guid: c16dda57679e68c46bd70831df26adfd, type: 3}
+  RPSSprite:
+  - {fileID: -5689264619536540805, guid: 7ee64beaf2b844743bc19e46bf899484, type: 3}
+  - {fileID: 1030347621761604427, guid: 8dda0b778731a1c4c983b67e1e4f99dc, type: 3}
+  - {fileID: -6228308234692837048, guid: 321ebe1ba05f6c344afeb9eda457e38a, type: 3}
 --- !u!1 &759607416
 GameObject:
   m_ObjectHideFlags: 0
@@ -2149,12 +2154,12 @@ GameObject:
   - component: {fileID: 944077771}
   - component: {fileID: 944077772}
   m_Layer: 0
-  m_Name: RPS
+  m_Name: RPS_P2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &944077771
 Transform:
   m_ObjectHideFlags: 0
@@ -2686,12 +2691,12 @@ GameObject:
   - component: {fileID: 1253111354}
   - component: {fileID: 1253111355}
   m_Layer: 0
-  m_Name: RPS
+  m_Name: RPS_P1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1253111354
 Transform:
   m_ObjectHideFlags: 0
@@ -2963,7 +2968,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1691079730
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3907,11 +3912,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerName: P2
   manager: {fileID: 1885399653}
+  RPS: {fileID: 944077770}
   standSprite: {fileID: -8956492304416441916, guid: 42771a7ed14b08b42bc3a0c92df54802, type: 3}
   fireStandSprite:
   - {fileID: -4013901361570327894, guid: 9c2c021447d0bf94b83dced46d9df17a, type: 3}
   - {fileID: -7893365281429987114, guid: 36aae029e7d4d6a41b238a7d254820b6, type: 3}
   - {fileID: 4393232579670885312, guid: 8939061a0ea80ca43b7a94f5cfc6069d, type: 3}
+  RPSSprite:
+  - {fileID: -5689264619536540805, guid: 7ee64beaf2b844743bc19e46bf899484, type: 3}
+  - {fileID: 1030347621761604427, guid: 8dda0b778731a1c4c983b67e1e4f99dc, type: 3}
+  - {fileID: -6228308234692837048, guid: 321ebe1ba05f6c344afeb9eda457e38a, type: 3}
 --- !u!1 &2100205987
 GameObject:
   m_ObjectHideFlags: 0
