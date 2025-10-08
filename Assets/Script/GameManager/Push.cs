@@ -70,7 +70,7 @@ public class Push : MonoBehaviour
     {
         string keyName = context.control.displayName; // 按键名称
         var digits = new string(keyName.Where(char.IsDigit).ToArray());
-        int num = digits.Length > 0 ? int.Parse(digits) : 1;
+        int num = digits.Length > 0 ? int.Parse(digits) : -1;
         if (manager.isWaitingForReady)
         {
             Debug.Log("waiting ready state");
@@ -83,17 +83,21 @@ public class Push : MonoBehaviour
             return;
         }
 
-        Debug.Log("can input state");
-        manager.PlayerPressed(playerName, num);
+        if (num > 0)
+        {
+            //manager.PlayerPressed(playerName, num);
+        }
         // 
         //if (!string.IsNullOrEmpty(manager.FirstPlayerPressed)) return;
         ////hasPressed = true;
         //Debug.Log("Fire");
 
         // 
-        if (spriteRenderer != null && fireStandSprite != null)
+        if (spriteRenderer != null && fireStandSprite != null && num > 0)
+        {
             spriteRenderer.sprite = fireStandSprite[num - 1];
-
+            manager.PlayerPressed(playerName, num);
+        }
         //if (isRealGo)
 
     }
