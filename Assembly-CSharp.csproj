@@ -67,6 +67,7 @@
     <Compile Include="Assets\Script\EndingScene\EndingSceneManager.cs" />
     <Compile Include="Assets\Script\Effect\DamageFlash.cs" />
     <Compile Include="Assets\Script\GameManager\CountDownManager.cs" />
+    <Compile Include="Assets\Script\GameManager\ScoreManager.cs" />
     <Compile Include="Assets\ButtonSound.cs" />
     <Compile Include="Assets\Script\Iteam\Kusa.cs" />
     <Compile Include="Assets\Script\UI\HealthBar.cs" />

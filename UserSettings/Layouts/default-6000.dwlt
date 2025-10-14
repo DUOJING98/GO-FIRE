@@ -95,8 +95,8 @@ MonoBehaviour:
     y: 0
     width: 315
     height: 545
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 226}
+  m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -298,8 +298,8 @@ MonoBehaviour:
     y: 0
     width: 495
     height: 933
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 76}
+  m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -427,8 +427,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 315
-    y: 79
+    x: 1
+    y: 24
     width: 1108
     height: 648
   m_SerializedDataModeController:
@@ -1109,7 +1109,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 79
+    y: 24
     width: 314
     height: 519
   m_SerializedDataModeController:
@@ -1175,7 +1175,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 624
+    y: 569
     width: 314
     height: 362
   m_SerializedDataModeController:
@@ -1218,7 +1218,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 35.333344}
     m_SelectedIDs: 28b60000
     m_LastClickedID: 46632
-    m_ExpandedIDs: 000000000ab20000
+    m_ExpandedIDs: 00000000b0b30000b2b30000b4b30000b6b30000b8b30000bab30000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1247,7 +1247,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 120}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff000000000ab2000010b200004eb200005ed4000060d400006cd40000
+    m_ExpandedIDs: 00000000b0b30000b2b30000b4b30000b6b30000b8b30000bab30000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1326,8 +1326,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Console\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 315
-    y: 753
+    x: 1
+    y: 698
     width: 1108
     height: 233
   m_SerializedDataModeController:
@@ -1362,8 +1362,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1425
-    y: 79
+    x: 1426
+    y: 24
     width: 494
     height: 907
   m_SerializedDataModeController:

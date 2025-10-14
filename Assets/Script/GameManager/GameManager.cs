@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     private AudioSource audioSource;
 
     [SerializeField] private int p1Hp = 100, p2Hp = 100, BaseDamage = 20, damage, firstAttackNum;
+    private int player1PerfectTimes, player2PerfectTimes, player1RPSWinTimes, player2RPSWinTimes;
 
     private bool roundEnded = false;
     public static bool currentIsRealSignal = false;
@@ -50,6 +51,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        //clear gamedatas
+        PlayerPrefs.DeleteAll();
         //SE
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = audioClip;
@@ -169,6 +172,14 @@ public class GameManager : MonoBehaviour
             if (timeSinceGo <= perfectTime)
             {
                 isPerfect = true;
+                if (isP1)
+                {
+                    player1PerfectTimes++;
+                }
+                else
+                {
+                    player2PerfectTimes++;
+                }
             }
         }
         if (firstPlayerPressed == null)
@@ -236,10 +247,15 @@ public class GameManager : MonoBehaviour
     {
         CDM.signalText.text = null;
         //string winner;
-
+        PlayerPrefs.SetInt("player1Hp", p1Hp);
+        PlayerPrefs.SetInt("player2Hp", p2Hp);
+        PlayerPrefs.SetInt("player1PerfectTimes", player1PerfectTimes);
+        PlayerPrefs.SetInt("player2PerfectTimes", player2PerfectTimes);
+        PlayerPrefs.SetInt("player1RPSWinTimes", player1RPSWinTimes);
+        PlayerPrefs.SetInt("player2RPSWinTimes", player2RPSWinTimes);
         if (p1Hp <= 0)
         {
-            //winner = "P2";
+            //winner = "P2";   
             CDM.UIText.rectTransform.anchoredPosition = new Vector2(688, -448);
         }
         else
@@ -273,6 +289,14 @@ public class GameManager : MonoBehaviour
         if (firstAttackNum - attackNum == 1 || firstAttackNum - attackNum == -2 || !(P1Inputed && P2Inputed))
         {
             damage += 10;
+            if (firstPlayerPressed == "P1")
+            {
+                player1RPSWinTimes++;
+            }
+            else
+            {
+                player2RPSWinTimes++;
+            }
         }
         else if (firstAttackNum != attackNum)
         {
@@ -310,6 +334,8 @@ public class GameManager : MonoBehaviour
 
         if (p1Hp <= 0 || p2Hp <= 0)
         {
+            p1Hp = p1Hp < 0 ? 0 : p1Hp;
+            p2Hp = p2Hp < 0 ? 0 : p2Hp;
             EndGame();
         }
         else
