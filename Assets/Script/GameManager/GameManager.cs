@@ -289,15 +289,19 @@ public class GameManager : MonoBehaviour
         if (firstAttackNum - attackNum == 1 || firstAttackNum - attackNum == -2 || !(P1Inputed && P2Inputed))
         {
             damage += 10;
-            if (firstPlayerPressed == "P1")
+            if (currentIsRealSignal)
             {
-                player1RPSWinTimes++;
-            }
-            else
-            {
-                player2RPSWinTimes++;
+                if (firstPlayerPressed == "P1")
+                {
+                    player1RPSWinTimes++;
+                }
+                else
+                {
+                    player2RPSWinTimes++;
+                }
             }
         }
+           
         else if (firstAttackNum != attackNum)
         {
             damage -= 10;
