@@ -1,10 +1,13 @@
-﻿using UnityEngine.Rendering;
-using UnityEngine.UIElements;
-using UnityEngine.Audio;
+﻿
 using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.UI;
+using System;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,7 +22,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject DamageSE;//SE
     [SerializeField] GameObject ReadySE;//SE
     private AudioSource audioSource;
-    private DamageFlash damageFlash;
+    [SerializeField] DamageFlash damageFlash1;
+    [SerializeField] DamageFlash damageFlash2;
     [SerializeField] private int p1Hp = 100, p2Hp = 100, BaseDamage = 20, damage, firstAttackNum;
     private int player1PerfectTimes, player2PerfectTimes, player1RPSWinTimes, player2RPSWinTimes;
     private List<float> player1ReactionTime = new List<float>();
@@ -343,11 +347,13 @@ public class GameManager : MonoBehaviour
             {
                 p2Hp -= damage;
                 reaction = player1ReactionTime[player1ReactionTime.Count - 1];
+                damageFlash2.TakeDamage();
             }
             else
             {
                 p1Hp -= damage;
                 reaction = player2ReactionTime[player2ReactionTime.Count - 1];
+                damageFlash1.TakeDamage();
             }
             CDM.reactionText.gameObject.SetActive(true);
             CDM.UIText.text = $"{playerName}" + (damage > BaseDamage ? " HEAVY HIT!" : damage == BaseDamage ? " HIT!" : " LIGHT HIT!");

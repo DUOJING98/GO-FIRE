@@ -26,7 +26,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 18657
+  controlID: 18823
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -97,7 +97,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 1
+    m_EnableMouseInput: 0
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 18658
+  controlID: 18824
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -907,8 +907,8 @@ MonoBehaviour:
     y: 0
     width: 245
     height: 933
-  m_MinSize: {x: 202, y: 226}
-  m_MaxSize: {x: 4002, y: 4026}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 8}
   m_Panes:
   - {fileID: 8}
@@ -955,7 +955,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: c2700000
       m_LastClickedID: 0
-      m_ExpandedIDs: dadffefff0e6feff02e7feffa4e9feffc4e9feffdce9fefff8e9feff28eafeff90ebfeff60ecfeff28edfeff5a2cffff5462ffff668effff30f2ffff54b60000c6b6000022b7000088b70000
+      m_ExpandedIDs: 2adbfeffdadffefff0e6feff02e7feffa4e9feffc4e9feffdce9fefff8e9feff28eafeff90ebfeff60ecfeff28edfeff5a2cffff5462ffff668effff30f2ffff54b60000c6b6000022b7000088b70000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1053,7 +1053,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Script/GameManager
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1063,15 +1063,15 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Script/GameManager
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\24CI0521\GO-FIRE
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: c4b30000
-    m_LastClickedID: 46020
+    m_SelectedIDs: 0eb80000
+    m_LastClickedID: 47118
     m_ExpandedIDs: 00000000c2b30000c6b300007cb5000084b500008ab5000018b80000bcb9000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1178,8 +1178,8 @@ MonoBehaviour:
     y: 0
     width: 430
     height: 933
-  m_MinSize: {x: 276, y: 76}
-  m_MaxSize: {x: 4001, y: 4026}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 12}

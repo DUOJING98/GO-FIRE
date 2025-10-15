@@ -3414,7 +3414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f373d1dd4c7334441bbf256f3516e8ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.3
+  moveSpeed: 0.09
 --- !u!1 &1685372203
 GameObject:
   m_ObjectHideFlags: 0
@@ -4134,7 +4134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f373d1dd4c7334441bbf256f3516e8ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.5
+  moveSpeed: 0.05
 --- !u!1 &1842953760
 GameObject:
   m_ObjectHideFlags: 0
@@ -4224,6 +4224,8 @@ MonoBehaviour:
   audioClip: {fileID: 8300000, guid: c6b04ab9c83705c478edf4e65837eb2d, type: 3}
   DamageSE: {fileID: 1016332358}
   ReadySE: {fileID: 345223067}
+  damageFlash1: {fileID: 756262335}
+  damageFlash2: {fileID: 2095286745}
   p1Hp: 100
   p2Hp: 100
   BaseDamage: 20
