@@ -349,7 +349,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 p1Hp -= damage;
-                reaction = player1ReactionTime[player2ReactionTime.Count - 1];
+                reaction = player2ReactionTime[player2ReactionTime.Count - 1];
             }
             CDM.reactionText.gameObject.SetActive(true);
             CDM.UIText.text = $"{playerName}" + (damage > BaseDamage ? " HEAVY HIT!" : damage == BaseDamage ? " HIT!" : " LIGHT HIT!");
