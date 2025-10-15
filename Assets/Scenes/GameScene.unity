@@ -4233,7 +4233,7 @@ MonoBehaviour:
   p1ready: {fileID: 1337467425}
   p2ready: {fileID: 634358398}
   gameOverText: {fileID: 506114189}
-  perfectTime: 0.4
+  perfectTime: 0.3
 --- !u!82 &1885399654
 AudioSource:
   m_ObjectHideFlags: 0
