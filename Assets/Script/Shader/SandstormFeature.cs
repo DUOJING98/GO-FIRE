@@ -19,6 +19,7 @@ public class SandstormFeature : ScriptableRendererFeature
         [Range(0f, 1f)] public float vignette = 0.35f;
         public Vector2 windDir = new Vector2(1f, 0.15f);
         public float speed = 0.6f;
+        public float fade = 1f; // 可选，全局淡入淡出控制
     }
 
     class SandstormPass : ScriptableRenderPass
@@ -29,7 +30,12 @@ public class SandstormFeature : ScriptableRendererFeature
         Material mat;
         RTHandle tempRT;
 
-       
+        // 保持在 SandstormPass 类里声明这些字段（放在类顶部）：
+        float currentIntensity = 0f;
+        float intensityVelocity = 0f; // SmoothDamp 用的速度缓存
+
+        
+
         readonly int _Intensity = Shader.PropertyToID("_Intensity");
         readonly int _Tint = Shader.PropertyToID("_Tint");
         readonly int _NoiseScale = Shader.PropertyToID("_NoiseScale");
@@ -44,7 +50,8 @@ public class SandstormFeature : ScriptableRendererFeature
         {
             settings = s;
             profilingSampler = new ProfilingSampler(kTag);
-        }
+            
+    }
 
         public void Setup(Material m) => mat = m;
 
@@ -79,22 +86,15 @@ public class SandstormFeature : ScriptableRendererFeature
 
             var cmd = CommandBufferPool.Get(kTag);
 
-            float t = Time.time * 0.7f; // 控制风变化速度
-            float windNoise = Mathf.PerlinNoise(t, 1.23f); // 得到 0~1 平滑随机数
+            float t = Time.time * 0.25f;
+            float windNoise = Mathf.PerlinNoise(t, 1.23f);
+            float targetIntensity = settings.intensity * Mathf.Lerp(0.9f, 1.1f, windNoise);
 
-            // 强度：在 0.8~1.3 倍之间波动
-            float intensity = settings.intensity * Mathf.Lerp(0.8f, 1.3f, windNoise);
+            // 平滑变化
+            currentIntensity = Mathf.SmoothDamp(currentIntensity, targetIntensity, ref intensityVelocity, 1.2f);
 
-            // 扭曲：与风同步起伏
-            float distort = settings.distort * Mathf.Lerp(0.9f, 1.2f, windNoise);
-
-            // 颗粒：轻微颤动，频率可以略快一点
-            float grain = settings.grain * Mathf.Lerp(0.9f, 1.1f, Mathf.PerlinNoise(t * 1.8f, 2.56f));
-
-            // 下发到 shader
-            mat.SetFloat(_Intensity, intensity);
-            mat.SetFloat(_Distort, distort);
-            mat.SetFloat(_Grain, grain);
+            // 全局淡入淡出控制
+            mat.SetFloat(_Intensity, currentIntensity * settings.fade);
             //mat.SetFloat(_Intensity, settings.intensity);
             mat.SetColor(_Tint, settings.tint);
             mat.SetFloat(_NoiseScale, settings.noiseScale);
