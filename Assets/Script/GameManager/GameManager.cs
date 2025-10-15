@@ -169,7 +169,7 @@ public class GameManager : MonoBehaviour
 
         if (currentIsRealSignal)
         {
-            if (timeSinceGo <= perfectTime)
+            if (timeSinceGo <= perfectTime && firstPlayerPressed == null)
             {
                 isPerfect = true;
                 if (isP1)
@@ -180,6 +180,7 @@ public class GameManager : MonoBehaviour
                 {
                     player2PerfectTimes++;
                 }
+                Debug.Log("player1Perfect=" + player1PerfectTimes + "  player2Perfect=" + player2PerfectTimes);
             }
         }
         if (firstPlayerPressed == null)
@@ -301,7 +302,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-           
+
         else if (firstAttackNum != attackNum)
         {
             damage -= 10;
