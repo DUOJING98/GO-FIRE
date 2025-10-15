@@ -55,3 +55,4 @@ Assets/AssetStoreTools*
 
 # Ignore generated files from Unity Collaborate
 .collabignore
+/.vs/GO-FIRE/FileContentIndex
