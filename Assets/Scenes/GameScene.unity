@@ -3537,7 +3537,7 @@ MonoBehaviour:
   audioClip: {fileID: 8300000, guid: c6b04ab9c83705c478edf4e65837eb2d, type: 3}
   p1Hp: 100
   p2Hp: 100
-  BaseDamage: 20
+  BaseDamage: 50
   damage: 20
   firstAttackNum: 0
   isWaitingForReady: 1

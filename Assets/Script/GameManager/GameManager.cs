@@ -7,6 +7,9 @@ using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 using UnityEngine.Audio;
 using UnityEditor;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,7 +25,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private int p1Hp = 100, p2Hp = 100, BaseDamage = 20, damage, firstAttackNum;
     private int player1PerfectTimes, player2PerfectTimes, player1RPSWinTimes, player2RPSWinTimes;
-
+    private List<float> player1ReactionTime = new List<float>();
+    private List<float> player2ReactionTime = new List<float>();
     private bool roundEnded = false;
     public static bool currentIsRealSignal = false;
     private Coroutine signalLoopCoroutine;
@@ -31,6 +35,7 @@ public class GameManager : MonoBehaviour
     private float goSignalTime = -1f, firstPlayerPushSignalTime = -1f;
     private Coroutine timeoutCoroutine;     //タイムアウトの検査
     private Coroutine WaitForSecondPlayerTimeoutCoroutine;
+    private float reaction;
 
     [Header("Ready")]
     //開始前の準備
@@ -165,10 +170,12 @@ public class GameManager : MonoBehaviour
         // ダメージ処理
         bool isP1 = playerName == "P1";
         float timeSinceGo = Time.time - goSignalTime;
-        //Perfectチェック
 
         if (currentIsRealSignal)
         {
+            reaction = CDM.GetCurrentReactionTime();
+            reaction = MathF.Round(reaction * 1000f) / 1000f;
+            //Perfectチェック
             if (timeSinceGo <= perfectTime && firstPlayerPressed == null)
             {
                 isPerfect = true;
@@ -180,14 +187,24 @@ public class GameManager : MonoBehaviour
                 {
                     player2PerfectTimes++;
                 }
-                Debug.Log("player1Perfect=" + player1PerfectTimes + "  player2Perfect=" + player2PerfectTimes);
+            }
+            //add reaciontime
+            if (isP1)
+            {
+                player1ReactionTime.Add(reaction);
+                Debug.Log("P1 this time:" + reaction);
+            }
+            else
+            {
+                player2ReactionTime.Add(reaction);
+                Debug.Log("P2 this time:" + reaction);
             }
         }
         if (firstPlayerPressed == null)
         {
             firstPlayerPressed = playerName;
             firstAttackNum = attackNum;
-            CDM.StopUpdateTimer(); //按下时停止计时器
+            //CDM.StopUpdateTimer(); //按下时停止计时器
             WaitForSecondPlayerTimeoutCoroutine = StartCoroutine(WaitForSecondPlayerTimeout(isPerfect));
         }
         if (playerName == "P1")
@@ -254,6 +271,13 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("player2PerfectTimes", player2PerfectTimes);
         PlayerPrefs.SetInt("player1RPSWinTimes", player1RPSWinTimes);
         PlayerPrefs.SetInt("player2RPSWinTimes", player2RPSWinTimes);
+        //average reaction time
+        float player1AverageReaction = player1ReactionTime.Count != 0 ? player1ReactionTime.Average() : 1;
+        float player2AverageReaction = player2ReactionTime.Count != 0 ? player2ReactionTime.Average() : 1;
+        player1AverageReaction = Mathf.Round(player1AverageReaction * 1000f) / 1000f;
+        player2AverageReaction = Mathf.Round(player2AverageReaction * 1000f) / 1000f;
+        PlayerPrefs.SetFloat("player1AverageReaction", player1AverageReaction);
+        PlayerPrefs.SetFloat("player2AverageReaction", player2AverageReaction);
         if (p1Hp <= 0)
         {
             //winner = "P2";   
@@ -285,6 +309,7 @@ public class GameManager : MonoBehaviour
 
     void playerAttack(bool isPerfect, string playerName, int attackNum)
     {
+        CDM.StopUpdateTimer();
         //damage calc
         damage = BaseDamage;
         if (firstAttackNum - attackNum == 1 || firstAttackNum - attackNum == -2 || !(P1Inputed && P2Inputed))
@@ -312,12 +337,20 @@ public class GameManager : MonoBehaviour
             damage += 20;
         }
         //反応時間表示
-        float reaction = CDM.GetCurrentReactionTime();
-        reaction = MathF.Round(reaction * 1000f) / 1000f;
+        //float reaction = CDM.GetCurrentReactionTime();
+        //reaction = MathF.Round(reaction * 1000f) / 1000f;
         if (currentIsRealSignal)
         {
-            if (playerName == "P1") p2Hp -= damage;
-            else p1Hp -= damage;
+            if (playerName == "P1")
+            {
+                p2Hp -= damage;
+                reaction = player1ReactionTime[player1ReactionTime.Count - 1];
+            }
+            else
+            {
+                p1Hp -= damage;
+                reaction = player1ReactionTime[player2ReactionTime.Count - 1];
+            }
             CDM.reactionText.gameObject.SetActive(true);
             CDM.UIText.text = $"{playerName}" + (damage > BaseDamage ? " HEAVY HIT!" : damage == BaseDamage ? " HIT!" : " LIGHT HIT!");
             CDM.PerfectText.text = isPerfect ? "Perfect!" : null;
@@ -345,7 +378,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Invoke(nameof(StartNewRound), 2.5f);
+            Invoke(nameof(StartNewRound), 4f);
         }
     }
 }
