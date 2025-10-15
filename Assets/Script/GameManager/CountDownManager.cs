@@ -12,6 +12,7 @@ public class CountDownManager : MonoBehaviour
 
     public Text signalText;     //信号
     public Text UIText;         //UI文字
+    public Text PerfectText;
     public Text timerText;      //タイマー
     public Text reactionText;   //タイマー
 
@@ -103,7 +104,6 @@ public class CountDownManager : MonoBehaviour
 
     public IEnumerator SignalLoop()
     {
-        Debug.Log("start loop");
         canInput = true;
         while (!hasGoAppeared)
         {

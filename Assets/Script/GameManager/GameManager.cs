@@ -3,6 +3,10 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
+using UnityEngine.UIElements;
+using UnityEngine.Audio;
+using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,11 +18,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] HealthBar p2HPBar;
     [SerializeField] Text Perfect;
     [SerializeField] AudioClip audioClip;
-    [SerializeField] GameObject ReadySE;
-    [SerializeField] GameObject DamageSE;
     private AudioSource audioSource;
 
     [SerializeField] private int p1Hp = 100, p2Hp = 100, BaseDamage = 20, damage, firstAttackNum;
+    private int player1PerfectTimes, player2PerfectTimes, player1RPSWinTimes, player2RPSWinTimes;
 
     private bool roundEnded = false;
     public static bool currentIsRealSignal = false;
@@ -48,6 +51,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        //clear gamedatas
+        PlayerPrefs.DeleteAll();
         //SE
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = audioClip;
@@ -94,12 +99,12 @@ public class GameManager : MonoBehaviour
     }
     private void StartNewRound()
     {
-        Debug.Log("start new round");
         roundEnded = false;
         Perfect.text = null;
         isPerfect = false;
         CDM.timerText.text = "0.0";
         CDM.UIText.text = null;
+        CDM.PerfectText.text = null;
         firstPlayerPressed = null;
         p1.ResetRound();
         p2.ResetRound();
@@ -138,17 +143,8 @@ public class GameManager : MonoBehaviour
         //ボタンを押すと準備完了
         if (isWaitingForReady)
         {
-            if (playerName == "P1")
-            {
-                P1Ready = true;
-                ReadySE.GetComponent<PlaySE>().PlaySound();
-            }
-            if (playerName == "P2")
-            {
-                P2Ready = true;
-                ReadySE.GetComponent<PlaySE>().PlaySound();
-
-            }
+            if (playerName == "P1") P1Ready = true;
+            if (playerName == "P2") P2Ready = true;
             if (P1Ready) p1ready.gameObject.SetActive(true);
             if (P2Ready) p2ready.gameObject.SetActive(true);
             //重複押す防止
@@ -164,7 +160,6 @@ public class GameManager : MonoBehaviour
         // ラウンド終了、入力不可、または既に入力済みの場合は無視
         if (roundEnded || firstPlayerPressed == playerName)
         {
-            Debug.Log("can not input !!");
             return;
         }
         // ダメージ処理
@@ -174,9 +169,18 @@ public class GameManager : MonoBehaviour
 
         if (currentIsRealSignal)
         {
-            if (timeSinceGo <= perfectTime)
+            if (timeSinceGo <= perfectTime && firstPlayerPressed == null)
             {
                 isPerfect = true;
+                if (isP1)
+                {
+                    player1PerfectTimes++;
+                }
+                else
+                {
+                    player2PerfectTimes++;
+                }
+                Debug.Log("player1Perfect=" + player1PerfectTimes + "  player2Perfect=" + player2PerfectTimes);
             }
         }
         if (firstPlayerPressed == null)
@@ -244,10 +248,15 @@ public class GameManager : MonoBehaviour
     {
         CDM.signalText.text = null;
         //string winner;
-
+        PlayerPrefs.SetInt("player1Hp", p1Hp);
+        PlayerPrefs.SetInt("player2Hp", p2Hp);
+        PlayerPrefs.SetInt("player1PerfectTimes", player1PerfectTimes);
+        PlayerPrefs.SetInt("player2PerfectTimes", player2PerfectTimes);
+        PlayerPrefs.SetInt("player1RPSWinTimes", player1RPSWinTimes);
+        PlayerPrefs.SetInt("player2RPSWinTimes", player2RPSWinTimes);
         if (p1Hp <= 0)
         {
-            //winner = "P2";
+            //winner = "P2";   
             CDM.UIText.rectTransform.anchoredPosition = new Vector2(688, -448);
         }
         else
@@ -278,9 +287,25 @@ public class GameManager : MonoBehaviour
     {
         //damage calc
         damage = BaseDamage;
-        if (firstAttackNum > attackNum || (firstAttackNum == 1 && attackNum == 3) || !(P1Inputed && P2Inputed))
+        if (firstAttackNum - attackNum == 1 || firstAttackNum - attackNum == -2 || !(P1Inputed && P2Inputed))
         {
-            damage += 20;
+            damage += 10;
+            if (currentIsRealSignal)
+            {
+                if (firstPlayerPressed == "P1")
+                {
+                    player1RPSWinTimes++;
+                }
+                else
+                {
+                    player2RPSWinTimes++;
+                }
+            }
+        }
+
+        else if (firstAttackNum != attackNum)
+        {
+            damage -= 10;
         }
         if (isPerfect)
         {
@@ -291,30 +316,22 @@ public class GameManager : MonoBehaviour
         reaction = MathF.Round(reaction * 1000f) / 1000f;
         if (currentIsRealSignal)
         {
-            if (playerName == "P1")
-            {
-                p2Hp -= damage;
-                p2.GetComponent<DamageFlash>().TakeDamage(); // 被弾演出
-            }
-            else
-            {
-                p1Hp -= damage;
-                p1.GetComponent<DamageFlash>().TakeDamage(); // 被弾演出
-            }
+            if (playerName == "P1") p2Hp -= damage;
+            else p1Hp -= damage;
             CDM.reactionText.gameObject.SetActive(true);
-            CDM.UIText.text = isPerfect ? "PERFECT!!" : $"{playerName} HIT!";
+            CDM.UIText.text = $"{playerName}" + (damage > BaseDamage ? " HEAVY HIT!" : damage == BaseDamage ? " HIT!" : " LIGHT HIT!");
+            CDM.PerfectText.text = isPerfect ? "Perfect!" : null;
             CDM.reactionText.text = $"{reaction:0.000}s";
             audioSource.Play();
         }
         else
         {
             if (playerName == "P1") p1Hp -= BaseDamage;
-            else p2Hp -= damage;
+            else p2Hp -= BaseDamage;
             CDM.UIText.text = $"{playerName} MISS!";
-            audioSource.Play();
+            //audioSource.Play();
         }
 
-        DamageSE.GetComponent<PlaySE>().PlaySound();
         p1HPBar.setHP(p1Hp);
         p2HPBar.setHP(p2Hp);
 
@@ -322,6 +339,8 @@ public class GameManager : MonoBehaviour
 
         if (p1Hp <= 0 || p2Hp <= 0)
         {
+            p1Hp = p1Hp < 0 ? 0 : p1Hp;
+            p2Hp = p2Hp < 0 ? 0 : p2Hp;
             EndGame();
         }
         else
