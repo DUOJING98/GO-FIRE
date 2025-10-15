@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SandStorm
-  m_Shader: {fileID: 4800000, guid: 559277abadaf44e43b2171e969cf02f7, type: 3}
+  m_Shader: {fileID: 4800000, guid: bdc87031e0ccf1d409943711f8efdf0a, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -76,32 +76,32 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _Distort: 0
+    - _Distort: 0.7
     - _DstBlend: 0
     - _EnableExternalAlpha: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Grain: 0.5
-    - _Intensity: 1
+    - _Grain: 1
+    - _Intensity: 0.68
     - _Metallic: 0
     - _Mode: 0
-    - _NoiseScale: 0.7
+    - _NoiseScale: 1.2
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Speed: 0.5
+    - _Speed: 1
     - _SrcBlend: 1
-    - _Streak: 0.5
+    - _Streak: 1
     - _UVSec: 0
-    - _Vignette: 0.1
+    - _Vignette: 0.8
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Tint: {r: 0.93011117, g: 0.597202, b: 0.27467737, a: 1}
+    - _Tint: {r: 0.9911022, g: 0.3967553, b: 0.11443538, a: 1}
     - _WindDir: {r: 1, g: 0.15, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
