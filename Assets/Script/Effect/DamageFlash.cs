@@ -6,7 +6,7 @@ public class DamageFlash : MonoBehaviour
     private Color originalColor;
     [SerializeField] Color flashColor = Color.red;
     [SerializeField] float flashDuration = 0.1f;
-    public AudioSource damageSE;
+   
 
     private void Awake()
     {
@@ -18,7 +18,7 @@ public class DamageFlash : MonoBehaviour
     {
 
         StartCoroutine(Flash());
-        damageSE.Play();
+        
     }
 
     private System.Collections.IEnumerator Flash()
