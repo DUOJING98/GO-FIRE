@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
@@ -79,12 +79,27 @@ public class SandstormFeature : ScriptableRendererFeature
 
             var cmd = CommandBufferPool.Get(kTag);
 
-            
-            mat.SetFloat(_Intensity, settings.intensity);
+            float t = Time.time * 0.7f; // 控制风变化速度
+            float windNoise = Mathf.PerlinNoise(t, 1.23f); // 得到 0~1 平滑随机数
+
+            // 强度：在 0.8~1.3 倍之间波动
+            float intensity = settings.intensity * Mathf.Lerp(0.8f, 1.3f, windNoise);
+
+            // 扭曲：与风同步起伏
+            float distort = settings.distort * Mathf.Lerp(0.9f, 1.2f, windNoise);
+
+            // 颗粒：轻微颤动，频率可以略快一点
+            float grain = settings.grain * Mathf.Lerp(0.9f, 1.1f, Mathf.PerlinNoise(t * 1.8f, 2.56f));
+
+            // 下发到 shader
+            mat.SetFloat(_Intensity, intensity);
+            mat.SetFloat(_Distort, distort);
+            mat.SetFloat(_Grain, grain);
+            //mat.SetFloat(_Intensity, settings.intensity);
             mat.SetColor(_Tint, settings.tint);
             mat.SetFloat(_NoiseScale, settings.noiseScale);
-            mat.SetFloat(_Distort, settings.distort);
-            mat.SetFloat(_Grain, settings.grain);
+            //mat.SetFloat(_Distort, settings.distort);
+            //mat.SetFloat(_Grain, settings.grain);
             mat.SetFloat(_Streak, settings.streak);
             mat.SetFloat(_Vignette, settings.vignette);
             mat.SetVector(_WindDir, settings.windDir);
