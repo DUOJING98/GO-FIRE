@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 7ef65aecb955eb6478d2c33b8a6e83af
+guid: 40459e7bb4681de4ebb8a8a286c04ead
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 373794394855273569
-    second: title_kumo1_0
-  - first:
-      213: -8857129281241822721
-    second: title_kumo1_1
+      213: 7451475243789715342
+    second: dusty_new_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -40,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -49,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -78,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -103,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: title_kumo1_0
+      name: dusty_new_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 250
-        width: 6
-        height: 6
+        x: 0
+        y: 0
+        width: 992
+        height: 567
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,30 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 164716c850cff2500800000000000000
-      internalID: 373794394855273569
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: title_kumo1_1
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 212
-        width: 530
-        height: 186
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ff9ced588d7251580800000000000000
-      internalID: -8857129281241822721
+      spriteID: e8704be2145f86760800000000000000
+      internalID: 7451475243789715342
       vertices: []
       indices: 
       edges: []
@@ -150,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -160,8 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      title_kumo1_0: 373794394855273569
-      title_kumo1_1: -8857129281241822721
+      dusty_new_0: 7451475243789715342
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
