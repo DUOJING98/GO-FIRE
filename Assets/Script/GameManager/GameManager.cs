@@ -3,10 +3,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements;
-using UnityEngine.Audio;
-using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,8 +14,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] HealthBar p2HPBar;
     [SerializeField] Text Perfect;
     [SerializeField] AudioClip audioClip;
+    [SerializeField] GameObject DamageSE;//SE
+    [SerializeField] GameObject ReadySE;//SE
     private AudioSource audioSource;
-
+    private DamageFlash damageFlash;
     [SerializeField] private int p1Hp = 100, p2Hp = 100, BaseDamage = 20, damage, firstAttackNum;
     private int player1PerfectTimes, player2PerfectTimes, player1RPSWinTimes, player2RPSWinTimes;
 
@@ -56,6 +54,7 @@ public class GameManager : MonoBehaviour
         //SE
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = audioClip;
+       
 
         //文字表示演出
         CDM.signalText.gameObject.SetActive(true);
@@ -143,8 +142,8 @@ public class GameManager : MonoBehaviour
         //ボタンを押すと準備完了
         if (isWaitingForReady)
         {
-            if (playerName == "P1") P1Ready = true;
-            if (playerName == "P2") P2Ready = true;
+            if (playerName == "P1") { P1Ready = true; ReadySE.GetComponent<PlaySE>().PlaySound(); }
+            if (playerName == "P2") { P2Ready = true; ReadySE.GetComponent<PlaySE>().PlaySound(); }
             if (P1Ready) p1ready.gameObject.SetActive(true);
             if (P2Ready) p2ready.gameObject.SetActive(true);
             //重複押す防止
@@ -332,6 +331,8 @@ public class GameManager : MonoBehaviour
             //audioSource.Play();
         }
 
+        DamageSE.GetComponent<PlaySE>().PlaySound();
+        //damageFlash.TakeDamage();
         p1HPBar.setHP(p1Hp);
         p2HPBar.setHP(p2Hp);
 
