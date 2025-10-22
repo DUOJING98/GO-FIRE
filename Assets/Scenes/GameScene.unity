@@ -2772,14 +2772,14 @@ MonoBehaviour:
   direction: 1
   leftX: -10
   rightX: 10
-  minSpeed: 1.2
-  maxSpeed: 3
-  speedChangeInterval: {x: 2, y: 5}
+  minSpeed: 0.3
+  maxSpeed: 2
+  speedChangeInterval: {x: 3, y: 7}
   stutterChance: 0
   stutterSpeedScale: 0.2
   stutterDuration: 0
   bobAmplitude: 0.02
-  bobFrequency: 0.8
+  bobFrequency: 1
   bobNoise: 0
   hopInterval: {x: 0.8, y: 1.8}
   hopInitialVelocity: 0.8
@@ -3415,6 +3415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.09
+  respawnMargin: 1
 --- !u!1 &1685372203
 GameObject:
   m_ObjectHideFlags: 0
@@ -4135,6 +4136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.05
+  respawnMargin: 1
 --- !u!1 &1842953760
 GameObject:
   m_ObjectHideFlags: 0
