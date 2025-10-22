@@ -67,14 +67,14 @@ MonoBehaviour:
   m_Active: 1
   settings:
     material: {fileID: 2100000, guid: de535ca4e0e9d09479345b59043b3219, type: 2}
-    injectionPoint: 500
+    injectionPoint: 600
     intensity: 0.68
     tint: {r: 0.9911022, g: 0.3967553, b: 0.11443538, a: 1}
     noiseScale: 1.2
     distort: 0.7
-    grain: 1
+    grain: 0.2
     streak: 1
-    vignette: 0.8
+    vignette: 0.3
     windDir: {x: 1, y: 0.15}
     speed: 1
 --- !u!114 &5331724894827498968
@@ -86,19 +86,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 260e1e3989762564ca881bb841c0646a, type: 3}
+  m_Script: {fileID: 11500000, guid: b74c99ca6defbe744b63aefc1087b1d2, type: 3}
   m_Name: SandstormFeature
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
     material: {fileID: 2100000, guid: de535ca4e0e9d09479345b59043b3219, type: 2}
-    injectionPoint: 500
-    intensity: 1
-    tint: {r: 0.8879232, g: 0.6444799, b: 0.36130688, a: 1}
-    noiseScale: 0.7
-    distort: 0
-    grain: 0.5
-    streak: 0.5
-    vignette: 0.5
+    injectionPoint: 1000
+    intensity: 0.8
+    tint: {r: 0.95, g: 0.85, b: 0.6, a: 1}
+    noiseScale: 1.2
+    distort: 0.35
+    grain: 0.25
+    streak: 0.7
+    vignette: 0.35
     windDir: {x: 1, y: 0.15}
-    speed: 0.5
+    speed: 0.6

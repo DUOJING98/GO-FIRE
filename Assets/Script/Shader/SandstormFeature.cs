@@ -19,7 +19,7 @@ public class SandstormFeature : ScriptableRendererFeature
         [Range(0f, 1f)] public float vignette = 0.35f;
         public Vector2 windDir = new Vector2(1f, 0.15f);
         public float speed = 0.6f;
-        public float fade = 1f; // 可选，全局淡入淡出控制
+        
     }
 
     class SandstormPass : ScriptableRenderPass
@@ -29,12 +29,6 @@ public class SandstormFeature : ScriptableRendererFeature
         readonly new ProfilingSampler profilingSampler;
         Material mat;
         RTHandle tempRT;
-
-        // 保持在 SandstormPass 类里声明这些字段（放在类顶部）：
-        float currentIntensity = 0f;
-        float intensityVelocity = 0f; // SmoothDamp 用的速度缓存
-
-        
 
         readonly int _Intensity = Shader.PropertyToID("_Intensity");
         readonly int _Tint = Shader.PropertyToID("_Tint");
@@ -46,11 +40,14 @@ public class SandstormFeature : ScriptableRendererFeature
         readonly int _WindDir = Shader.PropertyToID("_WindDir");
         readonly int _Speed = Shader.PropertyToID("_Speed");
 
+        public float fade = 1f; // 可选，全局淡入淡出控制
+        float currentIntensity = 0f;
+        float intensityVelocity = 0f;
+
         public SandstormPass(SandstormSettings s)
         {
             settings = s;
             profilingSampler = new ProfilingSampler(kTag);
-            
     }
 
         public void Setup(Material m) => mat = m;
@@ -79,27 +76,26 @@ public class SandstormFeature : ScriptableRendererFeature
             if (src == null || src.rt == null)
 
             {
-                
                 // Debug.Log("[Sandstorm] Skip: invalid color target (scene switching)");
                 return;
             }
 
             var cmd = CommandBufferPool.Get(kTag);
 
-            float t = Time.time * 0.25f;
-            float windNoise = Mathf.PerlinNoise(t, 1.23f);
-            float targetIntensity = settings.intensity * Mathf.Lerp(0.9f, 1.1f, windNoise);
 
-            // 平滑变化
+            float t = Time.time * 0.25f; 
+            float windNoise = Mathf.PerlinNoise(t, 1.23f); 
+
+            float targetIntensity = settings.intensity * Mathf.Lerp(0.9f, 1.1f, windNoise);
+            float targetDistort = settings.distort * Mathf.Lerp(0.9f, 1.2f, windNoise);
+            float targetGrain = settings.grain * Mathf.Lerp(0.9f, 1.1f, Mathf.PerlinNoise(t * 1.8f, 2.56f));
+
             currentIntensity = Mathf.SmoothDamp(currentIntensity, targetIntensity, ref intensityVelocity, 1.2f);
 
-            // 全局淡入淡出控制
-            mat.SetFloat(_Intensity, currentIntensity * settings.fade);
-            //mat.SetFloat(_Intensity, settings.intensity);
-            mat.SetColor(_Tint, settings.tint);
-            mat.SetFloat(_NoiseScale, settings.noiseScale);
-            //mat.SetFloat(_Distort, settings.distort);
-            //mat.SetFloat(_Grain, settings.grain);
+            mat.SetFloat(_Intensity, currentIntensity * fade);
+
+            mat.SetFloat(_Distort, targetDistort);
+            mat.SetFloat(_Grain, targetGrain);
             mat.SetFloat(_Streak, settings.streak);
             mat.SetFloat(_Vignette, settings.vignette);
             mat.SetVector(_WindDir, settings.windDir);
@@ -107,6 +103,7 @@ public class SandstormFeature : ScriptableRendererFeature
 
             using (new ProfilingScope(cmd, profilingSampler))
             {
+                
                 Blitter.BlitCameraTexture(cmd, src, tempRT, mat, 0);
                 Blitter.BlitCameraTexture(cmd, tempRT, src);
             }

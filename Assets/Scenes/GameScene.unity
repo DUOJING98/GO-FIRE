@@ -2334,20 +2334,20 @@ MonoBehaviour:
   direction: 1
   leftX: -10
   rightX: 10
-  minSpeed: 1.2
+  minSpeed: 0.5
   maxSpeed: 3
   speedChangeInterval: {x: 2, y: 5}
   stutterChance: 0
-  stutterSpeedScale: 0.55
-  stutterDuration: 0.15
-  bobAmplitude: 0.06
-  bobFrequency: 1.8
+  stutterSpeedScale: 0.3
+  stutterDuration: 0
+  bobAmplitude: 0.02
+  bobFrequency: 1
   bobNoise: 0
-  hopInterval: {x: 1.6, y: 3.2}
-  hopInitialVelocity: 1.1
-  gravity: 8
-  squashMin: 0.88
-  squashRecover: 12
+  hopInterval: {x: 0.8, y: 1.8}
+  hopInitialVelocity: 1
+  gravity: 9.8
+  squashMin: 0.99
+  squashRecover: 10
   rollRadius: 0.5
   maxDegPerFrame: 720
 --- !u!1 &944077770
@@ -2776,15 +2776,15 @@ MonoBehaviour:
   maxSpeed: 3
   speedChangeInterval: {x: 2, y: 5}
   stutterChance: 0
-  stutterSpeedScale: 0.55
-  stutterDuration: 0.15
-  bobAmplitude: 0.06
-  bobFrequency: 1.8
+  stutterSpeedScale: 0.2
+  stutterDuration: 0
+  bobAmplitude: 0.02
+  bobFrequency: 0.8
   bobNoise: 0
-  hopInterval: {x: 1.6, y: 3.2}
-  hopInitialVelocity: 1.1
-  gravity: 8
-  squashMin: 0.88
+  hopInterval: {x: 0.8, y: 1.8}
+  hopInitialVelocity: 0.8
+  gravity: 9
+  squashMin: 1
   squashRecover: 12
   rollRadius: 0.5
   maxDegPerFrame: 720
