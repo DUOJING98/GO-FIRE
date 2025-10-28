@@ -76,16 +76,16 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _Distort: 0.42188525
+    - _Distort: 0.21296604
     - _DstBlend: 0
     - _EnableExternalAlpha: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Grain: 0.70385087
+    - _Grain: 0.7190957
     - _GrainContrast: 0.681
     - _GrainSizePx: 1.4
-    - _Intensity: 0.67836964
+    - _Intensity: 0.70233005
     - _Metallic: 0
     - _Mode: 0
     - _NoiseScale: 1.2

@@ -3,7 +3,7 @@ using UnityEngine;
 public class Cloud : MonoBehaviour
 {
     [Tooltip("…•½ˆÚ“®")]
-    public float moveSpeed = 0.5f;
+    public float moveSpeed = 0.3f;
 
     [Tooltip("á`–ÊŠO”»’è‚Ì—]”’")]
     public float respawnMargin = 1.0f;
@@ -30,7 +30,7 @@ public class Cloud : MonoBehaviour
 
         if (transform.position.x > screenRightX + respawnMargin)
         {
-            transform.position = new Vector3(screenLeftX - respawnMargin * 7, transform.position.y, transform.position.z);
+            transform.position = new Vector3(screenLeftX - respawnMargin, transform.position.y, transform.position.z);
         }
     }
 }

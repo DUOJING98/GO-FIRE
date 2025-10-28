@@ -71,7 +71,7 @@ MonoBehaviour:
     intensity: 0.68
     tint: {r: 0.7454045, g: 0.22322798, b: 0.056128494, a: 1}
     noiseScale: 1.2
-    distort: 0.4
+    distort: 0.2
     grain: 0.7
     streak: 1
     vignette: 0.3
