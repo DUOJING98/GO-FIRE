@@ -9,6 +9,14 @@ public class TitleSceneManager : MonoBehaviour
     [SerializeField] private Button ManualButton;//オープション＆説明
     [SerializeField] private Button QuitButton;          //退出
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,41 +28,43 @@ public class TitleSceneManager : MonoBehaviour
         if (ManualButton != null)
         {
             ManualButton.onClick.AddListener(OnOpenManual);
+
+
+            if (QuitButton != null)
+            {
+                QuitButton.onClick.AddListener(OnQuitGame);
+            }
         }
 
-        if (QuitButton != null)
-        {
-            QuitButton.onClick.AddListener(OnQuitGame);
-        }
-    }
+        // Update is called once per frame
+        //void Update()
+        //{
+        //    if (Input.GetKeyDown(KeyCode.Escape))
+        //    {
+        //        Application.Quit();
+        //    }
+        //}
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        
+        void OnStartGame()
         {
+            SceneManager.LoadScene("GameScene");
+        }
+
+        void OnOpenManual()
+        {
+            SceneManager.LoadScene("ManualScene1");
+        }
+
+        void OnQuitGame()
+        {
+
+
+
             Application.Quit();
-        }
-    }
-
-    void OnStartGame()
-    {
-        SceneManager.LoadScene("GameScene");
-    }
-
-    void OnOpenManual()
-    {
-        SceneManager.LoadScene("ManualScene1");
-    }
-
-    void OnQuitGame()
-    {
-       
-
-
-        Application.Quit();
 #if UNITY_EDITOR
-       // Debug.Log("GameOver");
+            // Debug.Log("GameOver");
 #endif
+        }
     }
 }
