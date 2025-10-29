@@ -316,7 +316,7 @@ public class GameManager : MonoBehaviour
         damage = BaseDamage;
         if (firstAttackNum - attackNum == 1 || firstAttackNum - attackNum == -2 || !(P1Inputed && P2Inputed))
         {
-            damage += 10;
+            damage += 20;
             if (currentIsRealSignal)
             {
                 if (firstPlayerPressed == "P1")
@@ -336,7 +336,7 @@ public class GameManager : MonoBehaviour
         }
         if (isPerfect)
         {
-            damage += 20;
+            damage += 50;
         }
         //反応時間表示
         //float reaction = CDM.GetCurrentReactionTime();
