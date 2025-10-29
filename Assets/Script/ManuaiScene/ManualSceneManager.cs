@@ -4,15 +4,15 @@ using UnityEngine.UI;
 
 public class ManualSceneManager : MonoBehaviour
 {
-    [SerializeField] Button ToManual;
+    [SerializeField] Button ToGame;
     [SerializeField] Button ToTitle;
 
 
     private void Awake()
     {
-        if (ToManual != null)
+        if (ToGame != null)
         {
-            ToManual.onClick.AddListener(ToManual2);
+            ToGame.onClick.AddListener(ToGameScene);
         }
         if(ToTitle != null)
         {
@@ -28,9 +28,9 @@ public class ManualSceneManager : MonoBehaviour
         }
     }
 
-    void ToManual2()
+    void ToGameScene()
     {
-        SceneManager.LoadScene("ManualScene2");
+        SceneManager.LoadScene("GameScene");
     }
 
     void ToTitleScene()
