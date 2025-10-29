@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
         //SE
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = audioClip;
-       
+
 
         //文字表示演出
         CDM.signalText.gameObject.SetActive(true);
@@ -314,77 +314,81 @@ public class GameManager : MonoBehaviour
         CDM.StopUpdateTimer();
         //damage calc
         damage = BaseDamage;
-        if (firstAttackNum - attackNum == 1 || firstAttackNum - attackNum == -2 || !(P1Inputed && P2Inputed))
+        if (firstAttackNum - attackNum == 1 || firstAttackNum - attackNum == -2 || !(P1Inputed && P2Inputed) && currentIsRealSignal)
         {
-            damage += 20;
-            if (currentIsRealSignal)
+            damage += 10;
+            if (firstPlayerPressed == "P1")
             {
-                if (firstPlayerPressed == "P1")
-                {
-                    player1RPSWinTimes++;
-                }
-                else
-                {
-                    player2RPSWinTimes++;
-                }
-            }
-        }
-
-        else if (firstAttackNum != attackNum)
-        {
-            damage -= 10;
-        }
-        if (isPerfect)
-        {
-            damage += 50;
-        }
-        //反応時間表示
-        //float reaction = CDM.GetCurrentReactionTime();
-        //reaction = MathF.Round(reaction * 1000f) / 1000f;
-        if (currentIsRealSignal)
-        {
-            if (playerName == "P1")
-            {
-                p2Hp -= damage;
-                reaction = player1ReactionTime[player1ReactionTime.Count - 1];
-                damageFlash2.TakeDamage();
+                player1RPSWinTimes++;
             }
             else
             {
-                p1Hp -= damage;
-                reaction = player2ReactionTime[player2ReactionTime.Count - 1];
-                damageFlash1.TakeDamage();
+                player2RPSWinTimes++;
             }
-            CDM.reactionText.gameObject.SetActive(true);
-            CDM.UIText.text = $"{playerName}" + (damage > BaseDamage ? " HEAVY HIT!" : damage == BaseDamage ? " HIT!" : " LIGHT HIT!");
-            CDM.PerfectText.text = isPerfect ? "Perfect!" : null;
-            CDM.reactionText.text = $"{reaction:0.000}s";
-            audioSource.Play();
         }
-        else
+        else if (firstAttackNum != attackNum && currentIsRealSignal)
         {
-            if (playerName == "P1") p1Hp -= BaseDamage;
-            else p2Hp -= BaseDamage;
-            CDM.UIText.text = $"{playerName} MISS!";
-            //audioSource.Play();
+            if (firstPlayerPressed == "P1")
+            {
+                player2RPSWinTimes++;
+            }
+            else
+            {
+                player1RPSWinTimes++;
+            }
+            damage -= 10;
         }
+        if (isPerfect)
+            {
+                damage += 40;
+            }
+            //反応時間表示
+            //float reaction = CDM.GetCurrentReactionTime();
+            //reaction = MathF.Round(reaction * 1000f) / 1000f;
+            if (currentIsRealSignal)
+            {
+                if (playerName == "P1")
+                {
+                    p2Hp -= damage;
+                    reaction = player1ReactionTime[player1ReactionTime.Count - 1];
+                    damageFlash2.TakeDamage();
+                }
+                else
+                {
+                    p1Hp -= damage;
+                    reaction = player2ReactionTime[player2ReactionTime.Count - 1];
+                    damageFlash1.TakeDamage();
+                }
+                CDM.reactionText.gameObject.SetActive(true);
+                CDM.UIText.text = $"{playerName}" + (damage > BaseDamage ? " HEAVY HIT!" : damage == BaseDamage ? " HIT!" : " LIGHT HIT!");
+                CDM.PerfectText.text = isPerfect ? "Perfect!" : null;
+                CDM.reactionText.text = $"{reaction:0.000}s";
+                audioSource.Play();
+            }
+            else
+            {
+                if (playerName == "P1") p1Hp -= BaseDamage;
+                else p2Hp -= BaseDamage;
+                CDM.UIText.text = $"{playerName} MISS!";
+                //audioSource.Play();
+            }
 
-        DamageSE.GetComponent<PlaySE>().PlaySound();
-        //damageFlash.TakeDamage();
-        p1HPBar.setHP(p1Hp);
-        p2HPBar.setHP(p2Hp);
+            DamageSE.GetComponent<PlaySE>().PlaySound();
+            //damageFlash.TakeDamage();
+            p1HPBar.setHP(p1Hp);
+            p2HPBar.setHP(p2Hp);
 
-        roundEnded = true;
+            roundEnded = true;
 
-        if (p1Hp <= 0 || p2Hp <= 0)
-        {
-            p1Hp = p1Hp < 0 ? 0 : p1Hp;
-            p2Hp = p2Hp < 0 ? 0 : p2Hp;
-            EndGame();
-        }
-        else
-        {
-            Invoke(nameof(StartNewRound), 4f);
+            if (p1Hp <= 0 || p2Hp <= 0)
+            {
+                p1Hp = p1Hp < 0 ? 0 : p1Hp;
+                p2Hp = p2Hp < 0 ? 0 : p2Hp;
+                EndGame();
+            }
+            else
+            {
+                Invoke(nameof(StartNewRound), 4f);
+            }
         }
     }
-}

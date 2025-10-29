@@ -9,6 +9,14 @@ public class TitleSceneManager : MonoBehaviour
     [SerializeField] private Button ManualButton;//オープション＆説明
     [SerializeField] private Button QuitButton;          //退出
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -37,6 +45,7 @@ public class TitleSceneManager : MonoBehaviour
         //    }
         //}
 
+        
         void OnStartGame()
         {
             SceneManager.LoadScene("GameScene");
